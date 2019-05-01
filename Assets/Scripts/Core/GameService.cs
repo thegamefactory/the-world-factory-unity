@@ -28,5 +28,10 @@
         {
             map.GetTile(x, y).Type = type;
         }
+
+        public void SetTileType(float x, float y, Tile.TileType type)
+        {
+            map.GetTile(x, y).Type = type;
+        }
     }
 }

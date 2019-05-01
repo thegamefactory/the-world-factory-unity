@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class InputController : MonoBehaviour
 {
+    public KeyCode ResidentialModifier;
+
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
@@ -20,5 +22,14 @@ public class InputController : MonoBehaviour
                 // Did not click an object
             }
         }
+    }
+
+    Tile.TileType GetModifiedTileType()
+    {
+        if (Input.GetKey(this.ResidentialModifier))
+        {
+            return Tile.TileType.RESIDENTIAL;
+        }
+        return Tile.TileType.EMPTY;
     }
 }
