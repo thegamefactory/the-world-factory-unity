@@ -2,7 +2,7 @@
 
 public class Root
 {
-    private static Dictionary<System.Type, System.Object> singletons;
+    private static Dictionary<System.Type, System.Object> singletons = new Dictionary<System.Type, object>();
 
     public static T GetInstance<T>() where T : new()
     {

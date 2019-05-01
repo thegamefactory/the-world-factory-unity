@@ -19,6 +19,11 @@
             return map.GetTile(x, y);
         }
 
+        public Tile GetTile(float x, float y)
+        {
+            return map.GetTile(x, y);
+        }
+
         public void SetTileType(int x, int y, Tile.TileType type)
         {
             map.GetTile(x, y).Type = type;

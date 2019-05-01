@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using TWF.Terrain;
+using TWF;
 
 public class MapGenerator : MonoBehaviour
 {
@@ -35,6 +36,7 @@ public class MapGenerator : MonoBehaviour
 
     void Start()
     {
+        Root.GetInstance<GameService>().InitMap(mapWidth, mapHeight);
         Generate();
     }
     
@@ -50,5 +52,12 @@ public class MapGenerator : MonoBehaviour
         noiseGenerator.Generate(noiseMap);
         MapDisplay mapDisplay = FindObjectOfType<MapDisplay>();
         mapDisplay.Draw(noiseMap);
+        for (int x = 0; x < mapWidth; x++)
+        {
+            for (int y = 0; y < mapHeight; y++)
+            {
+                Root.GetInstance<GameService>().SetTileType(x, y, (x + y) % 2 == 0 ? Tile.TileType.EMPTY : Tile.TileType.RESIDENTIAL);
+            }
+        }
     }
 }
