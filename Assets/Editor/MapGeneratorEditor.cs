@@ -1,5 +1,6 @@
 ﻿using UnityEditor;
 using UnityEngine;
+using TWF;
 
 [CustomEditor (typeof (MapGenerator))]
 public class MapGeneratorEditor : Editor
@@ -12,7 +13,7 @@ public class MapGeneratorEditor : Editor
         if ((DrawDefaultInspector() && mapGenerator.autoUpdate)
             || GUILayout.Button("Generate"))
         {
-            mapGenerator.Generate();
+            mapGenerator.Generate(Root.GetInstance<GameService>());
         }
     }
 }

@@ -1,27 +1,36 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using TWF;
 using UnityEngine;
 
 public class MapDisplay : MonoBehaviour
 {
     public Renderer textureRender;
 
-    public void Draw(float[,] altitudeMap)
+    void Update()
     {
-        int width = altitudeMap.GetLength(0);
-        int height = altitudeMap.GetLength(1);
 
+    }
+
+    public void Draw(int width, int height)
+    {
+        GameService gameService = Root.GetInstance<GameService>();
+        TileMapper tileMapper = FindObjectOfType<TileMapper>();
         Color[] colorMap = new Color[width * height];
+
         for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < height; y++)
             {
-                // colorMap[y * width + x] = Color.blue;
-                colorMap[y * width + x] = Color.Lerp(Color.black, Color.white, altitudeMap[x, y]);
+                colorMap[y * width + x] = tileMapper.GetTileColor(gameService.GetTile(x, y));
             }
         }
 
-        Texture2D texture = new Texture2D(width, height);
+        Texture2D texture = textureRender.sharedMaterial.mainTexture as Texture2D;
+        if (null == texture || texture.width != width || texture.height != height)
+        {
+            texture = new Texture2D(width, height);
+        }
+
+        texture.filterMode = FilterMode.Point;
         texture.SetPixels(colorMap);
         texture.Apply();
 

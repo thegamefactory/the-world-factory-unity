@@ -36,28 +36,22 @@ public class MapGenerator : MonoBehaviour
 
     void Start()
     {
-        Root.GetInstance<GameService>().InitMap(mapWidth, mapHeight);
-        Generate();
+        Generate(Root.GetInstance<GameService>());
     }
     
     void Update()
     {
-
+        FindObjectOfType<MapDisplay>().Draw(mapWidth, mapHeight);
     }
 
-    public void Generate()
+    public void Generate(GameService gameService)
     {
-        float[,] noiseMap = new float[mapWidth, mapHeight];
-        NoiseGenerator noiseGenerator = new NoiseGenerator(scale);
-        noiseGenerator.Generate(noiseMap);
-        MapDisplay mapDisplay = FindObjectOfType<MapDisplay>();
-        mapDisplay.Draw(noiseMap);
-        for (int x = 0; x < mapWidth; x++)
-        {
-            for (int y = 0; y < mapHeight; y++)
-            {
-                Root.GetInstance<GameService>().SetTileType(x, y, (x + y) % 2 == 0 ? Tile.TileType.EMPTY : Tile.TileType.RESIDENTIAL);
-            }
-        }
+        //float[,] noiseMap = new float[mapWidth, mapHeight];
+        //NoiseGenerator noiseGenerator = new NoiseGenerator(scale);
+        //noiseGenerator.Generate(noiseMap);
+        //HeightMapDisplay mapDisplay = FindObjectOfType<HeightMapDisplay>();
+        //mapDisplay.Draw(noiseMap);
+
+        gameService.InitMap(mapWidth, mapHeight);
     }
 }
