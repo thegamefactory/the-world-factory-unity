@@ -1,21 +1,24 @@
-﻿public class Map
+﻿namespace TWF
 {
-    Tile[,] tiles;
-
-    public Map(int width, int height)
+    public class Map
     {
-        tiles = new Tile[width, height];
-        for (int x = 0; x < width; x++)
+        Tile[,] tiles;
+
+        public Map(int width, int height)
         {
-            for (int y = 0; y < height; y++)
+            tiles = new Tile[width, height];
+            for (int x = 0; x < width; x++)
             {
-                tiles[x, y] = new Tile();
+                for (int y = 0; y < height; y++)
+                {
+                    tiles[x, y] = new Tile();
+                }
             }
         }
-    }
 
-    public Tile GetTile(int x, int y)
-    {
-        return tiles[x, y];
+        public Tile GetTile(int x, int y)
+        {
+            return tiles[x, y];
+        }
     }
 }

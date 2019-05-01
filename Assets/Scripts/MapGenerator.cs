@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TWF;
 
 public class MapGenerator : MonoBehaviour
 {
@@ -9,11 +10,11 @@ public class MapGenerator : MonoBehaviour
     public Color evenColor;
     public Color oddColor;
 
-    private TWF.GameService gameService;
+    private GameService gameService;
 
     void Start()
     {
-        gameService = new TWF.GameService();
+        gameService = new GameService();
         gameService.InitMap(mapWidth, mapHeight);
         Generate();
     }

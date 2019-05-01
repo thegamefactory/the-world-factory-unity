@@ -1,10 +1,13 @@
-﻿public class Tile
+﻿namespace TWF
 {
-    public enum TileType
+    public class Tile
     {
-        EMPTY,
-        RESIDENTIAL
-    }
+        public enum TileType
+        {
+            EMPTY,
+            RESIDENTIAL
+        }
 
-    public TileType Type { get; internal set; } = TileType.EMPTY;
+        public TileType Type { get; internal set; } = TileType.EMPTY;
+    }
 }
