@@ -13,7 +13,7 @@ public class CameraController : MonoBehaviour
 
     void handleInput()
     {
-        this.transform.position += Input.GetAxis("Horizontal") * horizontalDirectionVector * Time.deltaTime * speed;
-        this.transform.position += Input.GetAxis("Vertical") * verticalDirectionVector * Time.deltaTime * speed;
+        this.transform.localPosition += Input.GetAxis("Horizontal") * horizontalDirectionVector * Time.deltaTime * speed;
+        this.transform.localPosition += Input.GetAxis("Vertical") * verticalDirectionVector * Time.deltaTime * speed;
     }
 }
