@@ -214,7 +214,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: e7a9799416bda52f1a8b3a0ffec7ffc5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -364,6 +364,7 @@ GameObject:
   - component: {fileID: 1133443526}
   - component: {fileID: 1133443525}
   - component: {fileID: 1133443527}
+  - component: {fileID: 1133443528}
   m_Layer: 0
   m_Name: MapGenerator
   m_TagString: Untagged
@@ -414,6 +415,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textureRender: {fileID: 230618659}
+--- !u!114 &1133443528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1133443524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e2a611c0c70c522ebd6c8af16b31ebb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  emptyTile: {r: 1, g: 1, b: 1, a: 0}
+  residentialTile: {r: 0, g: 1, b: 0, a: 0}
 --- !u!1 &1145999774
 GameObject:
   m_ObjectHideFlags: 0
