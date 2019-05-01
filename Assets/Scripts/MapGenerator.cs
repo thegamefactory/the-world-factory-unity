@@ -1,21 +1,40 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
-using TWF;
+using TWF.Terrain;
 
 public class MapGenerator : MonoBehaviour
 {
     public int mapWidth;
     public int mapHeight;
-    public Color evenColor;
-    public Color oddColor;
+    public float scale;
 
-    private GameService gameService;
+
+    void OnValidate()
+    {
+        if (mapWidth <= 0)
+        {
+            mapWidth = 1;
+        }
+        if (mapWidth > 255)
+        {
+            mapWidth = 255;
+        }
+        if (mapHeight <= 0)
+        {
+            mapHeight = 1;
+        }
+        if (mapHeight > 255)
+        {
+            mapHeight = 255;
+        }
+        if (scale < 1.0f)
+        {
+            scale = 1.0f;
+        }
+    }
 
     void Start()
     {
-        gameService = new GameService();
-        gameService.InitMap(mapWidth, mapHeight);
         Generate();
     }
     
@@ -24,21 +43,12 @@ public class MapGenerator : MonoBehaviour
 
     }
 
-    void Generate()
+    public void Generate()
     {
-        float offsetX = (mapWidth - 1) / 2.0f;
-        float offsetY = (mapHeight - 1) / 2.0f;
-        for (int x = 0; x < mapWidth; x++)
-        {
-            for (int y = 0; y < mapHeight; y++)
-            {
-                GameObject plane = GameObject.CreatePrimitive(PrimitiveType.Quad);
-                plane.gameObject.transform.position = new Vector3(x - offsetX, y - offsetY, 0);
-                Material tileMaterial = new Material(Shader.Find("Unlit/Color"));
-                gameService.SetTileType(x, y, (x + y) % 2 == 0 ? Tile.TileType.EMPTY : Tile.TileType.RESIDENTIAL);
-                tileMaterial.color = gameService.GetTile(x, y).Type == Tile.TileType.RESIDENTIAL ? evenColor : oddColor;
-                plane.gameObject.GetComponent<Renderer>().material = tileMaterial;
-            }
-        }
+        float[,] noiseMap = new float[mapWidth, mapHeight];
+        NoiseGenerator noiseGenerator = new NoiseGenerator(scale);
+        noiseGenerator.Generate(noiseMap);
+        MapDisplay mapDisplay = FindObjectOfType<MapDisplay>();
+        mapDisplay.Draw(noiseMap);
     }
 }
