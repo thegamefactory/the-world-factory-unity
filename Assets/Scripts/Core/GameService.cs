@@ -34,6 +34,11 @@ namespace TWF
             return map.GetTile(x, y);
         }
 
+        internal void SetEntity(IEntity entity, int x, int y)
+        {
+            entityMap.SetEntity(entity, x, y);
+        }
+
         public void SetTileType(int x, int y, Tile.TileType type)
         {
             map.GetTile(x, y).Type = type;

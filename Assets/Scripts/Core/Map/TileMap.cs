@@ -1,4 +1,6 @@
-﻿namespace TWF.Map
+﻿using System.Collections.Generic;
+
+namespace TWF.Map
 {
     public class TileMap
     {
@@ -12,6 +14,17 @@
                 for (int y = 0; y < height; y++)
                 {
                     tiles[x, y] = new Tile();
+                }
+            }
+        }
+
+        public IEnumerable<(Position, Tile)> GetTiles()
+        {
+            for (int x = 0; x < tiles.GetLength(0); x++)
+            {
+                for (int y = 0; y < tiles.GetLength(1); y++)
+                {
+                    yield return (new Position(x, y), tiles[x, y]);
                 }
             }
         }
