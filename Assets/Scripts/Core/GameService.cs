@@ -5,15 +5,23 @@ namespace TWF
     public class GameService
     {
         TileMap map;
+        EntityMap entityMap;
 
         public GameService()
         {
             map = new TileMap(1, 1);
+            entityMap = new EntityMap(1, 1);
         }
 
         public void InitMap(int width, int height)
         {
             map = new TileMap(width, height);
+            entityMap = new EntityMap(width, height);
+        }
+
+        public IEntity GetEntity(int x, int y)
+        {
+            return entityMap.GetEntity(x, y);
         }
 
         public Tile GetTile(int x, int y)

@@ -13,7 +13,7 @@ public class MapDisplay : MonoBehaviour
     public void Draw(int width, int height)
     {
         GameService gameService = Root.GetInstance<GameService>();
-        TileMapper tileMapper = FindObjectOfType<TileMapper>();
+        TileMapper tileMapper = GetComponent<TileMapper>();
         Color[] colorMap = new Color[width * height];
 
         for (int x = 0; x < width; x++)
