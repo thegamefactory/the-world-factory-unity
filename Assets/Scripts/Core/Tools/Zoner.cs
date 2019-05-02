@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using TWF.Map;
-using UnityEngine;
 
 namespace TWF.Tool
 {
-    public class Zoner : MonoBehaviour, ITool
+    public class Zoner : ITool
     {
         public ToolType ToolType { get; } = ToolType.ZONER;
         public HashSet<Modifier> Modifiers { get; } = new HashSet<Modifier> {
@@ -19,7 +18,6 @@ namespace TWF.Tool
             {
                 return ToolOutcome.FAILURE;
             }
-            print(inputPositions.First.Value.X);
             Tile.TileType newType;
             if (!Enum.TryParse(modifier.Identifier, out newType))
             {
