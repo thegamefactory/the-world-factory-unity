@@ -1,15 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using TWF;
 
-public class Root
+public static class Root
 {
-    private static Dictionary<System.Type, System.Object> singletons = new Dictionary<System.Type, object>();
-
-    public static T GetInstance<T>() where T : new()
-    {
-        if (!singletons.ContainsKey(typeof(T)))
-        {
-            singletons.Add(typeof(T), new T());
-        }
-        return (T) singletons[typeof(T)];
-    }
+    public static GameService GameService { get; set; } = GameServiceFactory.Create(1, 1);
 }

@@ -7,18 +7,16 @@ namespace TWF.Agent
 {
     public class Constructor: IAgent
     {
-        private TileMap tileMap;
         private Func<bool> doBuild;
 
-        public Constructor(TileMap tileMap, Func<bool> doBuild)
+        public Constructor(Func<bool> doBuild)
         {
-            this.tileMap = tileMap;
             this.doBuild = doBuild;
         }
 
-        public Action<GameService> execute()
+        public Action<GameService> execute(IGameState gameState)
         {
-            List<Position> positionsToBuild = tileMap.GetTiles()
+            List<Position> positionsToBuild = gameState.GetTiles()
                 .Where((t) => t.Item2.Type == Tile.TileType.RESIDENTIAL && doBuild())
                 .Select((t) => t.Item1)
                 .ToList();

@@ -1,22 +1,20 @@
 ﻿using TWF.Map;
+using TWF.Agent;
+using System.Collections.Generic;
 
 namespace TWF
 {
-    public class GameService
+    public class GameService : IGameState
     {
-        TileMap map;
+        TileMap tileMap;
         EntityMap entityMap;
+        List<IAgent> agents;
 
-        public GameService()
+        public GameService(TileMap tileMap, EntityMap entityMap, List<IAgent> agents)
         {
-            map = new TileMap(1, 1);
-            entityMap = new EntityMap(1, 1);
-        }
-
-        public void InitMap(int width, int height)
-        {
-            map = new TileMap(width, height);
-            entityMap = new EntityMap(width, height);
+            this.tileMap = tileMap;
+            this.entityMap = entityMap;
+            this.agents = agents;
         }
 
         public IEntity GetEntity(int x, int y)
@@ -26,12 +24,17 @@ namespace TWF
 
         public Tile GetTile(int x, int y)
         {
-            return map.GetTile(x, y);
+            return tileMap.GetTile(x, y);
         }
 
         public Tile GetTile(float x, float y)
         {
-            return map.GetTile(x, y);
+            return tileMap.GetTile(x, y);
+        }
+
+        public IEnumerable<(Position, Tile)> GetTiles()
+        {
+            return tileMap.GetTiles();
         }
 
         internal void SetEntity(IEntity entity, int x, int y)
@@ -41,12 +44,20 @@ namespace TWF
 
         public void SetTileType(int x, int y, Tile.TileType type)
         {
-            map.GetTile(x, y).Type = type;
+            tileMap.GetTile(x, y).Type = type;
         }
 
         public void SetTileType(float x, float y, Tile.TileType type)
         {
-            map.GetTile(x, y).Type = type;
+            tileMap.GetTile(x, y).Type = type;
+        }
+
+        public void Tick()
+        {
+            foreach(IAgent agent in agents)
+            {
+                agent.execute(this)(this);
+            }
         }
     }
 }

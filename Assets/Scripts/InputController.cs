@@ -14,8 +14,8 @@ public class InputController : MonoBehaviour
             try
             {
                 Tuple<float, float> clickedTilePosition = CoordinateMapper.ScreenPositionToMeshPosition(Input.mousePosition);
-                Root.GetInstance<GameService>().SetTileType(clickedTilePosition.Item1, clickedTilePosition.Item2, GetModifiedTileType());
-                print(Root.GetInstance<GameService>().GetTile(clickedTilePosition.Item1, clickedTilePosition.Item2).Type);
+                Root.GameService.SetTileType(clickedTilePosition.Item1, clickedTilePosition.Item2, GetModifiedTileType());
+                print(Root.GameService.GetTile(clickedTilePosition.Item1, clickedTilePosition.Item2).Type);
             } catch(ArgumentOutOfRangeException)
             {
                 // Did not click an object

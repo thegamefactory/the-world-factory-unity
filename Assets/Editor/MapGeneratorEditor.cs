@@ -13,7 +13,7 @@ public class MapGeneratorEditor : Editor
         if ((DrawDefaultInspector() && mapGenerator.autoUpdate)
             || GUILayout.Button("Generate"))
         {
-            mapGenerator.Generate(Root.GetInstance<GameService>());
+            mapGenerator.Generate(Root.GameService);
         }
     }
 }
