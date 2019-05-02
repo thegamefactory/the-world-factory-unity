@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using TWF;
+using TWF.Map;
 using UnityEngine;
 
 public class InputController : MonoBehaviour

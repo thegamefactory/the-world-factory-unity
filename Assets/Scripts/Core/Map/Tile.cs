@@ -1,4 +1,4 @@
-﻿namespace TWF
+﻿namespace TWF.Map
 {
     public class Tile
     {

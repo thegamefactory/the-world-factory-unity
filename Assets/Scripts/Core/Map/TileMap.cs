@@ -1,12 +1,10 @@
-﻿using System;
-
-namespace TWF
+﻿namespace TWF.Map
 {
-    public class Map
+    public class TileMap
     {
         Tile[,] tiles;
 
-        public Map(int width, int height)
+        public TileMap(int width, int height)
         {
             tiles = new Tile[width, height];
             for (int x = 0; x < width; x++)
@@ -21,6 +19,11 @@ namespace TWF
         public Tile GetTile(int x, int y)
         {
             return tiles[x, y];
+        }
+
+        public Tile GetTile(Position position)
+        {
+            return tiles[position.X, position.Y];
         }
 
         /// <summary>

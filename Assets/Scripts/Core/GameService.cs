@@ -1,17 +1,19 @@
-﻿namespace TWF
+﻿using TWF.Map;
+
+namespace TWF
 {
     public class GameService
     {
-        Map map;
+        TileMap map;
 
         public GameService()
         {
-            map = new Map(1, 1);
+            map = new TileMap(1, 1);
         }
 
         public void InitMap(int width, int height)
         {
-            map = new Map(width, height);
+            map = new TileMap(width, height);
         }
 
         public Tile GetTile(int x, int y)

@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using TWF;
+using TWF.Map;
 
 public class TileMapper : MonoBehaviour
 {
