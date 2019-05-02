@@ -1,5 +1,6 @@
 ﻿using TWF.Map;
 using TWF.Agent;
+using TWF.Tool;
 using System.Collections.Generic;
 
 namespace TWF
@@ -9,12 +10,21 @@ namespace TWF
         TileMap tileMap;
         EntityMap entityMap;
         List<IAgent> agents;
+        Dictionary<ToolType, ITool> tools;
 
         public GameService(TileMap tileMap, EntityMap entityMap, List<IAgent> agents)
         {
             this.tileMap = tileMap;
             this.entityMap = entityMap;
             this.agents = agents;
+            tools = new Dictionary<ToolType, ITool>();
+            tools.Add(ToolType.ZONER, new Zoner());
+        }
+
+        public void InitMap(int width, int height)
+        {
+            tileMap = new TileMap(width, height);
+            entityMap = new EntityMap(width, height);
         }
 
         public IEntity GetEntity(int x, int y)
@@ -42,14 +52,19 @@ namespace TWF
             entityMap.SetEntity(entity, x, y);
         }
 
-        public void SetTileType(int x, int y, Tile.TileType type)
+        public ToolOutcome ApplyTool(LinkedList<Position> positions, ToolType toolType, Modifier modifier)
         {
-            tileMap.GetTile(x, y).Type = type;
+            return tools[toolType].Apply(positions, tileMap, modifier);
         }
 
-        public void SetTileType(float x, float y, Tile.TileType type)
+        public ToolOutcome PreviewTool(LinkedList<Position> positions, ToolType toolType, Modifier modifier)
         {
-            tileMap.GetTile(x, y).Type = type;
+            return tools[toolType].Preview(positions, tileMap, modifier);
+        }
+
+        public Position GetPosition(float x, float y)
+        {
+            return tileMap.GetPosition(x, y);
         }
 
         public void Tick()

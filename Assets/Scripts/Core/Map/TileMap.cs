@@ -47,7 +47,12 @@ namespace TWF.Map
         /// <param name="y">The y coordinate between 0 and 1.</param>
         public Tile GetTile(float x, float y)
         {
-            return tiles[(int)(tiles.GetLength(0) * x), (int)(tiles.GetLength(1) * y)];
+            return GetTile(GetPosition(x, y));
+        }
+
+        public Position GetPosition(float x, float y)
+        {
+            return new Position((int)(tiles.GetLength(0) * x), (int)(tiles.GetLength(1) * y));
         }
     }
 }

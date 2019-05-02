@@ -1,11 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 using TWF;
 using TWF.Map;
+using TWF.Tool;
 using UnityEngine;
 
 public class InputController : MonoBehaviour
 {
-    public KeyCode ResidentialModifier;
+    public KeyCode ResidentialModifierKey;
+
+    private Modifier ResedentialModifier = new Modifier(Tile.TileType.RESIDENTIAL.ToString());
+    private Modifier EmptyModifier = new Modifier(Tile.TileType.EMPTY.ToString());
 
     void Update()
     {
@@ -14,8 +19,9 @@ public class InputController : MonoBehaviour
             try
             {
                 Tuple<float, float> clickedTilePosition = CoordinateMapper.ScreenPositionToMeshPosition(Input.mousePosition);
-                Root.GameService.SetTileType(clickedTilePosition.Item1, clickedTilePosition.Item2, GetModifiedTileType());
-                print(Root.GameService.GetTile(clickedTilePosition.Item1, clickedTilePosition.Item2).Type);
+                LinkedList<Position> positions = new LinkedList<Position>();
+                positions.AddLast(Root.GameService.GetPosition(clickedTilePosition.Item1, clickedTilePosition.Item2));
+                Root.GameService.ApplyTool(positions, ToolType.ZONER, GetModifier());
             } catch(ArgumentOutOfRangeException)
             {
                 // Did not click an object
@@ -23,12 +29,12 @@ public class InputController : MonoBehaviour
         }
     }
 
-    Tile.TileType GetModifiedTileType()
+    Modifier GetModifier()
     {
-        if (Input.GetKey(this.ResidentialModifier))
+        if (Input.GetKey(this.ResidentialModifierKey))
         {
-            return Tile.TileType.RESIDENTIAL;
+            return ResedentialModifier;
         }
-        return Tile.TileType.EMPTY;
+        return EmptyModifier;
     }
 }
