@@ -33,6 +33,7 @@ public class MapDisplay : MonoBehaviour
         Texture2D texture = GetTexture(width, height);
         texture.SetPixels(colorMap);
         texture.Apply();
+        textureRender.sharedMaterial.mainTexture = texture;
     }
 
     private Color[] GetColorMap(int width, int height)

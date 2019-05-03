@@ -429,6 +429,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   emptyTile: {r: 1, g: 1, b: 1, a: 0}
   residentialTile: {r: 0, g: 1, b: 0, a: 0}
+  buildingTile: {r: 0.49803922, g: 0.49803922, b: 0.49803922, a: 0}
 --- !u!1 &1145999774
 GameObject:
   m_ObjectHideFlags: 0
