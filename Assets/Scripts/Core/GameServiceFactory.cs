@@ -1,5 +1,6 @@
 ﻿using TWF.Agent;
 using TWF.Map;
+using TWF.Tool;
 using System.Collections.Generic;
 using System;
 
@@ -11,14 +12,22 @@ namespace TWF
         {
             var tileMap = new TileMap(width, height);
             var entityMap = new EntityMap(width, height);
-            var agents = new List<IAgent>();
-            agents.Add(CreateConstructionAgent());
-            return new GameService(tileMap, entityMap, agents);
+
+            return new GameService(tileMap, entityMap, CreateAgents(), CreateTools());
         }
 
-        private static IAgent CreateConstructionAgent()
+        private static List<IAgent> CreateAgents()
         {
-            return new Constructor(() => new Random().NextDouble() < 0.1);
+            var agents = new List<IAgent>();
+            agents.Add(new Constructor(() => new Random().NextDouble() < 0.1));
+            return agents;
+        }
+
+        private static IDictionary<ToolType, ITool> CreateTools()
+        {
+            var tools = new Dictionary<ToolType, ITool>();
+            tools.Add(ToolType.ZONER, new Zoner());
+            return tools;
         }
     }
 }

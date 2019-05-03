@@ -9,22 +9,15 @@ namespace TWF
     {
         TileMap tileMap;
         EntityMap entityMap;
-        List<IAgent> agents;
-        Dictionary<ToolType, ITool> tools;
+        IList<IAgent> agents;
+        IDictionary<ToolType, ITool> tools;
 
-        public GameService(TileMap tileMap, EntityMap entityMap, List<IAgent> agents)
+        public GameService(TileMap tileMap, EntityMap entityMap, IList<IAgent> agents, IDictionary<ToolType, ITool> tools)
         {
             this.tileMap = tileMap;
             this.entityMap = entityMap;
             this.agents = agents;
-            tools = new Dictionary<ToolType, ITool>();
-            tools.Add(ToolType.ZONER, new Zoner());
-        }
-
-        public void InitMap(int width, int height)
-        {
-            tileMap = new TileMap(width, height);
-            entityMap = new EntityMap(width, height);
+            this.tools = tools;
         }
 
         public IEntity GetEntity(int x, int y)
