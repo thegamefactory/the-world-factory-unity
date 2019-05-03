@@ -62,7 +62,12 @@ namespace TWF.Map
 
         public void SetTileZone(Tile.TileZone zone, Vector position)
         {
-            tiles[position.X, position.Y] = new Tile(zone);
+            SetTileZone(zone, position.X, position.Y);
+        }
+
+        public void SetTileZone(Tile.TileZone zone, int x, int y)
+        {
+            tiles[x, y] = new Tile(zone);
         }
     }
 }

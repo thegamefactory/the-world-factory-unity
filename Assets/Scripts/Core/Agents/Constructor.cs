@@ -5,10 +5,14 @@ using TWF.Map;
 
 namespace TWF.Agent
 {
+    /// <summary>
+    /// This agent is creating buildings on unoccupied zoned tiles.
+    /// </summary>
     public class Constructor : IAgent
     {
         private Func<bool> doBuild;
 
+        /// <param name="doBuild">A function called for each unoccupied zoned tile; if it returns true, the agent creates a building.</param>
         public Constructor(Func<bool> doBuild)
         {
             this.doBuild = doBuild;

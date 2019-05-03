@@ -21,7 +21,7 @@ public class InputController : MonoBehaviour
                 Tuple<float, float> clickedTilePosition = CoordinateMapper.ScreenPositionToMeshPosition(Input.mousePosition);
                 LinkedList<Vector> positions = new LinkedList<Vector>();
                 positions.AddLast(Root.GameService.GetPosition(clickedTilePosition.Item1, clickedTilePosition.Item2));
-                Root.GameService.ApplyTool(positions, ToolType.ZONER, GetModifier());
+                Root.GameService.ApplyTool(positions, ToolBehaviorType.ZONER, GetModifier());
             }
             catch (ArgumentOutOfRangeException)
             {

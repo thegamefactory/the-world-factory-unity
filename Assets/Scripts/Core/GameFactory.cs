@@ -23,10 +23,10 @@ namespace TWF
             return agents;
         }
 
-        private static IDictionary<ToolType, ITool> CreateTools()
+        private static IDictionary<ToolBehaviorType, ITool> CreateTools()
         {
-            var tools = new Dictionary<ToolType, ITool>();
-            tools.Add(ToolType.ZONER, new Zoner());
+            var tools = new Dictionary<ToolBehaviorType, ITool>();
+            tools.Add(ToolBehaviorType.ZONER, new Tool.Tool(new Zoner()));
             return tools;
         }
     }

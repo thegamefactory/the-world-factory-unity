@@ -11,12 +11,12 @@ namespace TWF
     /// Holds the state of the game defines the game behavior via agents.
     /// Objects that with to interact the game in a read-only fashion should obtain an instance of IGameState instead.
     /// </summary>
-    public class GameService : IGameState
+    public class GameService : IGameState, IGameActionQueue
     {
         TileMap tileMap;
         EntityMap entityMap;
         IList<(IAgent, float)> agents;
-        IDictionary<ToolType, ITool> tools;
+        IDictionary<ToolBehaviorType, ITool> tools;
         Ticker ticker = new Ticker();
 
         /// <summary>
@@ -28,7 +28,7 @@ namespace TWF
         /// Defined as a list of tuples (IAgent, float), where float is the period in seconds at which the agent should be executed.</param>
         /// <param name="tools">Tools that can be used by the player to alter the state of the game.
         /// Defined as a dictionary (ToolType, ITool) which map each tool type to a tool implementation.</param>
-        public GameService(TileMap tileMap, EntityMap entityMap, IList<(IAgent, float)> agents, IDictionary<ToolType, ITool> tools)
+        public GameService(TileMap tileMap, EntityMap entityMap, IList<(IAgent, float)> agents, IDictionary<ToolBehaviorType, ITool> tools)
         {
             this.tileMap = tileMap;
             this.entityMap = entityMap;
@@ -99,14 +99,24 @@ namespace TWF
             entityMap.SetEntity(entity, x, y);
         }
 
-        public ToolOutcome ApplyTool(LinkedList<Vector> positions, ToolType toolType, Modifier modifier)
+        internal void SetTileZone(Tile.TileZone zone, Vector position)
         {
-            return tools[toolType].Apply(positions, tileMap, modifier);
+            tileMap.SetTileZone(zone, position);
         }
 
-        public ToolOutcome PreviewTool(LinkedList<Vector> positions, ToolType toolType, Modifier modifier)
+        internal void SetTileZone(Tile.TileZone zone, int x, int y)
         {
-            return tools[toolType].Preview(positions, tileMap, modifier);
+            tileMap.SetTileZone(zone, x, y);
+        }
+
+        public ToolOutcome ApplyTool(LinkedList<Vector> positions, ToolBehaviorType toolType, Modifier modifier)
+        {
+            return tools[toolType].Apply(this, positions, modifier);
+        }
+
+        public ToolOutcome PreviewTool(LinkedList<Vector> positions, ToolBehaviorType toolType, Modifier modifier)
+        {
+            return tools[toolType].Preview(this, positions, modifier);
         }
 
         /// <summary>
@@ -115,7 +125,13 @@ namespace TWF
         /// <param name="currentTime">The current time, given in seconds.</param>
         public void TickAgents(float currentTime)
         {
-            ticker.Tick(this, agents, currentTime);
+            ticker.Tick(this, this, agents, currentTime);
+        }
+
+        public void executeSynchronous(Action<GameService> action)
+        {
+            // TODO: should 1) enqueue 2) wait until asynchronous processing on the queue 3) propagate exception, if any
+            action(this);
         }
     }
 }
