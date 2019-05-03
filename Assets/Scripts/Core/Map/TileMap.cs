@@ -13,7 +13,7 @@ namespace TWF.Map
             {
                 for (int y = 0; y < height; y++)
                 {
-                    tiles[x, y] = new Tile();
+                    tiles[x, y] = new Tile(Tile.TileZone.EMPTY);
                 }
             }
         }
@@ -58,6 +58,11 @@ namespace TWF.Map
         public Vector GetPosition(float x, float y)
         {
             return new Vector((int)(tiles.GetLength(0) * x), (int)(tiles.GetLength(1) * y));
+        }
+
+        public void SetTileZone(Tile.TileZone zone, Vector position)
+        {
+            tiles[position.X, position.Y] = new Tile(zone);
         }
     }
 }

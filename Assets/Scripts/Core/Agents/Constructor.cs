@@ -19,7 +19,7 @@ namespace TWF.Agent
         public Action<GameService> execute(IGameState gameState)
         {
             List<Vector> positionsToBuild = gameState.GetTiles()
-                .Where((t) => t.Item2.Type == Tile.Zone.RESIDENTIAL && doBuild())
+                .Where((t) => t.Item2.Zone == Tile.TileZone.RESIDENTIAL && doBuild())
                 .Select((t) => t.Item1)
                 .ToList();
 

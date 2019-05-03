@@ -8,8 +8,8 @@ namespace TWF.Tool
     {
         public ToolType ToolType { get; } = ToolType.ZONER;
         public HashSet<Modifier> Modifiers { get; } = new HashSet<Modifier> {
-            new Modifier(Tile.Zone.EMPTY.ToString()),
-            new Modifier(Tile.Zone.RESIDENTIAL.ToString())
+            new Modifier(Tile.TileZone.EMPTY.ToString()),
+            new Modifier(Tile.TileZone.RESIDENTIAL.ToString())
         };
 
         public ToolOutcome Apply(LinkedList<Vector> inputPositions, TileMap map, Modifier modifier)
@@ -18,12 +18,13 @@ namespace TWF.Tool
             {
                 return ToolOutcome.FAILURE;
             }
-            Tile.Zone newType;
-            if (!Enum.TryParse(modifier.Identifier, out newType))
+            Tile.TileZone zone;
+            if (!Enum.TryParse(modifier.Identifier, out zone))
             {
                 throw new InvalidOperationException("Zone modifier is invalid: " + modifier);
             }
-            map.GetTile(inputPositions.First.Value).Type = newType;
+            map.SetTileZone(zone, inputPositions.First.Value)
+            ;
             return ToolOutcome.SUCCESS;
         }
 
