@@ -1,4 +1,5 @@
-﻿namespace TWF.Tool {
+﻿namespace TWF.Tool
+{
     public enum ToolType
     {
         ZONER

@@ -23,7 +23,17 @@ namespace TWF.Tool
             {
                 throw new InvalidOperationException("Zone modifier is invalid: " + modifier);
             }
-            map.GetTile(inputPositions.First.Value).Type = newType;
+            Vector first = inputPositions.First.Value;
+            Vector second = inputPositions.Last.Value;
+            Vector min = new Vector(Math.Min(first.X, second.X), Math.Min(first.Y, second.Y));
+            Vector max = new Vector(Math.Max(first.X, second.X), Math.Max(first.Y, second.Y));
+            for (int x = min.X; x <= max.X; x++)
+            {
+                for (int y = min.Y; y <= max.Y; y++)
+                {
+                    map.GetTile(x, y).Type = newType;
+                }
+            }
             return ToolOutcome.SUCCESS;
         }
 
@@ -34,7 +44,7 @@ namespace TWF.Tool
 
         public ToolOutcome Preview(LinkedList<Vector> inputPositions, TileMap map, Modifier modifier)
         {
-            if (!Modifiers.Contains(modifier) || inputPositions.Count != 1)
+            if (!Modifiers.Contains(modifier) || inputPositions.Count != 2)
             {
                 return ToolOutcome.FAILURE;
             }
