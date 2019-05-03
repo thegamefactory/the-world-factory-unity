@@ -47,6 +47,6 @@ public class MapGenerator : MonoBehaviour
         //HeightMapDisplay mapDisplay = FindObjectOfType<HeightMapDisplay>();
         //mapDisplay.Draw(noiseMap);
 
-        Root.GameService = GameFactory.Create(mapWidth, mapHeight);
+        Root.GameService = GameFactory.Create(mapWidth, mapHeight, new System.Random());
     }
 }

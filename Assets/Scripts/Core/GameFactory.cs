@@ -8,18 +8,18 @@ namespace TWF
 {
     public static class GameFactory
     {
-        public static GameService Create(int width, int height)
+        public static GameService Create(int width, int height, Random random)
         {
             var tileMap = new TileMap(width, height);
             var entityMap = new EntityMap(width, height);
 
-            return new GameService(tileMap, entityMap, CreateAgents(), CreateTools());
+            return new GameService(tileMap, entityMap, CreateAgents(random), CreateTools());
         }
 
-        private static IList<(IAgent, float)> CreateAgents()
+        private static IList<(IAgent, float)> CreateAgents(Random random)
         {
             var agents = new List<(IAgent, float)>();
-            agents.Add((new Constructor(() => new Random().NextDouble() < 0.1), 1.0f));
+            agents.Add((new Constructor(() => random.NextDouble() < 0.1), 1.0f));
             return agents;
         }
 
