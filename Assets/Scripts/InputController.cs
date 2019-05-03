@@ -22,7 +22,8 @@ public class InputController : MonoBehaviour
                 LinkedList<Position> positions = new LinkedList<Position>();
                 positions.AddLast(Root.GameService.GetPosition(clickedTilePosition.Item1, clickedTilePosition.Item2));
                 Root.GameService.ApplyTool(positions, ToolType.ZONER, GetModifier());
-            } catch(ArgumentOutOfRangeException)
+            }
+            catch (ArgumentOutOfRangeException)
             {
                 // Did not click an object
             }
