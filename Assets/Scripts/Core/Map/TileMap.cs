@@ -18,13 +18,18 @@ namespace TWF.Map
             }
         }
 
-        public IEnumerable<(Position, Tile)> GetTiles()
+        public Vector GetSize()
+        {
+            return new Vector(tiles.GetLength(0), tiles.GetLength(1));
+        }
+
+        public IEnumerable<(Vector, Tile)> GetTiles()
         {
             for (int x = 0; x < tiles.GetLength(0); x++)
             {
                 for (int y = 0; y < tiles.GetLength(1); y++)
                 {
-                    yield return (new Position(x, y), tiles[x, y]);
+                    yield return (new Vector(x, y), tiles[x, y]);
                 }
             }
         }
@@ -34,7 +39,7 @@ namespace TWF.Map
             return tiles[x, y];
         }
 
-        public Tile GetTile(Position position)
+        public Tile GetTile(Vector position)
         {
             return tiles[position.X, position.Y];
         }
@@ -50,9 +55,9 @@ namespace TWF.Map
             return GetTile(GetPosition(x, y));
         }
 
-        public Position GetPosition(float x, float y)
+        public Vector GetPosition(float x, float y)
         {
-            return new Position((int)(tiles.GetLength(0) * x), (int)(tiles.GetLength(1) * y));
+            return new Vector((int)(tiles.GetLength(0) * x), (int)(tiles.GetLength(1) * y));
         }
     }
 }

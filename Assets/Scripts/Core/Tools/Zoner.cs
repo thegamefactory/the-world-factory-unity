@@ -12,7 +12,7 @@ namespace TWF.Tool
             new Modifier(Tile.TileType.RESIDENTIAL.ToString())
         };
 
-        public ToolOutcome Apply(LinkedList<Position> inputPositions, TileMap map, Modifier modifier)
+        public ToolOutcome Apply(LinkedList<Vector> inputPositions, TileMap map, Modifier modifier)
         {
             if (Preview(inputPositions, map, modifier) != ToolOutcome.SUCCESS)
             {
@@ -32,7 +32,7 @@ namespace TWF.Tool
             return Modifiers;
         }
 
-        public ToolOutcome Preview(LinkedList<Position> inputPositions, TileMap map, Modifier modifier)
+        public ToolOutcome Preview(LinkedList<Vector> inputPositions, TileMap map, Modifier modifier)
         {
             if (!Modifiers.Contains(modifier) || inputPositions.Count != 1)
             {

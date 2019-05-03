@@ -19,7 +19,7 @@ public class InputController : MonoBehaviour
             try
             {
                 Tuple<float, float> clickedTilePosition = CoordinateMapper.ScreenPositionToMeshPosition(Input.mousePosition);
-                LinkedList<Position> positions = new LinkedList<Position>();
+                LinkedList<Vector> positions = new LinkedList<Vector>();
                 positions.AddLast(Root.GameService.GetPosition(clickedTilePosition.Item1, clickedTilePosition.Item2));
                 Root.GameService.ApplyTool(positions, ToolType.ZONER, GetModifier());
             }

@@ -38,11 +38,6 @@ public class MapGenerator : MonoBehaviour
     {
         Generate(Root.GameService);
     }
-    
-    void Update()
-    {
-        FindObjectOfType<MapDisplay>().Draw(mapWidth, mapHeight);
-    }
 
     public void Generate(GameService gameService)
     {
@@ -52,6 +47,6 @@ public class MapGenerator : MonoBehaviour
         //HeightMapDisplay mapDisplay = FindObjectOfType<HeightMapDisplay>();
         //mapDisplay.Draw(noiseMap);
 
-        Root.GameService = GameServiceFactory.Create(mapWidth, mapHeight);
+        Root.GameService = GameFactory.Create(mapWidth, mapHeight);
     }
 }

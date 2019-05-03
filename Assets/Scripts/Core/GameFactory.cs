@@ -6,7 +6,7 @@ using System;
 
 namespace TWF
 {
-    public static class GameServiceFactory
+    public static class GameFactory
     {
         public static GameService Create(int width, int height)
         {
@@ -16,10 +16,10 @@ namespace TWF
             return new GameService(tileMap, entityMap, CreateAgents(), CreateTools());
         }
 
-        private static List<IAgent> CreateAgents()
+        private static IList<(IAgent, float)> CreateAgents()
         {
-            var agents = new List<IAgent>();
-            agents.Add(new Constructor(() => new Random().NextDouble() < 0.1));
+            var agents = new List<(IAgent, float)>();
+            agents.Add((new Constructor(() => new Random().NextDouble() < 0.1), 1.0f));
             return agents;
         }
 

@@ -5,7 +5,7 @@ using TWF.Map;
 
 namespace TWF.Agent
 {
-    public class Constructor: IAgent
+    public class Constructor : IAgent
     {
         private Func<bool> doBuild;
 
@@ -14,16 +14,18 @@ namespace TWF.Agent
             this.doBuild = doBuild;
         }
 
+        public string Name => "Constructor";
+
         public Action<GameService> execute(IGameState gameState)
         {
-            List<Position> positionsToBuild = gameState.GetTiles()
+            List<Vector> positionsToBuild = gameState.GetTiles()
                 .Where((t) => t.Item2.Type == Tile.TileType.RESIDENTIAL && doBuild())
                 .Select((t) => t.Item1)
                 .ToList();
 
             return (gameservice) =>
             {
-                foreach(Position freePos in positionsToBuild.Where((p) => null == gameservice.GetEntity(p.X, p.Y)))
+                foreach (Vector freePos in positionsToBuild.Where((p) => null == gameservice.GetEntity(p.X, p.Y)))
                 {
                     gameservice.SetEntity(new Building(), freePos.X, freePos.Y);
                 }

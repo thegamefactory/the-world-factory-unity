@@ -1,4 +1,5 @@
 ﻿using TWF;
+using TWF.Map;
 using UnityEngine;
 
 public class MapDisplay : MonoBehaviour
@@ -8,10 +9,17 @@ public class MapDisplay : MonoBehaviour
     private Color[] cachedColorMap;
     private Texture2D texture2D;
 
-    public void Draw(int width, int height)
+    void Update()
     {
-        IGameState gameState = Root.GameState;
-        TileMapper tileMapper = GetComponent<TileMapper>();
+        Draw(Root.GameState, GetComponent<TileMapper>());
+    }
+
+    public void Draw(IGameState gameState, TileMapper tileMapper)
+    {
+        Vector size = gameState.GetTileMapSize();
+        int width = size.X;
+        int height = size.Y;
+
         Color[] colorMap = GetColorMap(width, height);
 
         for (int x = 0; x < width; x++)
