@@ -2,6 +2,8 @@
 {
     public enum ToolType
     {
-        ZONER
+        NONE,
+        ZONER,
+        ROAD_BUILDER
     }
 }

@@ -7,6 +7,7 @@ public class TileMapper : MonoBehaviour
     public Color emptyTile;
     public Color residentialTile;
     public Color buildingTile;
+    public Color roadTile;
 
     public Color GetTileColor(IEntity entity, Tile tile)
     {
@@ -21,6 +22,8 @@ public class TileMapper : MonoBehaviour
                 return emptyTile;
             case Tile.Zone.RESIDENTIAL:
                 return residentialTile;
+            case Tile.Zone.ROAD:
+                return roadTile;
             default:
                 return Color.magenta;
         }

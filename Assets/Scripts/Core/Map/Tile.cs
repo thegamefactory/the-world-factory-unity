@@ -5,7 +5,8 @@
         public enum Zone
         {
             EMPTY,
-            RESIDENTIAL
+            RESIDENTIAL,
+            ROAD
         }
 
         public Zone Type { get; internal set; } = Zone.EMPTY;
