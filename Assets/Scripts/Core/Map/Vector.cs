@@ -1,14 +1,14 @@
 ﻿namespace TWF.Map
 {
-    public class Vector
+    public struct Vector
     {
-        public int X { get; } = 0;
-        public int Y { get; } = 0;
+        public int X;
+        public int Y;
 
         public Vector(int x, int y)
         {
-            this.X = x;
-            this.Y = y;
+            X = x;
+            Y = y;
         }
     }
 }

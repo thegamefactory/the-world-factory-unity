@@ -14,11 +14,22 @@
             RESIDENTIAL
         }
 
-        public TileZone Zone { get; private set; }
-
-        public Tile(TileZone zone)
+        /// <summary>
+        /// The terrain of the tile.
+        /// </summary>
+        public enum TileTerrain
         {
-            this.Zone = zone;
+            WATER,
+            LAND
+        }
+
+        public TileZone Zone { get; private set; }
+        public TileTerrain Terrain { get; private set; }
+
+        public Tile(TileZone zone, TileTerrain terrain)
+        {
+            Zone = zone;
+            Terrain = terrain;
         }
     }
 }

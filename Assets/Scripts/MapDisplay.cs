@@ -9,7 +9,7 @@ public class MapDisplay : MonoBehaviour
     private Color[] cachedColorMap;
     private Texture2D texture2D;
 
-    void Update()
+    public void Update()
     {
         Draw(Root.GameState, GetComponent<TileMapper>());
     }

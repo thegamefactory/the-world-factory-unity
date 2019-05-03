@@ -7,9 +7,9 @@
     {
         IEntity[,] entities;
 
-        public EntityMap(int width, int height)
+        public EntityMap(Vector size)
         {
-            entities = new IEntity[width, height];
+            entities = new IEntity[size.X, size.Y];
         }
 
         /// <summary>

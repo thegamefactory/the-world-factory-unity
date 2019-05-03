@@ -1,14 +1,16 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using TWF.Terrain;
+using TWF.Map;
 using TWF;
 
 public class MapGenerator : MonoBehaviour
 {
     public int mapWidth;
     public int mapHeight;
-    public float scale;
+    public float noisePeriod;
+    public float waterThreshold;
     public bool autoUpdate;
+    public int seed;
 
     void OnValidate()
     {
@@ -28,9 +30,9 @@ public class MapGenerator : MonoBehaviour
         {
             mapHeight = 255;
         }
-        if (scale < 1.0f)
+        if (noisePeriod < 1.0f)
         {
-            scale = 1.0f;
+            noisePeriod = 1.0f;
         }
     }
 
@@ -41,12 +43,29 @@ public class MapGenerator : MonoBehaviour
 
     public void Generate(GameService gameService)
     {
-        //float[,] noiseMap = new float[mapWidth, mapHeight];
-        //NoiseGenerator noiseGenerator = new NoiseGenerator(scale);
-        //noiseGenerator.Generate(noiseMap);
-        //HeightMapDisplay mapDisplay = FindObjectOfType<HeightMapDisplay>();
-        //mapDisplay.Draw(noiseMap);
+        System.Random random = new System.Random(seed);
+        ITileMapGenerator tileMapGenerator;
+        if (waterThreshold <= 0)
+        {
+            tileMapGenerator = new UniformMapGenerator(Tile.TileTerrain.LAND);
+        }
+        else if (waterThreshold <= 1)
+        {
+            tileMapGenerator = new WaterThresholdTileMapGenerator(
+                new PerlinNoiseGenerator(noisePeriod, (float)random.NextDouble(), (float)random.NextDouble()),
+                waterThreshold);
+        }
+        else
+        {
+            tileMapGenerator = new UniformMapGenerator(Tile.TileTerrain.WATER);
+        }
 
-        Root.GameService = GameFactory.Create(mapWidth, mapHeight, new System.Random());
+        Root.GameService = GameFactory.Create(new Vector(mapWidth, mapHeight), tileMapGenerator, random);
+
+        if (autoUpdate)
+        {
+            MapDisplay mapDisplay = GetComponent<MapDisplay>();
+            mapDisplay.Update();
+        }
     }
 }

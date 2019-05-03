@@ -251,7 +251,7 @@ Transform:
   m_GameObject: {fileID: 230618657}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 10, y: 10, z: 1}
+  m_LocalScale: {x: 32, y: 32, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
@@ -347,7 +347,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 813721418}
   m_LocalRotation: {x: -0.25488698, y: 0.044943444, z: 0.16773126, w: 0.95125127}
-  m_LocalPosition: {x: 0, y: 0, z: -100}
+  m_LocalPosition: {x: 0, y: 0, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -385,10 +385,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b288e3e5e59f46fa9830c13837c6f86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapWidth: 255
-  mapHeight: 255
-  scale: 17.17
-  autoUpdate: 0
+  mapWidth: 32
+  mapHeight: 32
+  noisePeriod: 5
+  waterThreshold: 0.36
+  autoUpdate: 1
+  seed: 20
 --- !u!4 &1133443526
 Transform:
   m_ObjectHideFlags: 0
@@ -431,6 +433,7 @@ MonoBehaviour:
   emptyTile: {r: 1, g: 1, b: 1, a: 0}
   residentialTile: {r: 0, g: 1, b: 0, a: 0}
   buildingTile: {r: 0.49803922, g: 0.49803922, b: 0.49803922, a: 0}
+  waterTile: {r: 0, g: 0, b: 1, a: 0}
 --- !u!114 &1133443529
 MonoBehaviour:
   m_ObjectHideFlags: 0
