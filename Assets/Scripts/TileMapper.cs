@@ -17,9 +17,9 @@ public class TileMapper : MonoBehaviour
 
         switch (tile.Type)
         {
-            case Tile.TileType.EMPTY:
+            case Tile.Zone.EMPTY:
                 return emptyTile;
-            case Tile.TileType.RESIDENTIAL:
+            case Tile.Zone.RESIDENTIAL:
                 return residentialTile;
             default:
                 return Color.magenta;

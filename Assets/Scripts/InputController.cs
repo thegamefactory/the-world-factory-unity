@@ -9,8 +9,8 @@ public class InputController : MonoBehaviour
 {
     public KeyCode ResidentialModifierKey;
 
-    private Modifier ResedentialModifier = new Modifier(Tile.TileType.RESIDENTIAL.ToString());
-    private Modifier EmptyModifier = new Modifier(Tile.TileType.EMPTY.ToString());
+    private Modifier ResedentialModifier = new Modifier(Tile.Zone.RESIDENTIAL.ToString());
+    private Modifier EmptyModifier = new Modifier(Tile.Zone.EMPTY.ToString());
 
     void Update()
     {

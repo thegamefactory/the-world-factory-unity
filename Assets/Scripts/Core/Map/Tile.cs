@@ -2,12 +2,12 @@
 {
     public class Tile
     {
-        public enum TileType
+        public enum Zone
         {
             EMPTY,
             RESIDENTIAL
         }
 
-        public TileType Type { get; internal set; } = TileType.EMPTY;
+        public Zone Type { get; internal set; } = Zone.EMPTY;
     }
 }
