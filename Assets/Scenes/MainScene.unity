@@ -365,6 +365,7 @@ GameObject:
   - component: {fileID: 1133443525}
   - component: {fileID: 1133443527}
   - component: {fileID: 1133443528}
+  - component: {fileID: 1133443529}
   m_Layer: 0
   m_Name: MapGenerator
   m_TagString: Untagged
@@ -430,6 +431,18 @@ MonoBehaviour:
   emptyTile: {r: 1, g: 1, b: 1, a: 0}
   residentialTile: {r: 0, g: 1, b: 0, a: 0}
   buildingTile: {r: 0.49803922, g: 0.49803922, b: 0.49803922, a: 0}
+--- !u!114 &1133443529
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1133443524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de3ca9147539e3349b354d889784cd93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1145999774
 GameObject:
   m_ObjectHideFlags: 0
