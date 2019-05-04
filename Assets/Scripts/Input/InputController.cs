@@ -9,8 +9,10 @@ public class InputController : MonoBehaviour
 {
     public KeyCode ResidentialModifierKey;
 
-    private Modifier ResidentialModifier = new Modifier(Tile.TileZone.RESIDENTIAL.ToString());
     private Modifier EmptyModifier = new Modifier(Tile.TileZone.EMPTY.ToString());
+    private Modifier ResidentialModifier = new Modifier(Tile.TileZone.RESIDENTIAL.ToString());
+    private Modifier RoadModifier = new Modifier(Tile.TileZone.ROAD.ToString());
+
     private Modifier CurrentModifier;
     LinkedList<Vector> positions = new LinkedList<Vector>();
     List<KeyCombinationPublisher> keyEventPublishers = new List<KeyCombinationPublisher>();
@@ -31,7 +33,7 @@ public class InputController : MonoBehaviour
             .build());
         // Road building
         this.keyEventPublishers.Add(KeyCombinationPublisher.builder(KeyCombination.builder(KeyCode.Mouse1).build())
-            .OnActivate(() => AddMousePosition(positions, ToolBehaviorType.ROAD_BUILDER))
+            .OnActivate(() => AddMousePosition(positions, ToolBehaviorType.ZONER))
             .OnDeactivate(() => BuildRoad())
             .build());
     }
@@ -45,16 +47,16 @@ public class InputController : MonoBehaviour
     {
         if (positions.Count == 1 && AddMousePosition(positions, ToolBehaviorType.ZONER))
         {
-            Root.GameService.ApplyTool(positions, ToolBehaviorType.ZONER, CurrentModifier);
+            Root.GameService.ApplyTool(ToolBehaviorType.ZONER, CurrentModifier, positions, ToolBrushType.RECTANGLE);
         }
         ResetTool();
     }
 
     private void BuildRoad()
     {
-        if (positions.Count == 1 && AddMousePosition(positions, ToolBehaviorType.ROAD_BUILDER))
+        if (positions.Count == 1 && AddMousePosition(positions, ToolBehaviorType.ZONER))
         {
-            Root.GameService.ApplyTool(positions, ToolBehaviorType.ROAD_BUILDER, null);
+            Root.GameService.ApplyTool(ToolBehaviorType.ZONER, RoadModifier, positions, ToolBrushType.MANATTHAN);
         }
         ResetTool();
     }

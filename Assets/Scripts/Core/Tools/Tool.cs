@@ -27,17 +27,24 @@ namespace TWF.Tool
             get { return toolBehavior.ToolBehaviorType; }
         }
 
-        public ToolOutcome Preview(IGameState gameState, IEnumerable<Vector> inputPositions, Modifier modifier)
+        public ToolOutcome Preview(IGameState gameState, Modifier modifier, IEnumerable<Vector> inputPositions, IToolBrush toolBrush)
         {
-            return toolBehavior.Validate(gameState, inputPositions, modifier);
+            IEnumerable<Vector> toolPositions = toolBrush.computePositions(inputPositions);
+            return toolBehavior.Validate(gameState, modifier, inputPositions);
         }
 
-        public ToolOutcome Apply(IGameActionQueue gameActionQueue, IEnumerable<Vector> inputPositions, Modifier modifier)
+        private ToolOutcome Validate(IGameState gameState, Modifier modifier, IEnumerable<Vector> toolPositions)
         {
-            var action = toolBehavior.CreateActions(inputPositions, modifier);
+            return toolBehavior.Validate(gameState, modifier, toolPositions);
+        }
+
+        public ToolOutcome Apply(IGameActionQueue gameActionQueue, Modifier modifier, IEnumerable<Vector> inputPositions, IToolBrush toolBrush)
+        {
+            IEnumerable<Vector> toolPositions = toolBrush.computePositions(inputPositions);
+            var action = toolBehavior.CreateActions(modifier, toolPositions);
             Action<GameService> validatedAction = (gs) =>
             {
-                if (Preview(gs, inputPositions, modifier) == ToolOutcome.SUCCESS)
+                if (Validate(gs, modifier, toolPositions) == ToolOutcome.SUCCESS)
                 {
                     action(gs);
                 }
@@ -56,6 +63,18 @@ namespace TWF.Tool
             catch (InvalidOperationException)
             {
                 return ToolOutcome.FAILURE;
+            }
+        }
+
+        private IEnumerable<Vector> ConvertPositions(IEnumerable<Vector> input, IToolBrush toolBrush)
+        {
+            if (toolBrush.IsValid(input))
+            {
+                return toolBrush.computePositions(input);
+            }
+            else
+            {
+                return null;
             }
         }
     }

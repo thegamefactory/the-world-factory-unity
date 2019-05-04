@@ -28,8 +28,8 @@ namespace TWF.Tool
     {
         ToolBehaviorType ToolBehaviorType { get; }
 
-        Action<GameService> CreateActions(IEnumerable<Vector> inputPositions, Modifier modifier);
+        Action<GameService> CreateActions(Modifier modifier, IEnumerable<Vector> inputPositions);
 
-        ToolOutcome Validate(IGameState gameState, IEnumerable<Vector> inputPositions, Modifier modifier);
+        ToolOutcome Validate(IGameState gameState, Modifier modifier, IEnumerable<Vector> inputPositions);
     }
 }

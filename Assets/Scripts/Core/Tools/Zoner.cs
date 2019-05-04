@@ -13,10 +13,11 @@ namespace TWF.Tool
         public ToolBehaviorType ToolBehaviorType { get; } = ToolBehaviorType.ZONER;
         private HashSet<Modifier> Modifiers { get; } = new HashSet<Modifier> {
             new Modifier(Tile.TileZone.EMPTY.ToString()),
-            new Modifier(Tile.TileZone.RESIDENTIAL.ToString())
+            new Modifier(Tile.TileZone.RESIDENTIAL.ToString()),
+            new Modifier(Tile.TileZone.ROAD.ToString())
         };
 
-        public Action<GameService> CreateActions(IEnumerable<Vector> inputPositions, Modifier modifier)
+        public Action<GameService> CreateActions(Modifier modifier, IEnumerable<Vector> inputPositions)
         {
             Tile.TileZone zone;
             if (!Enum.TryParse(modifier.Identifier, out zone))
@@ -26,24 +27,16 @@ namespace TWF.Tool
 
             return (gameservice) =>
             {
-                Vector first = inputPositions.First();
-                Vector second = inputPositions.Last();
-                Vector min = new Vector(Math.Min(first.X, second.X), Math.Min(first.Y, second.Y));
-                Vector max = new Vector(Math.Max(first.X, second.X), Math.Max(first.Y, second.Y));
-                for (int x = min.X; x <= max.X; x++)
+                foreach (var pos in inputPositions)
                 {
-                    for (int y = min.Y; y <= max.Y; y++)
-                    {
-                        gameservice.SetTileZone(zone, x, y);
-                    }
+                    gameservice.SetTileZone(zone, pos);
                 }
-
             };
         }
 
-        public ToolOutcome Validate(IGameState gameState, IEnumerable<Vector> inputPositions, Modifier modifier)
+        public ToolOutcome Validate(IGameState gameState, Modifier modifier, IEnumerable<Vector> inputPositions)
         {
-            if (!Modifiers.Contains(modifier) || inputPositions.Count() != 2)
+            if (!Modifiers.Contains(modifier))
             {
                 return ToolOutcome.FAILURE;
             }

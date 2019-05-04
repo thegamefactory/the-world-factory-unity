@@ -16,7 +16,7 @@ namespace TWF
         TileMap tileMap;
         EntityMap entityMap;
         IList<(IAgent, float)> agents;
-        IDictionary<ToolBehaviorType, ITool> tools;
+        ToolConfig toolConfig;
         Ticker ticker = new Ticker();
 
         /// <summary>
@@ -26,14 +26,13 @@ namespace TWF
         /// <param name="entityMap">The layout of the entities, maps each position to an entity.</param>
         /// <param name="agents">Background jobs that update the game state based on defined rules.
         /// Defined as a list of tuples (IAgent, float), where float is the period in seconds at which the agent should be executed.</param>
-        /// <param name="tools">Tools that can be used by the player to alter the state of the game.
-        /// Defined as a dictionary (ToolType, ITool) which map each tool type to a tool implementation.</param>
-        public GameService(TileMap tileMap, EntityMap entityMap, IList<(IAgent, float)> agents, IDictionary<ToolBehaviorType, ITool> tools)
+        /// <param name="tools">Tools that can be used by the player to alter the state of the game.</param>
+        public GameService(TileMap tileMap, EntityMap entityMap, IList<(IAgent, float)> agents, ToolConfig toolConfig)
         {
             this.tileMap = tileMap;
             this.entityMap = entityMap;
             this.agents = agents;
-            this.tools = tools;
+            this.toolConfig = toolConfig;
         }
 
         /// <summary>
@@ -131,14 +130,14 @@ namespace TWF
             tileMap.SetTileZone(zone, x, y);
         }
 
-        public ToolOutcome ApplyTool(LinkedList<Vector> positions, ToolBehaviorType toolType, Modifier modifier)
+        public ToolOutcome ApplyTool(ToolBehaviorType toolType, Modifier modifier, IEnumerable<Vector> positions, ToolBrushType toolBrushType)
         {
-            return tools[toolType].Apply(this, positions, modifier);
+            return toolConfig.GetTool(toolType).Apply(this, modifier, positions, toolConfig.GetToolBrush(toolBrushType));
         }
 
-        public ToolOutcome PreviewTool(LinkedList<Vector> positions, ToolBehaviorType toolType, Modifier modifier)
+        public ToolOutcome PreviewTool(ToolBehaviorType toolType, Modifier modifier, IEnumerable<Vector> positions, ToolBrushType toolBrushType)
         {
-            return tools[toolType].Preview(this, positions, modifier);
+            return toolConfig.GetTool(toolType).Preview(this, modifier, positions, toolConfig.GetToolBrush(toolBrushType));
         }
 
         /// <summary>
