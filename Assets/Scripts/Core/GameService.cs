@@ -135,7 +135,7 @@ namespace TWF
             return toolConfig.GetTool(toolType).Apply(this, modifier, positions, toolConfig.GetToolBrush(toolBrushType));
         }
 
-        public ToolOutcome PreviewTool(ToolBehaviorType toolType, Modifier modifier, IEnumerable<Vector> positions, ToolBrushType toolBrushType)
+        public PreviewOutcome PreviewTool(ToolBehaviorType toolType, Modifier modifier, IEnumerable<Vector> positions, ToolBrushType toolBrushType)
         {
             return toolConfig.GetTool(toolType).Preview(this, modifier, positions, toolConfig.GetToolBrush(toolBrushType));
         }

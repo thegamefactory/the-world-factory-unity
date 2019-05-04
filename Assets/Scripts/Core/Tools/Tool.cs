@@ -27,15 +27,15 @@ namespace TWF.Tool
             get { return toolBehavior.ToolBehaviorType; }
         }
 
-        public ToolOutcome Preview(IGameState gameState, Modifier modifier, IEnumerable<Vector> inputPositions, IToolBrush toolBrush)
+        public PreviewOutcome Preview(IGameState gameState, Modifier modifier, IEnumerable<Vector> inputPositions, IToolBrush toolBrush)
         {
             IEnumerable<Vector> toolPositions = toolBrush.computePositions(inputPositions);
-            return toolBehavior.Validate(gameState, modifier, inputPositions);
+            return toolBehavior.Preview(gameState, modifier, inputPositions);
         }
 
-        private ToolOutcome Validate(IGameState gameState, Modifier modifier, IEnumerable<Vector> toolPositions)
+        private bool Validate(IGameState gameState, Modifier modifier, IEnumerable<Vector> toolPositions)
         {
-            return toolBehavior.Validate(gameState, modifier, toolPositions);
+            return toolBehavior.Preview(gameState, modifier, toolPositions).IsPossible();
         }
 
         public ToolOutcome Apply(IGameActionQueue gameActionQueue, Modifier modifier, IEnumerable<Vector> inputPositions, IToolBrush toolBrush)
@@ -44,7 +44,7 @@ namespace TWF.Tool
             var action = toolBehavior.CreateActions(modifier, toolPositions);
             Action<GameService> validatedAction = (gs) =>
             {
-                if (Validate(gs, modifier, toolPositions) == ToolOutcome.SUCCESS)
+                if (Validate(gs, modifier, toolPositions))
                 {
                     action(gs);
                 }

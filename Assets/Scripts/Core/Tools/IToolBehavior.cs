@@ -30,6 +30,6 @@ namespace TWF.Tool
 
         Action<GameService> CreateActions(Modifier modifier, IEnumerable<Vector> inputPositions);
 
-        ToolOutcome Validate(IGameState gameState, Modifier modifier, IEnumerable<Vector> inputPositions);
+        PreviewOutcome Preview(IGameState gameState, Modifier modifier, IEnumerable<Vector> inputPositions);
     }
 }

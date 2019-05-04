@@ -34,16 +34,21 @@ namespace TWF.Tool
             };
         }
 
-        public ToolOutcome Validate(IGameState gameState, Modifier modifier, IEnumerable<Vector> inputPositions)
+        public PreviewOutcome Preview(IGameState gameState, Modifier modifier, IEnumerable<Vector> inputPositions)
         {
             if (!Modifiers.Contains(modifier))
             {
-                return ToolOutcome.FAILURE;
+                return PreviewOutcome.builder()
+                    .WithOutcomePositions(ToolOutcome.FAILURE, inputPositions.ToList())
+                    .Build();
             }
-            return inputPositions.All((pos) =>
+            PreviewOutcome.Builder builder = PreviewOutcome.builder();
+            foreach (Vector pos in inputPositions)
             {
-                return null == gameState.GetEntity(pos) && Tile.TileTerrain.LAND == gameState.GetTile(pos).Terrain;
-            }) ? ToolOutcome.SUCCESS : ToolOutcome.FAILURE;
+                bool possible = null == gameState.GetEntity(pos) && Tile.TileTerrain.LAND == gameState.GetTile(pos).Terrain;
+                builder.WithPositionOutcome(pos, possible ? ToolOutcome.SUCCESS : ToolOutcome.FAILURE);
+            }
+            return builder.Build();
         }
     }
 }
