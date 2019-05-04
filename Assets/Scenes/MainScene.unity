@@ -387,10 +387,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mapWidth: 32
   mapHeight: 32
-  noisePeriod: 5
-  waterThreshold: 0.36
+  noisePeriod: 1
+  waterThreshold: 0.6
   autoUpdate: 1
-  seed: 20
+  seed: 343
 --- !u!4 &1133443526
 Transform:
   m_ObjectHideFlags: 0
@@ -432,9 +432,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   emptyTile: {r: 1, g: 1, b: 1, a: 0}
   residentialTile: {r: 0, g: 1, b: 0, a: 0}
-  building1Tile: {r: 0.39215687, g: 0.39215687, b: 0.39215687, a: 0}
-  building2Tile: {r: 0.5882353, g: 0.5882353, b: 0.5882353, a: 0}
-  waterTile: {r: 0, g: 0, b: 1, a: 0}
+  building1Tile: {r: 0.7169812, g: 0.7169812, b: 0.7169812, a: 0}
+  building2Tile: {r: 0.33962262, g: 0.33962262, b: 0.33962262, a: 0}
+  waterTile: {r: 0, g: 0.78241277, b: 1, a: 0}
   roadTile: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1133443529
 MonoBehaviour:
