@@ -20,7 +20,7 @@ namespace TWF
         private static IList<(IAgent, float)> CreateAgents(Random random)
         {
             var agents = new List<(IAgent, float)>();
-            agents.Add((new Constructor(() => random.NextDouble() < 0.1), 1.0f));
+            agents.Add((new Constructor(() => random.NextDouble() < 0.1, random.Next), 1.0f));
             return agents;
         }
 

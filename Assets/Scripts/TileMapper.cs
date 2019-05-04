@@ -6,14 +6,16 @@ public class TileMapper : MonoBehaviour
 {
     public Color emptyTile;
     public Color residentialTile;
-    public Color buildingTile;
+    public Color building1Tile;
+    public Color building2Tile;
     public Color waterTile;
 
     public Color GetTileColor(IEntity entity, Tile tile)
     {
         if (entity is Building)
         {
-            return buildingTile;
+            Building building = entity as Building;
+            return building.Seed % 2 == 0 ? building1Tile : building2Tile;
         }
 
         if (Tile.TileTerrain.WATER == tile.Terrain)

@@ -11,11 +11,13 @@ namespace TWF.Agent
     public class Constructor : IAgent
     {
         private Func<bool> doBuild;
+        private Func<int> seeder;
 
         /// <param name="doBuild">A function called for each unoccupied zoned tile; if it returns true, the agent creates a building.</param>
-        public Constructor(Func<bool> doBuild)
+        public Constructor(Func<bool> doBuild, Func<int> seeder)
         {
             this.doBuild = doBuild;
+            this.seeder = seeder;
         }
 
         public string Name => "Constructor";
@@ -31,7 +33,7 @@ namespace TWF.Agent
             {
                 foreach (Vector freePos in positionsToBuild.Where((p) => null == gameservice.GetEntity(p.X, p.Y)))
                 {
-                    gameservice.SetEntity(new Building(), freePos.X, freePos.Y);
+                    gameservice.SetEntity(new Building(seeder()), freePos.X, freePos.Y);
                 }
             };
         }
