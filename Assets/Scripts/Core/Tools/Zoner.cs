@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using TWF.Agent;
+using System.Linq;
 using TWF.Map;
 
 namespace TWF.Tool
@@ -16,7 +16,7 @@ namespace TWF.Tool
             new Modifier(Tile.TileZone.RESIDENTIAL.ToString())
         };
 
-        public Action<GameService> CreateActions(IList<Vector> inputPositions, Modifier modifier)
+        public Action<GameService> CreateActions(IEnumerable<Vector> inputPositions, Modifier modifier)
         {
             Tile.TileZone zone;
             if (!Enum.TryParse(modifier.Identifier, out zone))
@@ -33,13 +33,13 @@ namespace TWF.Tool
             };
         }
 
-        public ToolOutcome Validate(IGameState gameState, IList<Vector> inputPositions, Modifier modifier)
+        public ToolOutcome Validate(IGameState gameState, IEnumerable<Vector> inputPositions, Modifier modifier)
         {
             if (!Modifiers.Contains(modifier))
             {
                 return ToolOutcome.FAILURE;
             }
-            return ToolOutcome.SUCCESS;
+            return inputPositions.All((pos) => null == gameState.GetEntity(pos)) ? ToolOutcome.SUCCESS : ToolOutcome.FAILURE;
         }
     }
 }

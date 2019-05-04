@@ -12,7 +12,7 @@ namespace TWF.Tool
     /// </summary>
     public interface ITool
     {
-        ToolOutcome Apply(IGameActionQueue gameActionQueue, LinkedList<Vector> inputPositions, Modifier modifier);
-        ToolOutcome Preview(IGameState gameState, LinkedList<Vector> inputPositions, Modifier modifier);
+        ToolOutcome Apply(IGameActionQueue gameActionQueue, IEnumerable<Vector> inputPositions, Modifier modifier);
+        ToolOutcome Preview(IGameState gameState, IEnumerable<Vector> inputPositions, Modifier modifier);
     }
 }

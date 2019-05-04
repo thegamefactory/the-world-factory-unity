@@ -27,12 +27,12 @@ namespace TWF.Tool
             get { return toolBehavior.ToolBehaviorType; }
         }
 
-        public ToolOutcome Preview(IGameState gameState, LinkedList<Vector> inputPositions, Modifier modifier)
+        public ToolOutcome Preview(IGameState gameState, IEnumerable<Vector> inputPositions, Modifier modifier)
         {
             return toolBehavior.Validate(gameState, inputPositions, modifier);
         }
 
-        public ToolOutcome Apply(IGameActionQueue gameActionQueue, LinkedList<Vector> inputPositions, Modifier modifier)
+        public ToolOutcome Apply(IGameActionQueue gameActionQueue, IEnumerable<Vector> inputPositions, Modifier modifier)
         {
             var action = toolBehavior.CreateActions(inputPositions, modifier);
             Action<GameService> validatedAction = (gs) =>

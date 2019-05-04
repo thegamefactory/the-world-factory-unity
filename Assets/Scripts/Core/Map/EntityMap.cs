@@ -24,6 +24,16 @@
         }
 
         /// <summary>
+        /// Returns the Entity corresponding to the given Position, or null if the map is empty there.
+        /// </summary>
+        /// <returns>The Entity corresponding to the given Position, or null if the map is empty there.</returns>
+        /// <param name="position">The entity position.</param>
+        public IEntity GetEntity(Vector position)
+        {
+            return GetEntity(position.X, position.Y);
+        }
+
+        /// <summary>
         /// Sets the given Entity at the given Position. If the map is not empty at that position, return the current Entity.
         /// </summary>
         /// <returns>The Entity corresponding to the given Position, or null if the map is empty there.</returns>

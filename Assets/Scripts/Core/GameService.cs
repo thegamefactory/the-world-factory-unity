@@ -37,12 +37,24 @@ namespace TWF
         }
 
         /// <summary>
-        /// Get the entity at the given position, or null if there is no entity there.
+        /// Returns the Entity corresponding to the given Position, or null if the map is empty there.
         /// </summary>
-        /// <return>The entity at the given position, or null if there is no entity there.</return>
+        /// <returns>The Entity corresponding to the given Position, or null if the map is empty there.</returns>
+        /// <param name="x">X position.</param>
+        /// <param name="y">Y position.</param>
         public IEntity GetEntity(int x, int y)
         {
             return entityMap.GetEntity(x, y);
+        }
+
+        // <summary>
+        /// Returns the Entity corresponding to the given Position, or null if the map is empty there.
+        /// </summary>
+        /// <returns>The Entity corresponding to the given Position, or null if the map is empty there.</returns>
+        /// <param name="position">The entity position.</param>
+        public IEntity GetEntity(Vector position)
+        {
+            return entityMap.GetEntity(position);
         }
 
         /// <summary>
