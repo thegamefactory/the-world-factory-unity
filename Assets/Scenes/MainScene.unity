@@ -146,7 +146,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 131899328}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 713890e2818ce42a4beb3bcf4715f9b0, type: 3}
+  m_Script: {fileID: 11500000, guid: 98cb145e6916143bdad3a2982fd28527, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ResidentialModifierKey: 49
@@ -352,7 +352,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -30, y: 0, z: 20}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1133443524
 GameObject:
   m_ObjectHideFlags: 0
@@ -432,8 +432,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   emptyTile: {r: 1, g: 1, b: 1, a: 0}
   residentialTile: {r: 0, g: 1, b: 0, a: 0}
-  buildingTile: {r: 0.49803922, g: 0.49803922, b: 0.49803922, a: 0}
+  building1Tile: {r: 0.39215687, g: 0.39215687, b: 0.39215687, a: 0}
+  building2Tile: {r: 0.5882353, g: 0.5882353, b: 0.5882353, a: 0}
   waterTile: {r: 0, g: 0, b: 1, a: 0}
+  roadTile: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1133443529
 MonoBehaviour:
   m_ObjectHideFlags: 0

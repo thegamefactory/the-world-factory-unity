@@ -26,16 +26,24 @@ namespace TWF.Tool
 
             return (gameservice) =>
             {
-                foreach (var inputPosition in inputPositions)
+                Vector first = inputPositions.First();
+                Vector second = inputPositions.Last();
+                Vector min = new Vector(Math.Min(first.X, second.X), Math.Min(first.Y, second.Y));
+                Vector max = new Vector(Math.Max(first.X, second.X), Math.Max(first.Y, second.Y));
+                for (int x = min.X; x <= max.X; x++)
                 {
-                    gameservice.SetTileZone(zone, inputPosition);
+                    for (int y = min.Y; y <= max.Y; y++)
+                    {
+                        gameservice.SetTileZone(zone, x, y);
+                    }
                 }
+
             };
         }
 
         public ToolOutcome Validate(IGameState gameState, IEnumerable<Vector> inputPositions, Modifier modifier)
         {
-            if (!Modifiers.Contains(modifier))
+            if (!Modifiers.Contains(modifier) || inputPositions.Count() != 2)
             {
                 return ToolOutcome.FAILURE;
             }

@@ -11,7 +11,8 @@
         public enum TileZone
         {
             EMPTY,
-            RESIDENTIAL
+            RESIDENTIAL,
+            ROAD
         }
 
         /// <summary>

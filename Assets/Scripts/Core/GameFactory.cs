@@ -28,6 +28,7 @@ namespace TWF
         {
             var tools = new Dictionary<ToolBehaviorType, ITool>();
             tools.Add(ToolBehaviorType.ZONER, new Tool.Tool(new Zoner()));
+            tools.Add(ToolBehaviorType.ROAD_BUILDER, new Tool.Tool(new RoadBuilder()));
             return tools;
         }
     }
