@@ -16,7 +16,7 @@ namespace TWF.Tool
             new Modifier(Tile.TileZone.RESIDENTIAL.ToString())
         };
 
-        public Action<GameService> CreateActions(LinkedList<Vector> inputPositions, Modifier modifier)
+        public Action<GameService> CreateActions(IList<Vector> inputPositions, Modifier modifier)
         {
             Tile.TileZone zone;
             if (!Enum.TryParse(modifier.Identifier, out zone))
@@ -26,13 +26,16 @@ namespace TWF.Tool
 
             return (gameservice) =>
             {
-                gameservice.SetTileZone(zone, inputPositions.First.Value);
+                foreach (var inputPosition in inputPositions)
+                {
+                    gameservice.SetTileZone(zone, inputPosition);
+                }
             };
         }
 
-        public ToolOutcome Validate(IGameState gameState, LinkedList<Vector> inputPositions, Modifier modifier)
+        public ToolOutcome Validate(IGameState gameState, IList<Vector> inputPositions, Modifier modifier)
         {
-            if (!Modifiers.Contains(modifier) || inputPositions.Count != 1)
+            if (!Modifiers.Contains(modifier))
             {
                 return ToolOutcome.FAILURE;
             }
