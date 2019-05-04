@@ -39,7 +39,10 @@ namespace TWF.Tool
             {
                 return ToolOutcome.FAILURE;
             }
-            return inputPositions.All((pos) => null == gameState.GetEntity(pos)) ? ToolOutcome.SUCCESS : ToolOutcome.FAILURE;
+            return inputPositions.All((pos) =>
+            {
+                return null == gameState.GetEntity(pos) && Tile.TileTerrain.LAND == gameState.GetTile(pos).Terrain;
+            }) ? ToolOutcome.SUCCESS : ToolOutcome.FAILURE;
         }
     }
 }
