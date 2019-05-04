@@ -3,6 +3,6 @@ namespace TWF
 {
     public interface IGameActionQueue
     {
-        void executeSynchronous(Action<GameService> action);
+        void ExecuteSynchronous(Action<GameService> action);
     }
 }

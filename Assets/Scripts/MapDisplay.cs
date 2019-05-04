@@ -16,7 +16,7 @@ public class MapDisplay : MonoBehaviour
 
     public void Draw(IGameState gameState, TileMapper tileMapper)
     {
-        Vector size = gameState.GetTileMapSize();
+        Vector size = gameState.GetSize();
         int width = size.X;
         int height = size.Y;
 

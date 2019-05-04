@@ -4,6 +4,15 @@ using TWF.Map;
 
 namespace TWF.Tool
 {
+    /// <summary>
+    /// The default implementation for Tool.
+    /// 
+    /// Wraps the IToolBehavior interface which is designed to separate logical concerns of tool validation and tool enactment 
+    /// from the ITool interface which is designed to be presented to the player.
+    /// 
+    /// Note how the Apply method creates a GameService Action which encapsulate validation and enactement.
+    /// 
+    /// </summary>
     public class Tool : ITool
     {
         private IToolBehavior toolBehavior;
@@ -41,7 +50,7 @@ namespace TWF.Tool
             // TODO: don't use exception to control the flow. Need google for this.
             try
             {
-                gameActionQueue.executeSynchronous(validatedAction);
+                gameActionQueue.ExecuteSynchronous(validatedAction);
                 return ToolOutcome.SUCCESS;
             }
             catch (InvalidOperationException)

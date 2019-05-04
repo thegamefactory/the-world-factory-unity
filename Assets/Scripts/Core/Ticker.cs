@@ -4,6 +4,14 @@ using TWF.Agent;
 
 namespace TWF
 {
+    /// <summary>
+    /// The Ticker is called periodically and triggers the due agent executions.
+    /// In the current implementation the Ticker executes all the due agents synchronously.
+    /// 
+    /// The Ticker normalizes the agents executions. 
+    /// That is, even if the Ticker is called irregulary, it will ensure that the agents are called at intervals specified at Game construction.
+    /// It does it by keeping track of each last agent execution.
+    /// </summary>
     public class Ticker
     {
         IDictionary<String, float> lastTicks = new Dictionary<String, float>();
@@ -17,7 +25,7 @@ namespace TWF
                     float lastTick = lastTicks[agent.Item1.Name];
                     if (lastTick + agent.Item2 < currentTime)
                     {
-                        gameActionQueue.executeSynchronous(agent.Item1.execute(gameState));
+                        gameActionQueue.ExecuteSynchronous(agent.Item1.execute(gameState));
                         lastTicks[agent.Item1.Name] = lastTick + agent.Item2;
                     }
                 }

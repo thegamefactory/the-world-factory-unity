@@ -5,6 +5,9 @@ using TWF.Map;
 
 namespace TWF.Tool
 {
+    /// <summary>
+    /// A tool behavior that attempts to set the zone of the input positions to the zone corresponding to the given modifier.
+    /// </summary>
     public class Zoner : IToolBehavior
     {
         public ToolBehaviorType ToolBehaviorType { get; } = ToolBehaviorType.ZONER;

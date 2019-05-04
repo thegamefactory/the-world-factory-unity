@@ -37,15 +37,6 @@ namespace TWF
         }
 
         /// <summary>
-        /// Returns the size of the map.
-        /// </summary>
-        /// <return>The size of the map.</return>
-        public Vector GetTileMapSize()
-        {
-            return tileMap.GetSize();
-        }
-
-        /// <summary>
         /// Get the entity at the given position, or null if there is no entity there.
         /// </summary>
         /// <return>The entity at the given position, or null if there is no entity there.</return>
@@ -55,12 +46,40 @@ namespace TWF
         }
 
         /// <summary>
+        /// Return the size of the map.
+        /// </summary>
+        /// <return>The size of the map.</return>
+        public Vector GetSize()
+        {
+            return tileMap.GetSize();
+        }
+
+        /// <summary>
+        /// Get an enumerable to iterate over all the tiles.
+        /// </summary>
+        /// <return>An enumerable to iterate over all the tiles.</return>
+        public IEnumerable<(Vector, Tile)> GetTiles()
+        {
+            return tileMap.GetTiles();
+        }
+
+        /// <summary>
         /// Get the tile at the given position.
         /// </summary>
         /// <return>The tile at the given position.</return>
         public Tile GetTile(int x, int y)
         {
             return tileMap.GetTile(x, y);
+        }
+
+        /// <summary>
+        /// Get the tile at the given position using an absolute scale.
+        /// </summary>
+        /// <return>The tile at the given position.</return>
+        /// <param name="position">The position.</param>
+        public Tile GetTile(Vector position)
+        {
+            return tileMap.GetTile(position);
         }
 
         /// <summary>
@@ -83,15 +102,6 @@ namespace TWF
         public Vector GetPosition(float x, float y)
         {
             return tileMap.GetPosition(x, y);
-        }
-
-        /// <summary>
-        /// Get an enumerable to iterate over all the tiles.
-        /// </summary>
-        /// <return>An enumerable to iterate over all the tiles.</return>
-        public IEnumerable<(Vector, Tile)> GetTiles()
-        {
-            return tileMap.GetTiles();
         }
 
         internal void SetEntity(IEntity entity, int x, int y)
@@ -128,7 +138,7 @@ namespace TWF
             ticker.Tick(this, this, agents, currentTime);
         }
 
-        public void executeSynchronous(Action<GameService> action)
+        public void ExecuteSynchronous(Action<GameService> action)
         {
             // TODO: should 1) enqueue 2) wait until asynchronous processing on the queue 3) propagate exception, if any
             action(this);

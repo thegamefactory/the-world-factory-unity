@@ -5,7 +5,7 @@ namespace TWF.Map
     /// <summary>
     /// A bidimensional array of tiles representing the game map.
     /// </summary>
-    public class TileMap
+    public class TileMap : IImmutableTileMap
     {
         Tile[,] tiles;
 
