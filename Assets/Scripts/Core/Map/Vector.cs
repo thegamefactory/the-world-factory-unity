@@ -1,4 +1,4 @@
-﻿namespace TWF.Map
+namespace TWF.Map
 {
     public struct Vector
     {

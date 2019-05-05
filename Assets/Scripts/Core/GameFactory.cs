@@ -1,4 +1,4 @@
-﻿using TWF.Agent;
+using TWF.Agent;
 using TWF.Map;
 using TWF.Tool;
 using TWF.Terrain;

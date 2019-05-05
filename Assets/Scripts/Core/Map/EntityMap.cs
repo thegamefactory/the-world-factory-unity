@@ -1,4 +1,4 @@
-﻿namespace TWF.Map
+namespace TWF.Map
 {
     /// <summary>
     /// A mapper from Position to Entity.

@@ -1,4 +1,4 @@
-﻿namespace TWF.Terrain
+namespace TWF.Terrain
 {
     /// <summary>
     /// An interface to generate random noise on a given float bidimensional array.

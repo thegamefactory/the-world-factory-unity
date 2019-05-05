@@ -1,4 +1,4 @@
-﻿using TWF.Map;
+using TWF.Map;
 using TWF.Agent;
 using TWF.Tool;
 using System.Collections.Generic;

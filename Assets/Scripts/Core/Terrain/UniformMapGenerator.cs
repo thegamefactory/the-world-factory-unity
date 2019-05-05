@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using TWF.Map;
 
 namespace TWF.Terrain

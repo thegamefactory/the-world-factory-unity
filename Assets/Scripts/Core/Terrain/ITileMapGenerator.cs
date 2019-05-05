@@ -1,4 +1,4 @@
-﻿using TWF.Map;
+using TWF.Map;
 
 namespace TWF.Terrain
 {

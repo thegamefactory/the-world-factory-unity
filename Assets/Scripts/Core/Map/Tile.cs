@@ -1,4 +1,4 @@
-﻿namespace TWF.Map
+namespace TWF.Map
 {
     /// <summary>
     /// The smallest discrete position on the map.

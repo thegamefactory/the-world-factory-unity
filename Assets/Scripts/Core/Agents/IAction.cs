@@ -1,4 +1,4 @@
-﻿namespace TWF.Agent
+namespace TWF.Agent
 {
     /// <summary>
     /// An agent mutates the state of a GameService.

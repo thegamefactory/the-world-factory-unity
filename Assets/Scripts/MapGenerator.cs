@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using TWF.Terrain;
 using TWF.Map;
 using TWF;

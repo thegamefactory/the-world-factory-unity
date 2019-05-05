@@ -1,4 +1,4 @@
-﻿using TWF;
+using TWF;
 using TWF.Map;
 using UnityEngine;
 
