@@ -13,6 +13,7 @@ namespace TWF.Tool
         public ToolBehaviorType ToolBehaviorType { get; } = ToolBehaviorType.ZONER;
         private HashSet<Modifier> Modifiers { get; } = new HashSet<Modifier> {
             new Modifier(Tile.TileZone.EMPTY.ToString()),
+            new Modifier(Tile.TileZone.FARMLAND.ToString()),
             new Modifier(Tile.TileZone.RESIDENTIAL.ToString()),
             new Modifier(Tile.TileZone.ROAD.ToString())
         };

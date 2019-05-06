@@ -8,9 +8,11 @@ using UnityEngine;
 public class InputController : MonoBehaviour
 {
     public KeyCode ResidentialModifierKey;
+    public KeyCode FarmlandModifierKey;
 
     private Modifier EmptyModifier = new Modifier(Tile.TileZone.EMPTY.ToString());
     private Modifier ResidentialModifier = new Modifier(Tile.TileZone.RESIDENTIAL.ToString());
+    private Modifier FarmlandModifier = new Modifier(Tile.TileZone.FARMLAND.ToString());
     private Modifier RoadModifier = new Modifier(Tile.TileZone.ROAD.ToString());
 
     private Modifier CurrentModifier;
@@ -27,15 +29,23 @@ public class InputController : MonoBehaviour
             .OnDeactivate(() => ZoneTiles())
             .build());
         // Zoning modifier
-        this.keyEventPublishers.Add(KeyCombinationPublisher.builder(KeyCombination.builder(ResidentialModifierKey).build())
-            .OnActivate(() => CurrentModifier = ResidentialModifier)
+        ZoneModifiers().ForEach(zm =>
+        {
+            this.keyEventPublishers.Add(KeyCombinationPublisher.builder(KeyCombination.builder(zm.Item2).build())
+            .OnActivate(() => CurrentModifier = zm.Item1)
             .OnDeactivate(() => CurrentModifier = EmptyModifier)
             .build());
+        });
         // Road building
         this.keyEventPublishers.Add(KeyCombinationPublisher.builder(KeyCombination.builder(KeyCode.Mouse1).build())
             .OnActivate(() => AddMousePosition(positions, ToolBehaviorType.ZONER))
             .OnDeactivate(() => BuildRoad())
             .build());
+    }
+
+    private List<(Modifier, KeyCode)> ZoneModifiers()
+    {
+        return new List<(Modifier, KeyCode)>() { (ResidentialModifier, ResidentialModifierKey), (FarmlandModifier, FarmlandModifierKey) };
     }
 
     void Update()

@@ -11,6 +11,7 @@ namespace TWF.Map
         public enum TileZone
         {
             EMPTY,
+            FARMLAND,
             RESIDENTIAL,
             ROAD
         }
