@@ -17,10 +17,18 @@ namespace TWF
             return new GameService(tileMap, entityMap, CreateAgents(random), CreateToolConfig());
         }
 
+        /// <summary>
+        /// Return a list of tuples (IAgent, float), where float is the period in seconds at which the agent should be executed.
+        /// </summary>
         private static IList<(IAgent, float)> CreateAgents(Random random)
         {
             var agents = new List<(IAgent, float)>();
-            agents.Add((new Constructor(() => random.NextDouble() < 0.1, random.Next), 1.0f));
+            agents.Add((
+                new Constructor(
+                    new HashSet<Tile.TileZone> { Tile.TileZone.RESIDENTIAL, Tile.TileZone.FARMLAND },
+                    () => random.NextDouble() < 0.1,
+                    random.Next),
+                1.0f));
             return agents;
         }
 

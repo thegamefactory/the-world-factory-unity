@@ -1,5 +1,6 @@
 using UnityEngine;
 using TWF;
+using TWF.Building;
 using TWF.Map;
 
 public class TileMapper : MonoBehaviour
@@ -23,7 +24,7 @@ public class TileMapper : MonoBehaviour
             switch (tile.Zone)
             {
                 case Tile.TileZone.RESIDENTIAL:
-                    Building building = entity as Building;
+                    IBuilding building = entity as IBuilding;
                     return building.Seed % 2 == 0 ? building1Tile : building2Tile;
                 case Tile.TileZone.FARMLAND:
                     return fieldTile;

@@ -115,6 +115,11 @@ namespace TWF
             return tileMap.GetPosition(x, y);
         }
 
+        internal void SetEntity(IEntity entity, Vector position)
+        {
+            entityMap.SetEntity(entity, position);
+        }
+
         internal void SetEntity(IEntity entity, int x, int y)
         {
             entityMap.SetEntity(entity, x, y);

@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using TWF.Building;
 using TWF.Map;
 
 namespace TWF.Agent
@@ -10,12 +11,14 @@ namespace TWF.Agent
     /// </summary>
     public class Constructor : IAgent
     {
+        private ISet<Tile.TileZone> constructibleZones;
         private Func<bool> doBuild;
         private Func<int> seeder;
 
         /// <param name="doBuild">A function called for each unoccupied zoned tile; if it returns true, the agent creates a building.</param>
-        public Constructor(Func<bool> doBuild, Func<int> seeder)
+        public Constructor(ISet<Tile.TileZone> constructibleZones, Func<bool> doBuild, Func<int> seeder)
         {
+            this.constructibleZones = constructibleZones;
             this.doBuild = doBuild;
             this.seeder = seeder;
         }
@@ -24,16 +27,15 @@ namespace TWF.Agent
 
         public Action<GameService> execute(IGameState gameState)
         {
-            List<Vector> positionsToBuild = gameState.GetTiles()
-                .Where((t) => t.Item2.Zone == Tile.TileZone.RESIDENTIAL && doBuild())
-                .Select((t) => t.Item1)
+            List<(Vector, Tile)> positionsToBuild = gameState.GetTiles()
+                .Where((t) => constructibleZones.Contains(t.Item2.Zone) && doBuild())
                 .ToList();
 
             return (gameservice) =>
             {
-                foreach (Vector freePos in positionsToBuild.Where((p) => null == gameservice.GetEntity(p.X, p.Y)))
+                foreach ((Vector, Tile) t in positionsToBuild.Where((t) => null == gameservice.GetEntity(t.Item1)))
                 {
-                    gameservice.SetEntity(new Building(seeder()), freePos.X, freePos.Y);
+                    gameservice.SetEntity(new TWF.Building.Building(t.Item2.Zone, seeder()), t.Item1);
                 }
             };
         }

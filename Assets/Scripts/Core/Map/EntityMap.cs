@@ -40,6 +40,18 @@ namespace TWF.Map
         /// <param name="entity">The entity to set.</param>
         /// <param name="x">X position.</param>
         /// <param name="y">Y position.</param>
+        public IEntity SetEntity(IEntity entity, Vector position)
+        {
+            return SetEntity(entity, position.X, position.Y);
+        }
+
+        /// <summary>
+        /// Sets the given Entity at the given Position. If the map is not empty at that position, return the current Entity.
+        /// </summary>
+        /// <returns>The Entity corresponding to the given Position, or null if the map is empty there.</returns>
+        /// <param name="entity">The entity to set.</param>
+        /// <param name="x">X position.</param>
+        /// <param name="y">Y position.</param>
         public IEntity SetEntity(IEntity entity, int x, int y)
         {
             if (null != entities[x, y])
