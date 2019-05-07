@@ -125,12 +125,12 @@ namespace TWF
             entityMap.SetEntity(entity, x, y);
         }
 
-        internal void SetTileZone(Tile.TileZone zone, Vector position)
+        internal void SetTileZone(TileZone zone, Vector position)
         {
             tileMap.SetTileZone(zone, position);
         }
 
-        internal void SetTileZone(Tile.TileZone zone, int x, int y)
+        internal void SetTileZone(TileZone zone, int x, int y)
         {
             tileMap.SetTileZone(zone, x, y);
         }

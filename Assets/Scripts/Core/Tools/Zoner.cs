@@ -12,15 +12,15 @@ namespace TWF.Tool
     {
         public ToolBehaviorType ToolBehaviorType { get; } = ToolBehaviorType.ZONER;
         private HashSet<Modifier> Modifiers { get; } = new HashSet<Modifier> {
-            new Modifier(Tile.TileZone.EMPTY.ToString()),
-            new Modifier(Tile.TileZone.FARMLAND.ToString()),
-            new Modifier(Tile.TileZone.RESIDENTIAL.ToString()),
-            new Modifier(Tile.TileZone.ROAD.ToString())
+            new Modifier(TileZone.EMPTY.ToString()),
+            new Modifier(TileZone.FARMLAND.ToString()),
+            new Modifier(TileZone.RESIDENTIAL.ToString()),
+            new Modifier(TileZone.ROAD.ToString())
         };
 
         public Action<GameService> CreateActions(Modifier modifier, IEnumerable<Vector> inputPositions)
         {
-            Tile.TileZone zone;
+            TileZone zone;
             if (!Enum.TryParse(modifier.Identifier, out zone))
             {
                 throw new InvalidOperationException("Zone modifier is invalid: " + modifier);
@@ -46,7 +46,7 @@ namespace TWF.Tool
             PreviewOutcome.Builder builder = PreviewOutcome.builder();
             foreach (Vector pos in inputPositions)
             {
-                bool possible = null == gameState.GetEntity(pos) && Tile.TileTerrain.LAND == gameState.GetTile(pos).Terrain;
+                bool possible = null == gameState.GetEntity(pos) && TileTerrain.LAND == gameState.GetTile(pos).Terrain;
                 builder.WithPositionOutcome(pos, possible ? ToolOutcome.SUCCESS : ToolOutcome.FAILURE);
             }
             return builder.Build();

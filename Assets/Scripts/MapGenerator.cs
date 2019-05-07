@@ -47,7 +47,7 @@ public class MapGenerator : MonoBehaviour
         ITileMapGenerator tileMapGenerator;
         if (waterThreshold <= 0)
         {
-            tileMapGenerator = new UniformMapGenerator(Tile.TileTerrain.LAND);
+            tileMapGenerator = new UniformMapGenerator(TileTerrain.LAND);
         }
         else if (waterThreshold <= 1)
         {
@@ -57,7 +57,7 @@ public class MapGenerator : MonoBehaviour
         }
         else
         {
-            tileMapGenerator = new UniformMapGenerator(Tile.TileTerrain.WATER);
+            tileMapGenerator = new UniformMapGenerator(TileTerrain.WATER);
         }
 
         Root.GameService = GameFactory.Create(new Vector(mapWidth, mapHeight), tileMapGenerator, random);

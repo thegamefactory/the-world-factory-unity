@@ -10,10 +10,10 @@ public class InputController : MonoBehaviour
     public KeyCode ResidentialModifierKey;
     public KeyCode FarmlandModifierKey;
 
-    private Modifier EmptyModifier = new Modifier(Tile.TileZone.EMPTY.ToString());
-    private Modifier ResidentialModifier = new Modifier(Tile.TileZone.RESIDENTIAL.ToString());
-    private Modifier FarmlandModifier = new Modifier(Tile.TileZone.FARMLAND.ToString());
-    private Modifier RoadModifier = new Modifier(Tile.TileZone.ROAD.ToString());
+    private Modifier EmptyModifier = new Modifier(TileZone.EMPTY.ToString());
+    private Modifier ResidentialModifier = new Modifier(TileZone.RESIDENTIAL.ToString());
+    private Modifier FarmlandModifier = new Modifier(TileZone.FARMLAND.ToString());
+    private Modifier RoadModifier = new Modifier(TileZone.ROAD.ToString());
 
     private Modifier CurrentModifier;
     LinkedList<Vector> positions = new LinkedList<Vector>();

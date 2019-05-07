@@ -5,26 +5,6 @@ namespace TWF.Map
     /// </summary>
     public class Tile
     {
-        /// <summary>
-        /// The zone of the tile, can be defined by the player and used by agents to evaluate against rule and define which buildings to create.
-        /// </summary>
-        public enum TileZone
-        {
-            EMPTY,
-            FARMLAND,
-            RESIDENTIAL,
-            ROAD
-        }
-
-        /// <summary>
-        /// The terrain of the tile.
-        /// </summary>
-        public enum TileTerrain
-        {
-            WATER,
-            LAND
-        }
-
         public TileZone Zone { get; private set; }
         public TileTerrain Terrain { get; private set; }
 

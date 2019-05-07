@@ -41,11 +41,11 @@ namespace TWF.Terrain
         {
             if (noiseValue < waterThreshold)
             {
-                return new Tile(Tile.TileZone.EMPTY, Tile.TileTerrain.WATER);
+                return new Tile(TileZone.EMPTY, TileTerrain.WATER);
             }
             else
             {
-                return new Tile(Tile.TileZone.EMPTY, Tile.TileTerrain.LAND);
+                return new Tile(TileZone.EMPTY, TileTerrain.LAND);
             }
         }
     }

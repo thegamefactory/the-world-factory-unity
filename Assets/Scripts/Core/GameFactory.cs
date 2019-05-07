@@ -25,7 +25,7 @@ namespace TWF
             var agents = new List<(IAgent, float)>();
             agents.Add((
                 new Constructor(
-                    new HashSet<Tile.TileZone> { Tile.TileZone.RESIDENTIAL, Tile.TileZone.FARMLAND },
+                    new HashSet<TileZone> { TileZone.RESIDENTIAL, TileZone.FARMLAND },
                     () => random.NextDouble() < 0.1,
                     random.Next),
                 1.0f));

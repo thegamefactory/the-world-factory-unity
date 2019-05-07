@@ -23,30 +23,30 @@ public class TileMapper : MonoBehaviour
 
             switch (tile.Zone)
             {
-                case Tile.TileZone.RESIDENTIAL:
+                case TileZone.RESIDENTIAL:
                     IBuilding building = entity as IBuilding;
                     return building.Seed % 2 == 0 ? building1Tile : building2Tile;
-                case Tile.TileZone.FARMLAND:
+                case TileZone.FARMLAND:
                     return fieldTile;
                 default:
                     return errorTile;
             }
         }
 
-        if (Tile.TileTerrain.WATER == tile.Terrain)
+        if (TileTerrain.WATER == tile.Terrain)
         {
             return waterTile;
         }
 
         switch (tile.Zone)
         {
-            case Tile.TileZone.EMPTY:
+            case TileZone.EMPTY:
                 return emptyTile;
-            case Tile.TileZone.RESIDENTIAL:
+            case TileZone.RESIDENTIAL:
                 return residentialTile;
-            case Tile.TileZone.FARMLAND:
+            case TileZone.FARMLAND:
                 return farmlandTile;
-            case Tile.TileZone.ROAD:
+            case TileZone.ROAD:
                 return roadTile;
             default:
                 return errorTile;

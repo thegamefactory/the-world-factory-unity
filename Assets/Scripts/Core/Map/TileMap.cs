@@ -90,7 +90,7 @@ namespace TWF.Map
         /// <return>The absolute position.</return>
         /// <param name="zone">The new tile zone.</param>
         /// <param name="position">The position of the tile.</param>
-        public void SetTileZone(Tile.TileZone zone, Vector position)
+        public void SetTileZone(TileZone zone, Vector position)
         {
             SetTileZone(zone, position.X, position.Y);
         }
@@ -102,7 +102,7 @@ namespace TWF.Map
         /// <param name="zone">The new tile zone.</param>
         /// <param name="x">The x coordinate of the tile.</param>
         /// <param name="y">The x coordinate of the tile.</param>
-        public void SetTileZone(Tile.TileZone zone, int x, int y)
+        public void SetTileZone(TileZone zone, int x, int y)
         {
             tiles[x, y] = new Tile(zone, tiles[x, y].Terrain);
         }

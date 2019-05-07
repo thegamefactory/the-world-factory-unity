@@ -8,10 +8,10 @@ namespace TWF.Terrain
     /// </summary>
     public class UniformMapGenerator : ITileMapGenerator
     {
-        private Tile.TileTerrain terrain;
+        private TileTerrain terrain;
 
         /// <param name="terrain">The type of terrain that this generator create.</param>
-        public UniformMapGenerator(Tile.TileTerrain terrain)
+        public UniformMapGenerator(TileTerrain terrain)
         {
             this.terrain = terrain;
         }
@@ -23,7 +23,7 @@ namespace TWF.Terrain
             {
                 for (int y = 0; y < size.Y; y++)
                 {
-                    tiles[x, y] = new Tile(Tile.TileZone.EMPTY, terrain);
+                    tiles[x, y] = new Tile(TileZone.EMPTY, terrain);
                 }
             }
             return new TileMap(tiles);
