@@ -38,7 +38,7 @@ namespace TWF.State
 
         public IEnumerable<(Vector, ITileView)> GetTiles()
         {
-            return MapTraverser<ITileView>.GetElements(tileMap as IMap<ITileView>);
+            return MapTraverser.GetElements(tileMap as IMap<ITileView>);
         }
 
         public void SetTileZone(TileZone zone, int x, int y)

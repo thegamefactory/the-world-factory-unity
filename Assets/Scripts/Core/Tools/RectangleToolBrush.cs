@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System;
+using TWF.State.Map;
 
 namespace TWF.Tool
 {
@@ -16,17 +17,7 @@ namespace TWF.Tool
 
         public IEnumerable<Vector> computePositions(IEnumerable<Vector> brushPositions)
         {
-            Vector first = brushPositions.First();
-            Vector second = brushPositions.Last();
-            Vector min = new Vector(Math.Min(first.X, second.X), Math.Min(first.Y, second.Y));
-            Vector max = new Vector(Math.Max(first.X, second.X), Math.Max(first.Y, second.Y));
-            for (int x = min.X; x <= max.X; x++)
-            {
-                for (int y = min.Y; y <= max.Y; y++)
-                {
-                    yield return new Vector(x, y);
-                }
-            }
+            return MapTraverser.GetPositions(brushPositions.First(), brushPositions.Last());
         }
     }
 }
