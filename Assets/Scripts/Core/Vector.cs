@@ -1,4 +1,4 @@
-namespace TWF.Map
+namespace TWF
 {
     /// <summary>
     /// An X, Y tuple used to represent either vectors or positions.

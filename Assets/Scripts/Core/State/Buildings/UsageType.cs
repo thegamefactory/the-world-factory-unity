@@ -1,4 +1,4 @@
-﻿namespace TWF.Building
+﻿namespace TWF.State.Building
 {
     /// <summary>
     /// The different types of building usage

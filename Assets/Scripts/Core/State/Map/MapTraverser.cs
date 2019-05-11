@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System;
 
-namespace TWF.Map
+namespace TWF.State.Map
 {
     /// <summary>
     /// An utility class to traverse Maps.

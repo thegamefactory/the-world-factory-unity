@@ -1,4 +1,6 @@
-﻿namespace TWF.Map
+﻿using TWF.State.Entity;
+
+namespace TWF.State.Tile
 {
     /// <summary>
     /// The smallest discrete element composing the map.

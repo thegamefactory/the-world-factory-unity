@@ -1,7 +1,7 @@
 using UnityEngine;
 using TWF.Generation;
-using TWF.Map;
 using TWF;
+using TWF.State.Tile;
 
 public class MapGenerator : MonoBehaviour
 {

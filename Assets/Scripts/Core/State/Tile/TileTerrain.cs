@@ -1,4 +1,4 @@
-﻿namespace TWF.Map
+﻿namespace TWF.State.Tile
 {
     /// <summary>
     /// The terrain of the tile.

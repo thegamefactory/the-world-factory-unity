@@ -1,8 +1,9 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
-using TWF.Building;
-using TWF.Map;
+using TWF.State.Building;
+using TWF.State.Tile;
+using TWF.State;
 
 namespace TWF.Agent
 {
@@ -38,7 +39,7 @@ namespace TWF.Agent
                 foreach ((Vector, Tile) t in positionsToBuild.Where((t) => null == gameState.GetTile(t.Item1).Entity))
                 {
                     gameState.SetTileEntity(
-                        new Building.Building(t.Item2.Zone, random(), new Dictionary<UsageType, Usage>()),
+                        new Building(t.Item2.Zone, random(), new Dictionary<UsageType, Usage>()),
                         t.Item1);
                 }
             };

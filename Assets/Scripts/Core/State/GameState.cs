@@ -1,19 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using TWF.Map;
+using TWF.State.Map;
+using TWF.State.Tile;
 using TWF.Agent;
+using TWF.State.Entity;
 
-namespace TWF
+namespace TWF.State
 {
     /// <summary>
     /// Interface to interact with anything that is unique to a specific game instance.
     /// </summary>
     public class GameState : IGameStateView
     {
-        private IMap<Tile> tileMap;
+        private IMap<Tile.Tile> tileMap;
         private Ticker ticker;
 
-        public GameState(IMap<Tile> tileMap, Ticker ticker)
+        public GameState(IMap<Tile.Tile> tileMap, Ticker ticker)
         {
             this.tileMap = tileMap;
             this.ticker = ticker;

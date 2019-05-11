@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using TWF.Agent;
 
-namespace TWF
+namespace TWF.State
 {
     /// <summary>
     /// The Ticker is called periodically and triggers the due agent executions.

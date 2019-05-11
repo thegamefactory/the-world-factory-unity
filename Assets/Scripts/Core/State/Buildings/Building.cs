@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using TWF.Map;
+using TWF.State.Tile;
 
-namespace TWF.Building
+namespace TWF.State.Building
 {
     /// <summary>
     /// Concrete building implementation.

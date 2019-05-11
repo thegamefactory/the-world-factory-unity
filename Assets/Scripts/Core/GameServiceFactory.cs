@@ -1,7 +1,7 @@
 ﻿using TWF.Agent;
-using TWF.Map;
+using TWF.State;
+using TWF.State.Tile;
 using TWF.Tool;
-using TWF.Generation;
 using System.Collections.Generic;
 using System;
 

@@ -1,4 +1,4 @@
-﻿using TWF.Map;
+﻿using TWF.State.Tile;
 
 namespace TWF.Statistics
 {

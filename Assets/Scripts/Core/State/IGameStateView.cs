@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using TWF.Map;
+using TWF.State.Tile;
 
-namespace TWF
+namespace TWF.State
 {
     public interface IGameStateView
     {

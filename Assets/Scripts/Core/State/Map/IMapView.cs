@@ -1,4 +1,4 @@
-﻿namespace TWF.Map
+﻿namespace TWF.State.Map
 {
     /// <summary>
     /// A generic interface for a read-only view of a map containing elements of type T.
