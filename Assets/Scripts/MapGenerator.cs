@@ -1,5 +1,5 @@
 using UnityEngine;
-using TWF.Terrain;
+using TWF.Generation;
 using TWF.Map;
 using TWF;
 

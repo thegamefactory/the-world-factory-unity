@@ -1,7 +1,7 @@
 using System;
 using TWF.Map;
 
-namespace TWF.Terrain
+namespace TWF.Generation
 {
     /// <summary>
     /// A tile generator which creates an uniform map of the terrain type given at construction.

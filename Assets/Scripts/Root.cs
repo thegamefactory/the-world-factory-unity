@@ -1,6 +1,6 @@
 using TWF;
 using TWF.Map;
-using TWF.Terrain;
+using TWF.Generation;
 
 public static class Root
 {

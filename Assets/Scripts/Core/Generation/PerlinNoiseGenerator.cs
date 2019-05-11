@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace TWF.Terrain
+namespace TWF.Generation
 {
     /// <summary>
     /// An implementation of the noise generator using Perlin noise.

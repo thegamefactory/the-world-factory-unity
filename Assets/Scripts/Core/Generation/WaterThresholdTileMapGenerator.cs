@@ -1,7 +1,7 @@
 using System;
 using TWF.Map;
 
-namespace TWF.Terrain
+namespace TWF.Generation
 {
     /// <summary>
     /// A tile generator which considers all the noise below a certain threshold as water and the rest land.

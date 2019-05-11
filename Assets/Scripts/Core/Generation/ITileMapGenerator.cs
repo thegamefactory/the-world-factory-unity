@@ -1,6 +1,6 @@
 using TWF.Map;
 
-namespace TWF.Terrain
+namespace TWF.Generation
 {
     /// <summary>
     /// An interface to generate maps of a given size.
