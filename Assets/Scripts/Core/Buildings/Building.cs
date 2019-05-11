@@ -3,16 +3,19 @@ using TWF.Map;
 
 namespace TWF.Building
 {
+    /// <summary>
+    /// Concrete building implementation.
+    /// </summary>
     public class Building : IBuilding
     {
         public TileZone Zone { get; }
-        public int Seed { get; }
+        public int RenderingSeed { get; }
         private IDictionary<UsageType, Usage> usage;
 
         public Building(TileZone zone, int seed, IDictionary<UsageType, Usage> usage)
         {
             Zone = zone;
-            Seed = seed;
+            RenderingSeed = seed;
             this.usage = usage;
         }
 

@@ -14,7 +14,7 @@ public class MapDisplay : MonoBehaviour
         Draw(Root.GameState, GetComponent<TileMapper>());
     }
 
-    public void Draw(IGameState gameState, TileMapper tileMapper)
+    public void Draw(IGameStateView gameState, TileMapper tileMapper)
     {
         Vector size = gameState.GetSize();
         int width = size.X;
@@ -26,7 +26,7 @@ public class MapDisplay : MonoBehaviour
         {
             for (int y = 0; y < height; y++)
             {
-                colorMap[y * width + x] = tileMapper.GetTileColor(gameState.GetEntity(x, y), gameState.GetTile(x, y));
+                colorMap[y * width + x] = tileMapper.GetTileColor(gameState.GetTile(x, y));
             }
         }
 

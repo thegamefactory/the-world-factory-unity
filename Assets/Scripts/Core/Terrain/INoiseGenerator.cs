@@ -6,6 +6,9 @@ namespace TWF.Terrain
     /// </summary>
     public interface INoiseGenerator
     {
+        /// <summary>
+        /// Generates the noise in place in the given noiseMap.
+        /// </summary>
         void Generate(float[,] noiseMap);
     }
 }

@@ -27,13 +27,13 @@ namespace TWF.Tool
             get { return toolBehavior.ToolBehaviorType; }
         }
 
-        public PreviewOutcome Preview(IGameState gameState, Modifier modifier, IEnumerable<Vector> inputPositions, IToolBrush toolBrush)
+        public PreviewOutcome Preview(IGameStateView gameState, Modifier modifier, IEnumerable<Vector> inputPositions, IToolBrush toolBrush)
         {
             IEnumerable<Vector> toolPositions = toolBrush.computePositions(inputPositions);
             return toolBehavior.Preview(gameState, modifier, inputPositions);
         }
 
-        private bool Validate(IGameState gameState, Modifier modifier, IEnumerable<Vector> toolPositions)
+        private bool Validate(IGameStateView gameState, Modifier modifier, IEnumerable<Vector> toolPositions)
         {
             return toolBehavior.Preview(gameState, modifier, toolPositions).IsPossible();
         }
@@ -42,7 +42,7 @@ namespace TWF.Tool
         {
             IEnumerable<Vector> toolPositions = toolBrush.computePositions(inputPositions);
             var action = toolBehavior.CreateActions(modifier, toolPositions);
-            Action<GameService> validatedAction = (gs) =>
+            Action<GameState> validatedAction = (gs) =>
             {
                 if (Validate(gs, modifier, toolPositions))
                 {
@@ -57,7 +57,7 @@ namespace TWF.Tool
             // TODO: don't use exception to control the flow. Need google for this.
             try
             {
-                gameActionQueue.ExecuteSynchronous(validatedAction);
+                gameActionQueue.ExecuteSynchronously(validatedAction);
                 return ToolOutcome.SUCCESS;
             }
             catch (InvalidOperationException)

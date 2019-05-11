@@ -24,7 +24,7 @@ namespace TWF.Agent
         /// 
         /// </summary>
         /// <returns>Mutating actions to execute on the game.</returns>
-        /// <param name="gameState">The game state.</param>
-        Action<GameService> execute(IGameState gameState);
+        /// <param name="gameStateView">The game state (read-only).</param>
+        Action<GameState> execute(IGameStateView gameStateView);
     }
 }

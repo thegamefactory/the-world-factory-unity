@@ -16,7 +16,7 @@ namespace TWF
     {
         IDictionary<String, float> lastTicks = new Dictionary<String, float>();
 
-        public void Tick(IGameActionQueue gameActionQueue, IGameState gameState, IList<(IAgent, float)> agents, float currentTime)
+        public void Tick(IGameActionQueue gameActionQueue, IGameStateView gameController, IList<(IAgent, float)> agents, float currentTime)
         {
             foreach (var agent in agents)
             {
@@ -25,7 +25,7 @@ namespace TWF
                     float lastTick = lastTicks[agent.Item1.Name];
                     if (lastTick + agent.Item2 < currentTime)
                     {
-                        gameActionQueue.ExecuteSynchronous(agent.Item1.execute(gameState));
+                        gameActionQueue.ExecuteSynchronously(agent.Item1.execute(gameController));
                         lastTicks[agent.Item1.Name] = lastTick + agent.Item2;
                     }
                 }

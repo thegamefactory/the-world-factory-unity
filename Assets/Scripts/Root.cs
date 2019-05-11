@@ -1,14 +1,18 @@
 using TWF;
 using TWF.Map;
+using TWF.Terrain;
 
 public static class Root
 {
-    public static GameService GameService { get; set; } = GameFactory.Create(
-        new Vector(1, 1),
-        new TWF.Terrain.UniformMapGenerator(TileTerrain.LAND),
+    public static GameService GameService { get; set; } = GameServiceFactory.Create(
+        GameFactory.Create(
+            new Vector(1, 1),
+            new UniformMapGenerator(TileTerrain.LAND),
+            new System.Random()
+            ),
         new System.Random());
 
-    public static IGameState GameState
+    public static IGameStateView GameState
     {
         get
         {

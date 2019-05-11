@@ -6,7 +6,7 @@ using TWF.Map;
 namespace TWF.Tool
 {
     /// <summary>
-    /// A tool brush that yields all rectangle tiles given rectangle corners (inclusive) 
+    /// A tool brush that yields all rectangle tiles given rectangle corners (inclusive).
     /// </summary>
     public class RectangleToolBrush : IToolBrush
     {

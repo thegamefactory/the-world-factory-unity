@@ -13,6 +13,6 @@ public class GameTicker : MonoBehaviour
     void Update()
     {
         currentTime += Time.deltaTime;
-        Root.GameService.TickAgents(currentTime);
+        Root.GameService.Tick(currentTime);
     }
 }

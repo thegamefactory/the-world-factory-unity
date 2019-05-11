@@ -22,7 +22,7 @@ namespace TWF.Terrain
             this.waterThreshold = waterThreshold;
         }
 
-        public TileMap Generate(Vector size)
+        public IMap<Tile> Generate(Vector size)
         {
             float[,] noiseMap = new float[size.X, size.Y];
             noiseGenerator.Generate(noiseMap);
@@ -34,7 +34,7 @@ namespace TWF.Terrain
                     tiles[x, y] = CreateTile(noiseMap[x, y]);
                 }
             }
-            return new TileMap(tiles);
+            return new ArrayMap<Tile>(tiles);
         }
 
         Tile CreateTile(float noiseValue)

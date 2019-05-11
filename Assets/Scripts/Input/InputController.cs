@@ -90,7 +90,7 @@ public class InputController : MonoBehaviour
                 return false;
             }
             Tuple<float, float> clickedTilePosition = CoordinateMapper.ScreenPositionToMeshPosition(Input.mousePosition);
-            vectors.AddLast(Root.GameService.GetPosition(clickedTilePosition.Item1, clickedTilePosition.Item2));
+            vectors.AddLast(Root.GameService.ConvertPosition(clickedTilePosition.Item1, clickedTilePosition.Item2));
             return true;
         }
         catch (ArgumentOutOfRangeException)

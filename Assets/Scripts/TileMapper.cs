@@ -16,8 +16,9 @@ public class TileMapper : MonoBehaviour
 
     public Color errorTile;
 
-    public Color GetTileColor(IEntity entity, Tile tile)
+    public Color GetTileColor(ITileView tile)
     {
+        IEntity entity = tile.Entity;
         if (entity is Building)
         {
 
@@ -25,7 +26,7 @@ public class TileMapper : MonoBehaviour
             {
                 case TileZone.RESIDENTIAL:
                     IBuilding building = entity as IBuilding;
-                    return building.Seed % 2 == 0 ? building1Tile : building2Tile;
+                    return building.RenderingSeed % 2 == 0 ? building1Tile : building2Tile;
                 case TileZone.FARMLAND:
                     return fieldTile;
                 default:

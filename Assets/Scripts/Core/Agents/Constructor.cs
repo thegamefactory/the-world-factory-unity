@@ -13,30 +13,32 @@ namespace TWF.Agent
     {
         private ISet<TileZone> constructibleZones;
         private Func<bool> doBuild;
-        private Func<int> seeder;
+        private Func<int> random;
 
+        /// <param name="constructibleZones">A set of zones on which buildings can be created.</param>
         /// <param name="doBuild">A function called for each unoccupied zoned tile; if it returns true, the agent creates a building.</param>
-        public Constructor(ISet<TileZone> constructibleZones, Func<bool> doBuild, Func<int> seeder)
+        /// <param name="random">A function that generates random numbers.</param>
+        public Constructor(ISet<TileZone> constructibleZones, Func<bool> doBuild, Func<int> random)
         {
             this.constructibleZones = constructibleZones;
             this.doBuild = doBuild;
-            this.seeder = seeder;
+            this.random = random;
         }
 
         public string Name => "Constructor";
 
-        public Action<GameService> execute(IGameState gameState)
+        public Action<GameState> execute(IGameStateView gameStateView)
         {
-            List<(Vector, Tile)> positionsToBuild = gameState.GetTiles()
+            List<(Vector, ITileView)> positionsToBuild = gameStateView.GetTiles()
                 .Where((t) => constructibleZones.Contains(t.Item2.Zone) && doBuild())
                 .ToList();
 
-            return (gameservice) =>
+            return (gameState) =>
             {
-                foreach ((Vector, Tile) t in positionsToBuild.Where((t) => null == gameservice.GetEntity(t.Item1)))
+                foreach ((Vector, Tile) t in positionsToBuild.Where((t) => null == gameState.GetTile(t.Item1).Entity))
                 {
-                    gameservice.SetEntity(
-                        new Building.Building(t.Item2.Zone, seeder(), new Dictionary<UsageType, Usage>()),
+                    gameState.SetTileEntity(
+                        new Building.Building(t.Item2.Zone, random(), new Dictionary<UsageType, Usage>()),
                         t.Item1);
                 }
             };

@@ -18,7 +18,7 @@ namespace TWF.Tool
             new Modifier(TileZone.ROAD.ToString())
         };
 
-        public Action<GameService> CreateActions(Modifier modifier, IEnumerable<Vector> inputPositions)
+        public Action<GameState> CreateActions(Modifier modifier, IEnumerable<Vector> inputPositions)
         {
             TileZone zone;
             if (!Enum.TryParse(modifier.Identifier, out zone))
@@ -26,16 +26,16 @@ namespace TWF.Tool
                 throw new InvalidOperationException("Zone modifier is invalid: " + modifier);
             }
 
-            return (gameservice) =>
+            return (gameController) =>
             {
                 foreach (var pos in inputPositions)
                 {
-                    gameservice.SetTileZone(zone, pos);
+                    gameController.SetTileZone(zone, pos);
                 }
             };
         }
 
-        public PreviewOutcome Preview(IGameState gameState, Modifier modifier, IEnumerable<Vector> inputPositions)
+        public PreviewOutcome Preview(IGameStateView gameState, Modifier modifier, IEnumerable<Vector> inputPositions)
         {
             if (!Modifiers.Contains(modifier))
             {
@@ -46,7 +46,7 @@ namespace TWF.Tool
             PreviewOutcome.Builder builder = PreviewOutcome.builder();
             foreach (Vector pos in inputPositions)
             {
-                bool possible = null == gameState.GetEntity(pos) && TileTerrain.LAND == gameState.GetTile(pos).Terrain;
+                bool possible = null == gameState.GetTile(pos).Entity && TileTerrain.LAND == gameState.GetTile(pos).Terrain;
                 builder.WithPositionOutcome(pos, possible ? ToolOutcome.SUCCESS : ToolOutcome.FAILURE);
             }
             return builder.Build();

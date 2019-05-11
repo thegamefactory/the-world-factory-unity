@@ -1,6 +1,9 @@
 using System.Collections.Generic;
 namespace TWF.Tool
 {
+    /// <summary>
+    /// Defines which tool behaviors and which tool brushes are available.
+    /// </summary>
     public class ToolConfig
     {
         IDictionary<ToolBehaviorType, ITool> tools;

@@ -16,17 +16,17 @@ namespace TWF.Terrain
             this.terrain = terrain;
         }
 
-        public TileMap Generate(Vector size)
+        public IMap<Tile> Generate(Vector size)
         {
             Tile[,] tiles = new Tile[size.X, size.Y];
             for (int x = 0; x < size.X; x++)
             {
                 for (int y = 0; y < size.Y; y++)
                 {
-                    tiles[x, y] = new Tile(TileZone.EMPTY, terrain);
+                    tiles[x, y] = new Tile(TileZone.EMPTY, terrain, null);
                 }
             }
-            return new TileMap(tiles);
+            return new ArrayMap<Tile>(tiles);
         }
     }
 }

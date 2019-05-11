@@ -7,6 +7,6 @@ namespace TWF.Terrain
     /// </summary>
     public interface ITileMapGenerator
     {
-        TileMap Generate(Vector size);
+        IMap<Tile> Generate(Vector size);
     }
 }

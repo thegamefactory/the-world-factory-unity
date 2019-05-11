@@ -1,5 +1,8 @@
 namespace TWF.Map
 {
+    /// <summary>
+    /// An X, Y tuple used to represent either vectors or positions.
+    /// </summary>
     public struct Vector
     {
         public int X;

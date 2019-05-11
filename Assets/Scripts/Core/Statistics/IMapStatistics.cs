@@ -2,7 +2,7 @@
 
 namespace TWF.Statistics
 {
-    public interface ITileMapStatistics
+    public interface IMapStatistics
     {
         int GetCount(TileZone zone);
         int GetBuildingCount(TileZone zone);
