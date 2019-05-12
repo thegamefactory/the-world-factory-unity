@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using TWF.State.Tile;
+using TWF.State.Map;
 
 namespace TWF.State
 {
@@ -10,13 +11,19 @@ namespace TWF.State
         /// Return the size of the map.
         /// </summary>
         /// <return>The size of the map.</return>
-        Vector GetSize();
+        Vector Size { get; }
 
         /// <summary>
-        /// Get an enumerable to iterate over all the tiles.
+        /// Returns the size of the map on the X axis.
         /// </summary>
-        /// <return>An enumerable to iterate over all the tiles.</return>
-        IEnumerable<(Vector, ITileView)> GetTiles();
+        /// <return>The size of the map on the X axis.</return>
+        int SizeX { get; }
+
+        /// <summary>
+        /// Returns the size of the map on the Y axis.
+        /// </summary>
+        /// <return>The size of the map on the Y axis.</return>
+        int SizeY { get; }
 
         /// <summary>
         /// Get the tile at the given position using an absolute scale.

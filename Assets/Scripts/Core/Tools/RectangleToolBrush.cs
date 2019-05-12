@@ -17,7 +17,7 @@ namespace TWF.Tool
 
         public IEnumerable<Vector> computePositions(IEnumerable<Vector> brushPositions)
         {
-            return MapTraverser.GetPositions(brushPositions.First(), brushPositions.Last());
+            return MapPositionsEnumerables.GetPositions(brushPositions.First(), brushPositions.Last());
         }
     }
 }

@@ -24,18 +24,18 @@
         /// Returns the size of the map.
         /// </summary>
         /// <return>The size of the map.</return>
-        Vector GetSize();
+        Vector Size { get; }
 
         /// <summary>
         /// Returns the size of the map on the X axis.
         /// </summary>
         /// <return>The size of the map on the X axis.</return>
-        int GetSizeX();
+        int SizeX { get; }
 
         /// <summary>
         /// Returns the size of the map on the Y axis.
         /// </summary>
         /// <return>The size of the map on the Y axis.</return>
-        int GetSizeY();
+        int SizeY { get; }
     }
 }

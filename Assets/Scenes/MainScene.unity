@@ -150,6 +150,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ResidentialModifierKey: 49
+  FarmlandModifierKey: 50
 --- !u!4 &131899330
 Transform:
   m_ObjectHideFlags: 0
@@ -430,12 +431,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e2a611c0c70c522ebd6c8af16b31ebb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  emptyTile: {r: 1, g: 1, b: 1, a: 0}
+  emptyTile: {r: 0.83544075, g: 0.9339623, b: 0.38768244, a: 0}
   residentialTile: {r: 0, g: 1, b: 0, a: 0}
+  farmlandTile: {r: 1, g: 0.5019608, b: 0, a: 0}
+  fieldTile: {r: 1, g: 1, b: 0, a: 0}
   building1Tile: {r: 0.7169812, g: 0.7169812, b: 0.7169812, a: 0}
   building2Tile: {r: 0.33962262, g: 0.33962262, b: 0.33962262, a: 0}
   waterTile: {r: 0, g: 0.78241277, b: 1, a: 0}
   roadTile: {r: 0, g: 0, b: 0, a: 0}
+  errorTile: {r: 1, g: 0, b: 1, a: 0}
 --- !u!114 &1133443529
 MonoBehaviour:
   m_ObjectHideFlags: 0

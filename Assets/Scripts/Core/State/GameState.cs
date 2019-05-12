@@ -4,6 +4,7 @@ using TWF.State.Map;
 using TWF.State.Tile;
 using TWF.Agent;
 using TWF.State.Entity;
+using TWF.State.Accessors;
 
 namespace TWF.State
 {
@@ -21,10 +22,14 @@ namespace TWF.State
             this.ticker = ticker;
         }
 
-        public Vector GetSize()
-        {
-            return tileMap.GetSize();
-        }
+        /// <inheritdoc/>
+        public Vector Size { get => tileMap.Size; }
+
+        /// <inheritdoc/>
+        public int SizeX { get => tileMap.SizeX; }
+
+        /// <inheritdoc/>
+        public int SizeY { get => tileMap.SizeY; }
 
         public ITileView GetTile(int x, int y)
         {
@@ -34,11 +39,6 @@ namespace TWF.State
         public ITileView GetTile(Vector position)
         {
             return tileMap.GetElement(position);
-        }
-
-        public IEnumerable<(Vector, ITileView)> GetTiles()
-        {
-            return MapTraverser.GetElements(tileMap as IMap<ITileView>);
         }
 
         public void SetTileZone(TileZone zone, int x, int y)

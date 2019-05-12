@@ -1,5 +1,9 @@
-﻿using TWF.State.Tile;
-using TWF.State;
+﻿using TWF.State;
+using TWF.State.Map;
+using System;
+using System.Linq;
+using TWF.State.Building;
+using TWF.State.Accessors;
 
 namespace TWF.Statistics
 {
@@ -12,19 +16,22 @@ namespace TWF.Statistics
             this.gameStateView = gameStateView;
         }
 
-        public int GetBuildingCount(TileZone zone)
+        public int GetCapacity(UsageType usageType)
         {
-            return 0;
+            return MapBuidlings(b => b.GetCapacity(usageType));
         }
 
-        public int GetCount(TileZone zone)
+        public int GetOccupation(UsageType usageType)
         {
-            throw new System.NotImplementedException();
+            return MapBuidlings(b => b.GetOccupation(usageType));
         }
 
-        public int GetUnoccupiedCount(TileZone zone)
+        public int MapBuidlings(Func<IBuilding, int> mapper)
         {
-            throw new System.NotImplementedException();
+            return gameStateView.ToAllPositions()
+                .ToBuildings()
+                .Select(b => b.GetOccupation(UsageType.HOUSING))
+                .Sum();
         }
     }
 }

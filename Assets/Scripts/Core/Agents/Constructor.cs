@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TWF.State.Building;
 using TWF.State.Tile;
 using TWF.State;
+using TWF.State.Accessors;
 
 namespace TWF.Agent
 {
@@ -30,7 +31,9 @@ namespace TWF.Agent
 
         public Action<GameState> execute(IGameStateView gameStateView)
         {
-            List<(Vector, ITileView)> positionsToBuild = gameStateView.GetTiles()
+            List<(Vector, ITileView)> positionsToBuild = gameStateView
+                .ToAllPositions()
+                .ToTilePositionTuples()
                 .Where((t) => constructibleZones.Contains(t.Item2.Zone) && doBuild())
                 .ToList();
 

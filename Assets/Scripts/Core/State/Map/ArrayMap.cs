@@ -22,36 +22,34 @@
             this.contentMap = contentMap;
         }
 
+        /// <inheritdoc/>
         public T GetElement(int x, int y)
         {
             return contentMap[x, y];
         }
 
+        /// <inheritdoc/>
         public T GetElement(Vector position)
         {
             return contentMap[position.X, position.Y];
         }
 
-        public Vector GetSize()
-        {
-            return new Vector(contentMap.GetLength(0), contentMap.GetLength(1));
-        }
+        /// <inheritdoc/>
+        public Vector Size { get => new Vector(contentMap.GetLength(0), contentMap.GetLength(1)); }
 
-        public int GetSizeX()
-        {
-            return contentMap.GetLength(0);
-        }
+        /// <inheritdoc/>
+        public int SizeX { get => contentMap.GetLength(0); }
 
-        public int GetSizeY()
-        {
-            return contentMap.GetLength(1);
-        }
+        /// <inheritdoc/>
+        public int SizeY { get => contentMap.GetLength(0); }
 
+        /// <inheritdoc/>
         public void SetElement(T content, int x, int y)
         {
             contentMap[x, y] = content;
         }
 
+        /// <inheritdoc/>
         public void SetElement(T content, Vector position)
         {
             contentMap[position.X, position.Y] = content;

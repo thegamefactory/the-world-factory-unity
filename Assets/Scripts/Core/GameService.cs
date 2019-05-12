@@ -59,7 +59,7 @@ namespace TWF
         /// <param name="y">The y coordinate between 0 and 1.</param>
         public Vector ConvertPosition(float x, float y)
         {
-            Vector size = state.GetSize();
+            Vector size = state.Size;
             return new Vector((int)(size.X * x), (int)(size.Y * y));
         }
 
@@ -88,41 +88,22 @@ namespace TWF
             state.Tick(agents, currentTime);
         }
 
-        /// <summary>
-        /// <summary>
-        /// Return the size of the map.
-        /// </summary>
-        /// <return>The size of the map.</return>
-        public Vector GetSize()
-        {
-            return state.GetSize();
-        }
+        /// <inheritdoc/>
+        public Vector Size { get => state.Size; }
 
-        /// <summary>
-        /// Get an enumerable to iterate over all the tiles.
-        /// </summary>
-        /// <return>An enumerable to iterate over all the tiles.</return>
-        public IEnumerable<(Vector, ITileView)> GetTiles()
-        {
-            return state.GetTiles();
-        }
+        /// <inheritdoc/>
+        public int SizeX { get => state.SizeX; }
 
-        /// <summary>
-        /// Get the tile at the given position using an absolute scale.
-        /// </summary>
-        /// <return>The tile at the given position.</return>
-        /// <param name="x">The x coordinate.</param>
-        /// <param name="y">The y coordinate.</param>
+        /// <inheritdoc/>
+        public int SizeY { get => state.SizeY; }
+
+        /// <inheritdoc/>
         public ITileView GetTile(int x, int y)
         {
             return state.GetTile(x, y);
         }
 
-        /// <summary>
-        /// Get the tile at the given position using an absolute scale.
-        /// </summary>
-        /// <return>The tile at the given position.</return>
-        /// <param name="position">The position.</param>
+        /// <inheritdoc/>
         public ITileView GetTile(Vector position)
         {
             return state.GetTile(position);

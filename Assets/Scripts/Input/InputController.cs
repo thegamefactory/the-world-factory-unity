@@ -57,7 +57,15 @@ public class InputController : MonoBehaviour
     {
         if (positions.Count == 1 && AddMousePosition(positions, ToolBehaviorType.ZONER))
         {
-            Root.GameService.ApplyTool(ToolBehaviorType.ZONER, CurrentModifier, positions, ToolBrushType.RECTANGLE);
+            Modifier currentModifier = CurrentModifier;
+            if (ToolOutcome.SUCCESS != Root.GameService.ApplyTool(ToolBehaviorType.ZONER, currentModifier, positions, ToolBrushType.RECTANGLE))
+            {
+                Debug.LogError("Failed to apply zoner (" + currentModifier + " ) on rectangle " + positions);
+            }
+            else
+            {
+                Debug.Log("Zoner " + currentModifier + " applied");
+            }
         }
         ResetTool();
     }
@@ -66,7 +74,14 @@ public class InputController : MonoBehaviour
     {
         if (positions.Count == 1 && AddMousePosition(positions, ToolBehaviorType.ZONER))
         {
-            Root.GameService.ApplyTool(ToolBehaviorType.ZONER, RoadModifier, positions, ToolBrushType.MANATTHAN);
+            if (ToolOutcome.SUCCESS != Root.GameService.ApplyTool(ToolBehaviorType.ZONER, RoadModifier, positions, ToolBrushType.MANATTHAN))
+            {
+                Debug.LogError("Failed to apply zoner (" + CurrentModifier + " ) on manatthan " + positions);
+            }
+            else
+            {
+                Debug.Log("Road built");
+            }
         }
         ResetTool();
     }
