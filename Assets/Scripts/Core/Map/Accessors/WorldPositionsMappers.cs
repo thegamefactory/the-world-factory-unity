@@ -25,7 +25,7 @@ namespace TWF.Map.Accessors
         public static IEnumerable<IBuilding> ToBuildings(this WorldPositions gamePositions)
         {
             return gamePositions.ToTiles()
-               .Select(t => t.Entity as IBuilding)
+               .Select(t => t.Building)
                .Where(b => null != b);
         }
     }

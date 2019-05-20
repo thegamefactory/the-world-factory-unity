@@ -38,9 +38,9 @@ namespace TWF.Agent
 
             return (world) =>
             {
-                foreach ((Vector, Tile) t in positionsToBuild.Where((t) => null == world.GetTile(t.Item1).Entity))
+                foreach ((Vector, Tile) t in positionsToBuild.Where((t) => null == world.GetTile(t.Item1).Building))
                 {
-                    world.SetTileEntity(
+                    world.SetTileBuilding(
                         new Building(t.Item2.Zone, random(), new Dictionary<UsageType, Usage>()),
                         t.Item1);
                 }

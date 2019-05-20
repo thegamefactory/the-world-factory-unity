@@ -1,4 +1,4 @@
-﻿using TWF.Map.Entity;
+﻿using TWF.Map.Building;
 
 namespace TWF.Map.Tile
 {
@@ -18,8 +18,8 @@ namespace TWF.Map.Tile
         TileTerrain Terrain { get; }
 
         /// <summary>
-        /// The entity corresponding to the given tile. Can be null. Multiple tiles can share the same entity.
+        /// The building corresponding to the given tile. Can be null. Multiple tiles can share the same building.
         /// </summary>
-        IEntity Entity { get; }
+        IBuilding Building { get; }
     }
 }

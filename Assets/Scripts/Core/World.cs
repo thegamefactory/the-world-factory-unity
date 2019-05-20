@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TWF.Map;
 using TWF.Map.Tile;
 using TWF.Agent;
-using TWF.Map.Entity;
+using TWF.Map.Building;
 
 namespace TWF
 {
@@ -50,14 +50,14 @@ namespace TWF
             SetTileZone(zone, position.X, position.Y);
         }
 
-        public void SetTileEntity(IEntity entity, int x, int y)
+        public void SetTileBuilding(IBuilding building, int x, int y)
         {
-            tileMap.GetElement(x, y).Entity = entity;
+            tileMap.GetElement(x, y).Building = building;
         }
 
-        public void SetTileEntity(IEntity entity, Vector position)
+        public void SetTileBuilding(IBuilding entity, Vector position)
         {
-            SetTileEntity(entity, position.X, position.Y);
+            SetTileBuilding(entity, position.X, position.Y);
         }
 
         /// <summary>

@@ -1,7 +1,6 @@
 using UnityEngine;
 using TWF.Map.Tile;
 using TWF.Map.Building;
-using TWF.Map.Entity;
 
 public class TileMapper : MonoBehaviour
 {
@@ -18,14 +17,13 @@ public class TileMapper : MonoBehaviour
 
     public Color GetTileColor(ITileView tile)
     {
-        IEntity entity = tile.Entity;
-        if (entity is Building)
+        IBuilding building = tile.Building;
+        if (null != building)
         {
 
             switch (tile.Zone)
             {
                 case TileZone.RESIDENTIAL:
-                    IBuilding building = entity as IBuilding;
                     return building.RenderingSeed % 2 == 0 ? building1Tile : building2Tile;
                 case TileZone.FARMLAND:
                     return fieldTile;

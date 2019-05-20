@@ -46,7 +46,7 @@ namespace TWF.Tool
             PreviewOutcome.Builder builder = PreviewOutcome.builder();
             foreach (Vector pos in inputPositions)
             {
-                bool possible = null == worldView.GetTile(pos).Entity && TileTerrain.LAND == worldView.GetTile(pos).Terrain;
+                bool possible = null == worldView.GetTile(pos).Building && TileTerrain.LAND == worldView.GetTile(pos).Terrain;
                 builder.WithPositionOutcome(pos, possible ? ToolOutcome.SUCCESS : ToolOutcome.FAILURE);
             }
             return builder.Build();

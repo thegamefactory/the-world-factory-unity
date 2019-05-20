@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using TWF.Map.Entity;
 using TWF.Map.Tile;
 
 namespace TWF.Map.Building
@@ -7,7 +6,7 @@ namespace TWF.Map.Building
     /// <summary>
     /// A building represents a constructed instance on the map.
     /// </summary>
-    public interface IBuilding : IEntity
+    public interface IBuilding
     {
         /// <summary>
         /// The zone on which the building is physically situated.

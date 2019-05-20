@@ -1,4 +1,4 @@
-﻿using TWF.Map.Entity;
+﻿using TWF.Map.Building;
 
 namespace TWF.Map.Tile
 {
@@ -9,20 +9,20 @@ namespace TWF.Map.Tile
     {
         public TileZone Zone { get; set; }
         public TileTerrain Terrain { get; set; }
-        public IEntity Entity { get; set; }
+        public IBuilding Building { get; set; }
 
-        public Tile(TileZone zone, TileTerrain terrain, IEntity entity)
+        public Tile(TileZone zone, TileTerrain terrain, IBuilding building)
         {
             Zone = zone;
             Terrain = terrain;
-            Entity = entity;
+            Building = building;
         }
 
         public Tile(TileZone zone, TileTerrain terrain)
         {
             Zone = zone;
             Terrain = terrain;
-            Entity = null;
+            Building = null;
         }
     }
 }
