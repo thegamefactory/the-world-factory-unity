@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using TWF.State.Entity;
-using TWF.State.Tile;
+using TWF.Map.Entity;
+using TWF.Map.Tile;
 
-namespace TWF.State.Building
+namespace TWF.Map.Building
 {
     /// <summary>
     /// A building represents a constructed instance on the map.

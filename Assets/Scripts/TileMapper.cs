@@ -1,7 +1,7 @@
 using UnityEngine;
-using TWF.State.Tile;
-using TWF.State.Building;
-using TWF.State.Entity;
+using TWF.Map.Tile;
+using TWF.Map.Building;
+using TWF.Map.Entity;
 
 public class TileMapper : MonoBehaviour
 {

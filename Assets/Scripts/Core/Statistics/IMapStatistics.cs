@@ -1,5 +1,5 @@
-﻿using TWF.State.Tile;
-using TWF.State.Building;
+﻿using TWF.Map.Tile;
+using TWF.Map.Building;
 
 namespace TWF.Statistics
 {

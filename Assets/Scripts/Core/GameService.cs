@@ -1,7 +1,6 @@
-using TWF.State;
 using TWF.Agent;
 using TWF.Tool;
-using TWF.State.Tile;
+using TWF.Map.Tile;
 using System.Collections.Generic;
 
 namespace TWF

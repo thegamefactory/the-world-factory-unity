@@ -1,6 +1,6 @@
-﻿using TWF.State.Entity;
+﻿using TWF.Map.Entity;
 
-namespace TWF.State.Tile
+namespace TWF.Map.Tile
 {
     /// <summary>
     /// A read-only view of a Tile.

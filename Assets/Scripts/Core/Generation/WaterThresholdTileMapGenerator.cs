@@ -1,5 +1,5 @@
-using TWF.State.Tile;
-using TWF.State.Map;
+using TWF.Map.Tile;
+using TWF.Map;
 
 namespace TWF.Generation
 {

@@ -1,10 +1,9 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
-using TWF.State.Building;
-using TWF.State.Tile;
-using TWF.State;
-using TWF.State.Accessors;
+using TWF.Map.Building;
+using TWF.Map.Tile;
+using TWF.Map.Accessors;
 
 namespace TWF.Agent
 {

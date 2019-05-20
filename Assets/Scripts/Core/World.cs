@@ -1,22 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using TWF.State.Map;
-using TWF.State.Tile;
+using TWF.Map;
+using TWF.Map.Tile;
 using TWF.Agent;
-using TWF.State.Entity;
-using TWF.State.Accessors;
+using TWF.Map.Entity;
 
-namespace TWF.State
+namespace TWF
 {
     /// <summary>
     /// Interface to interact with anything that is unique to a specific world instance.
     /// </summary>
     public class World : IWorldView
     {
-        private IMap<Tile.Tile> tileMap;
+        private IMap<Tile> tileMap;
         private Ticker ticker;
 
-        public World(IMap<Tile.Tile> tileMap, Ticker ticker)
+        public World(IMap<Tile> tileMap, Ticker ticker)
         {
             this.tileMap = tileMap;
             this.ticker = ticker;

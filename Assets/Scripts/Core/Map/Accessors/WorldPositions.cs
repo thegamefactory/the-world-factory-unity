@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using TWF.State.Tile;
+using TWF.Map.Tile;
 
-namespace TWF.State.Accessors
+namespace TWF.Map.Accessors
 {
     /// <summary>
     /// A tuple world view / positions.

@@ -1,6 +1,5 @@
 using TWF;
-using TWF.State;
-using TWF.State.Tile;
+using TWF.Map.Tile;
 using TWF.Generation;
 
 public static class Root

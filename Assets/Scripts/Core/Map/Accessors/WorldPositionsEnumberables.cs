@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using TWF.State.Map;
 using System;
 
-namespace TWF.State.Accessors
+namespace TWF.Map.Accessors
 {
     /// <summary>
     /// An utility class to iterate over game state map positions.

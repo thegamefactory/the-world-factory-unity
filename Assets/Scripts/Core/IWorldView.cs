@@ -1,8 +1,6 @@
-using System.Collections.Generic;
-using TWF.State.Tile;
-using TWF.State.Map;
+using TWF.Map.Tile;
 
-namespace TWF.State
+namespace TWF
 {
     public interface IWorldView
     {

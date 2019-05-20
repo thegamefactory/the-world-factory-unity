@@ -1,4 +1,4 @@
-﻿namespace TWF.State.Building
+﻿namespace TWF.Map.Building
 {
     /// <summary>
     /// A building usage is an integer tuple (capacity, occupation) that can be used as building trait

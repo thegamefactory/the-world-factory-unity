@@ -1,5 +1,6 @@
 using System;
-namespace TWF.State
+
+namespace TWF
 {
     /// <summary>
     /// Interface for objects that can process actions on a game state.

@@ -1,4 +1,4 @@
-﻿namespace TWF.State.Map
+﻿namespace TWF.Map
 {
     /// <summary>
     /// A generic interface for a read-write map containing elements of type T.

@@ -1,9 +1,7 @@
-﻿using TWF.State;
-using TWF.State.Map;
-using System;
+﻿using System;
 using System.Linq;
-using TWF.State.Building;
-using TWF.State.Accessors;
+using TWF.Map.Building;
+using TWF.Map.Accessors;
 
 namespace TWF.Statistics
 {

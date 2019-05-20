@@ -1,4 +1,4 @@
-namespace TWF.State.Entity
+namespace TWF.Map.Entity
 {
     /// <summary>
     /// Base interface for any world object

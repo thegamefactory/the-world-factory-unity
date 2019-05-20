@@ -1,4 +1,4 @@
-﻿namespace TWF.State.Map
+﻿namespace TWF.Map
 {
     /// <summary>
     /// A concrete map implementation based on a bidimensional array.

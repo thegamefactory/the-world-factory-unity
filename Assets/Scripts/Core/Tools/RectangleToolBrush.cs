@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using System;
-using TWF.State.Map;
+using TWF.Map;
 
 namespace TWF.Tool
 {

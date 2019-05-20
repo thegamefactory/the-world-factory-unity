@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using TWF.State.Building;
-using TWF.State.Tile;
+using TWF.Map.Building;
+using TWF.Map.Tile;
 
-namespace TWF.State.Accessors
+namespace TWF.Map.Accessors
 {
     /// <summary>
     /// An utility class that extends GamePositions to add a bunch of functions that map positions to useful constructs.
