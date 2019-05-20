@@ -9,14 +9,14 @@ using TWF.State.Accessors;
 namespace TWF.State
 {
     /// <summary>
-    /// Interface to interact with anything that is unique to a specific game instance.
+    /// Interface to interact with anything that is unique to a specific world instance.
     /// </summary>
-    public class GameState : IGameStateView
+    public class World : IWorldView
     {
         private IMap<Tile.Tile> tileMap;
         private Ticker ticker;
 
-        public GameState(IMap<Tile.Tile> tileMap, Ticker ticker)
+        public World(IMap<Tile.Tile> tileMap, Ticker ticker)
         {
             this.tileMap = tileMap;
             this.ticker = ticker;
@@ -64,7 +64,7 @@ namespace TWF.State
         /// <summary>
         /// Triggers all the <paramref name="agents"/>, based on the <paramref name="currentTime"/>, given in seconds.
         /// </summary>
-        /// <param name="agents">The agents (jobs) that are mutating the game.</param>
+        /// <param name="agents">The agents (jobs) that are mutating the world.</param>
         /// <param name="currentTime">The current time, given in seconds.</param>
         public void Tick(IList<(IAgent, float)> agents, float currentTime)
         {
@@ -74,23 +74,23 @@ namespace TWF.State
         /// <summary>
         /// Temporary hack to get action queue working. Should use a proper queue in the future.
         /// </summary>
-        public IGameActionQueue GetActionQueue()
+        public IActionQueue GetActionQueue()
         {
             return new ActionQueue(this);
         }
 
-        private class ActionQueue : IGameActionQueue
+        private class ActionQueue : IActionQueue
         {
-            private GameState gameState;
+            private World world;
 
-            internal ActionQueue(GameState gameState)
+            internal ActionQueue(World world)
             {
-                this.gameState = gameState;
+                this.world = world;
             }
 
-            public void ExecuteSynchronously(Action<GameState> action)
+            public void ExecuteSynchronously(Action<World> action)
             {
-                action(gameState);
+                action(world);
             }
         }
     }

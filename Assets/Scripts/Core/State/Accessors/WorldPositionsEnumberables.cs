@@ -8,14 +8,14 @@ namespace TWF.State.Accessors
     /// An utility class to iterate over game state map positions.
     /// Useful wrapper over MapPositionsEnumberables.
     /// </summary>
-    public static class GamePositionsEnumberables
+    public static class WorldPositionsEnumberables
     {
         /// <summary>
         /// Get a GameStatePositions encapsulating the game state and an enumerable to iterate over all the tiles positions.
         /// </summary>
         /// <param name="gameStateView">The map to traverse.</param>
         /// <return>Get a GameStatePositions encapsulating the game state and an enumerable to iterate over all the tiles positions.</return>
-        public static GamePositions ToAllPositions(this IGameStateView gameStateView)
+        public static WorldPositions ToAllPositions(this IWorldView gameStateView)
         {
             return gameStateView.ToGamePositions(gameStateView.GetAllPositions());
         }
@@ -25,7 +25,7 @@ namespace TWF.State.Accessors
         /// </summary>
         /// <param name="gameStateView">The map to traverse.</param>
         /// <return>An enumerable to iterate over all the positions.</return>
-        public static IEnumerable<Vector> GetAllPositions(this IGameStateView gameStateView)
+        public static IEnumerable<Vector> GetAllPositions(this IWorldView gameStateView)
         {
             return MapPositionsEnumerables.GetPositions(0, 0, gameStateView.SizeX - 1, gameStateView.SizeY - 1);
         }
@@ -41,7 +41,7 @@ namespace TWF.State.Accessors
         /// <param name="x2">X position of the second corner.</param>
         /// <param name="y2">Y position of the second corner.</param>
         /// <return>An enumerable to iterate over the tile positions.</return>
-        public static GamePositions ToPositions(this IGameStateView gameStateView, int x1, int y1, int x2, int y2)
+        public static WorldPositions ToPositions(this IWorldView gameStateView, int x1, int y1, int x2, int y2)
         {
             return gameStateView.ToGamePositions(gameStateView.GetPositions(x1, y1, x2, y2));
         }
@@ -57,7 +57,7 @@ namespace TWF.State.Accessors
         /// <param name="x2">X position of the second corner.</param>
         /// <param name="y2">Y position of the second corner.</param>
         /// <return>An enumerable to iterate over the tile positions.</return>
-        public static IEnumerable<Vector> GetPositions(this IGameStateView gameStateView, int x1, int y1, int x2, int y2)
+        public static IEnumerable<Vector> GetPositions(this IWorldView gameStateView, int x1, int y1, int x2, int y2)
         {
             int xMin = Math.Max(Math.Min(x1, x2), 0);
             int xMax = Math.Min(Math.Max(x1, x2), gameStateView.SizeX - 1);
@@ -66,9 +66,9 @@ namespace TWF.State.Accessors
             return MapPositionsEnumerables.GetPositions(xMin, yMin, xMax, yMax);
         }
 
-        private static GamePositions ToGamePositions(this IGameStateView gameStateView, IEnumerable<Vector> positions)
+        private static WorldPositions ToGamePositions(this IWorldView gameStateView, IEnumerable<Vector> positions)
         {
-            return new GamePositions(gameStateView, positions);
+            return new WorldPositions(gameStateView, positions);
         }
     }
 }

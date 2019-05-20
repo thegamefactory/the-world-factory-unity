@@ -4,7 +4,7 @@ using TWF.State.Map;
 
 namespace TWF.State
 {
-    public interface IGameStateView
+    public interface IWorldView
     {
         /// <summary>
         /// <summary>

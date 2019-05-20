@@ -1,7 +1,7 @@
 namespace TWF.State.Entity
 {
     /// <summary>
-    /// Base interface for any game object
+    /// Base interface for any world object
     /// </summary>
     public interface IEntity
     {

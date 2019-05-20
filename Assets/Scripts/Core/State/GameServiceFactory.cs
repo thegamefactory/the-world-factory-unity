@@ -9,9 +9,9 @@ namespace TWF
 {
     public class GameServiceFactory
     {
-        public static GameService Create(GameState gameState, Random random)
+        public static GameService Create(World world, Random random)
         {
-            return new GameService(gameState, CreateAgents(random), CreateToolConfig());
+            return new GameService(world, CreateAgents(random), CreateToolConfig());
         }
 
         /// <summary>

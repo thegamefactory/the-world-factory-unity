@@ -4,8 +4,8 @@ namespace TWF.State
     /// <summary>
     /// Interface for objects that can process actions on a game state.
     /// </summary>
-    public interface IGameActionQueue
+    public interface IActionQueue
     {
-        void ExecuteSynchronously(Action<GameState> action);
+        void ExecuteSynchronously(Action<World> action);
     }
 }

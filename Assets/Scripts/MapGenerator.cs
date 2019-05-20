@@ -60,7 +60,7 @@ public class MapGenerator : MonoBehaviour
             tileMapGenerator = new UniformMapGenerator(TileTerrain.WATER);
         }
 
-        Root.GameService.SetGameState(GameFactory.Create(new Vector(mapWidth, mapHeight), tileMapGenerator, random));
+        Root.GameService.SetWorld(WorldFactory.Create(new Vector(mapWidth, mapHeight), tileMapGenerator, random));
 
         if (autoUpdate)
         {

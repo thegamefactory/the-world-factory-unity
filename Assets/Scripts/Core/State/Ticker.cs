@@ -9,14 +9,14 @@ namespace TWF.State
     /// In the current implementation the Ticker executes all the due agents synchronously.
     /// 
     /// The Ticker normalizes the agents executions. 
-    /// That is, even if the Ticker is called irregulary, it will ensure that the agents are called at intervals specified at Game construction.
+    /// That is, even if the Ticker is called irregulary, it will ensure that the agents are called at intervals specified at construction.
     /// It does it by keeping track of each last agent execution.
     /// </summary>
     public class Ticker
     {
         IDictionary<String, float> lastTicks = new Dictionary<String, float>();
 
-        public void Tick(IGameActionQueue gameActionQueue, IGameStateView gameController, IList<(IAgent, float)> agents, float currentTime)
+        public void Tick(IActionQueue actionQueue, IWorldView worldView, IList<(IAgent, float)> agents, float currentTime)
         {
             foreach (var agent in agents)
             {
@@ -25,7 +25,7 @@ namespace TWF.State
                     float lastTick = lastTicks[agent.Item1.Name];
                     if (lastTick + agent.Item2 < currentTime)
                     {
-                        gameActionQueue.ExecuteSynchronously(agent.Item1.execute(gameController));
+                        actionQueue.ExecuteSynchronously(agent.Item1.execute(worldView));
                         lastTicks[agent.Item1.Name] = lastTick + agent.Item2;
                     }
                 }

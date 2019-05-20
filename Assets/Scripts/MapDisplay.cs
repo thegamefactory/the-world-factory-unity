@@ -11,12 +11,12 @@ public class MapDisplay : MonoBehaviour
 
     public void Update()
     {
-        Draw(Root.GameState, GetComponent<TileMapper>());
+        Draw(Root.WorldView, GetComponent<TileMapper>());
     }
 
-    public void Draw(IGameStateView gameState, TileMapper tileMapper)
+    public void Draw(IWorldView worldView, TileMapper tileMapper)
     {
-        Vector size = gameState.Size;
+        Vector size = worldView.Size;
         int width = size.X;
         int height = size.Y;
 
@@ -26,7 +26,7 @@ public class MapDisplay : MonoBehaviour
         {
             for (int y = 0; y < height; y++)
             {
-                colorMap[y * width + x] = tileMapper.GetTileColor(gameState.GetTile(x, y));
+                colorMap[y * width + x] = tileMapper.GetTileColor(worldView.GetTile(x, y));
             }
         }
 

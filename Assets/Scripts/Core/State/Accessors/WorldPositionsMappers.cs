@@ -8,21 +8,21 @@ namespace TWF.State.Accessors
     /// <summary>
     /// An utility class that extends GamePositions to add a bunch of functions that map positions to useful constructs.
     /// </summary>
-    public static class GamePositionsMappers
+    public static class WorldPositionsMappers
     {
-        public static IEnumerable<(Vector, ITileView)> ToTilePositionTuples(this GamePositions gamePositions)
+        public static IEnumerable<(Vector, ITileView)> ToTilePositionTuples(this WorldPositions gamePositions)
         {
             return gamePositions.Positions
                .Select(gamePositions.GetTilePositionTuple);
         }
 
-        public static IEnumerable<ITileView> ToTiles(this GamePositions gamePositions)
+        public static IEnumerable<ITileView> ToTiles(this WorldPositions gamePositions)
         {
             return gamePositions.Positions
                .Select(gamePositions.GetTile);
         }
 
-        public static IEnumerable<IBuilding> ToBuildings(this GamePositions gamePositions)
+        public static IEnumerable<IBuilding> ToBuildings(this WorldPositions gamePositions)
         {
             return gamePositions.ToTiles()
                .Select(t => t.Entity as IBuilding)

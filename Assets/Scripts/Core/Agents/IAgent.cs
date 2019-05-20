@@ -4,10 +4,10 @@ using TWF.State;
 namespace TWF.Agent
 {
     /// <summary>
-    /// An agent mutates the state of the game.
+    /// An agent mutates the state of the world.
     /// 
-    /// The agent is triggered by the GameService. 
-    /// Instead of directly mutating the state of the game, the agent returns a list of actions.
+    /// The agent is triggered periodically by a ticker.
+    /// Instead of directly mutating the state of the world, the agent returns a list of actions.
     /// The actions are then processed by the service.
     /// </summary>
     public interface IAgent
@@ -21,11 +21,11 @@ namespace TWF.Agent
         /// The agents executions are read-only.
         /// 
         /// The resulting actions are designed to be serialized and should be cheap.
-        /// The resulting actions mutate the game state.
+        /// The resulting actions mutate the world.
         /// 
         /// </summary>
-        /// <returns>Mutating actions to execute on the game.</returns>
-        /// <param name="gameStateView">The game state (read-only).</param>
-        Action<GameState> execute(IGameStateView gameStateView);
+        /// <returns>Mutating actions to execute on the world.</returns>
+        /// <param name="worldView">The world (read-only).</param>
+        Action<World> execute(IWorldView worldView);
     }
 }

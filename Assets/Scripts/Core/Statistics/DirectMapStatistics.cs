@@ -9,11 +9,11 @@ namespace TWF.Statistics
 {
     public class DirectMapStatistics : IMapStatistics
     {
-        IGameStateView gameStateView;
+        IWorldView worldView;
 
-        public DirectMapStatistics(IGameStateView gameStateView)
+        public DirectMapStatistics(IWorldView worldView)
         {
-            this.gameStateView = gameStateView;
+            this.worldView = worldView;
         }
 
         public int GetCapacity(UsageType usageType)
@@ -28,7 +28,7 @@ namespace TWF.Statistics
 
         public int MapBuidlings(Func<IBuilding, int> mapper)
         {
-            return gameStateView.ToAllPositions()
+            return worldView.ToAllPositions()
                 .ToBuildings()
                 .Select(b => b.GetOccupation(UsageType.HOUSING))
                 .Sum();
