@@ -1,4 +1,4 @@
-﻿namespace TWF.Map
+﻿namespace TWF
 {
     /// <summary>
     /// A concrete map implementation based on a bidimensional array.
@@ -7,9 +7,8 @@
     {
         T[,] contentMap;
 
-        public ArrayMap(Vector size)
+        public ArrayMap(Vector size) : this(size.X, size.Y)
         {
-            contentMap = new T[size.X, size.Y];
         }
 
         public ArrayMap(int sizeX, int sizeY)
@@ -22,16 +21,20 @@
             this.contentMap = contentMap;
         }
 
-        /// <inheritdoc/>
-        public T GetElement(int x, int y)
+        public ArrayMap(Vector size, T value) : this(size.X, size.Y, value)
         {
-            return contentMap[x, y];
         }
 
-        /// <inheritdoc/>
-        public T GetElement(Vector position)
+        public ArrayMap(int sizeX, int sizeY, T value)
         {
-            return contentMap[position.X, position.Y];
+            contentMap = new T[sizeX, sizeY];
+            for (int x = 0; x < sizeX; x++)
+            {
+                for (int y = 0; y < sizeY; y++)
+                {
+                    contentMap[x, y] = value;
+                }
+            }
         }
 
         /// <inheritdoc/>
@@ -44,13 +47,39 @@
         public int SizeY { get => contentMap.GetLength(0); }
 
         /// <inheritdoc/>
-        public void SetElement(T content, int x, int y)
+        T IMapView<T>.this[Vector position] => contentMap[position.X, position.Y];
+
+        /// <inheritdoc/>
+        T IMapView<T>.this[int x, int y] => contentMap[x, y];
+
+        /// <inheritdoc/>
+        public T this[Vector position] { get => contentMap[position.X, position.Y]; set => contentMap[position.X, position.Y] = value; }
+
+        /// <inheritdoc/>
+        public T this[int x, int y] { get => contentMap[x, y]; set => contentMap[x, y] = value; }
+
+
+        /// <inheritdoc/>
+        public T GetContent(int x, int y)
+        {
+            return contentMap[x, y];
+        }
+
+        /// <inheritdoc/>
+        public T GetContent(Vector position)
+        {
+            return contentMap[position.X, position.Y];
+        }
+
+
+        /// <inheritdoc/>
+        public void SetContent(T content, int x, int y)
         {
             contentMap[x, y] = content;
         }
 
         /// <inheritdoc/>
-        public void SetElement(T content, Vector position)
+        public void SetContent(T content, Vector position)
         {
             contentMap[position.X, position.Y] = content;
         }

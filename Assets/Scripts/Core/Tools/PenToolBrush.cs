@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace TWF.Tool
+namespace TWF
 {
     /// <summary>
     /// A tool brush that yields the positions given in input.

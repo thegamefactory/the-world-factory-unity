@@ -1,6 +1,3 @@
-using TWF.Agent;
-using TWF.Tool;
-using TWF.Map.Tile;
 using System.Collections.Generic;
 
 namespace TWF
@@ -84,6 +81,12 @@ namespace TWF
         }
 
         /// <inheritdoc/>
+        public IMapView<T> GetMapView<T>(MapType mapType)
+        {
+            return world.GetMapView<T>(mapType);
+        }
+
+        /// <inheritdoc/>
         public Vector Size { get => world.Size; }
 
         /// <inheritdoc/>
@@ -91,17 +94,5 @@ namespace TWF
 
         /// <inheritdoc/>
         public int SizeY { get => world.SizeY; }
-
-        /// <inheritdoc/>
-        public ITileView GetTile(int x, int y)
-        {
-            return world.GetTile(x, y);
-        }
-
-        /// <inheritdoc/>
-        public ITileView GetTile(Vector position)
-        {
-            return world.GetTile(position);
-        }
     }
 }

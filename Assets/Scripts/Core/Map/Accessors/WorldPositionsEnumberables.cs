@@ -1,22 +1,22 @@
 ﻿using System.Collections.Generic;
 using System;
 
-namespace TWF.Map.Accessors
+namespace TWF
 {
     /// <summary>
-    /// An utility class to iterate over game state map positions.
+    /// An utility class to iterate over map positions.
     /// Useful wrapper over MapPositionsEnumberables.
     /// </summary>
     public static class WorldPositionsEnumberables
     {
         /// <summary>
-        /// Get a GameStatePositions encapsulating the game state and an enumerable to iterate over all the tiles positions.
+        /// Get a GameStatePositions encapsulating the map and an enumerable to iterate over all the positions.
         /// </summary>
-        /// <param name="gameStateView">The map to traverse.</param>
+        /// <param name="map">The map to traverse.</param>
         /// <return>Get a GameStatePositions encapsulating the game state and an enumerable to iterate over all the tiles positions.</return>
-        public static WorldPositions ToAllPositions(this IWorldView gameStateView)
+        public static WorldPositions<T> ToAllPositions<T>(this IMapView<T> map)
         {
-            return gameStateView.ToGamePositions(gameStateView.GetAllPositions());
+            return map.ToMapPositions(map.GetAllPositions());
         }
 
         /// <summary>
@@ -40,9 +40,9 @@ namespace TWF.Map.Accessors
         /// <param name="x2">X position of the second corner.</param>
         /// <param name="y2">Y position of the second corner.</param>
         /// <return>An enumerable to iterate over the tile positions.</return>
-        public static WorldPositions ToPositions(this IWorldView gameStateView, int x1, int y1, int x2, int y2)
+        public static WorldPositions<T> ToPositions<T>(this IMapView<T> map, int x1, int y1, int x2, int y2)
         {
-            return gameStateView.ToGamePositions(gameStateView.GetPositions(x1, y1, x2, y2));
+            return map.ToMapPositions(map.GetPositions(x1, y1, x2, y2));
         }
 
         /// <summary>
@@ -65,9 +65,9 @@ namespace TWF.Map.Accessors
             return MapPositionsEnumerables.GetPositions(xMin, yMin, xMax, yMax);
         }
 
-        private static WorldPositions ToGamePositions(this IWorldView gameStateView, IEnumerable<Vector> positions)
+        private static WorldPositions<T> ToMapPositions<T>(this IMapView<T> map, IEnumerable<Vector> positions)
         {
-            return new WorldPositions(gameStateView, positions);
+            return new WorldPositions<T>(map, positions);
         }
     }
 }

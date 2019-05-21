@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace TWF.Tool
+namespace TWF
 {
     /// <summary>
     /// An interface to define tool brushes.

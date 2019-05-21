@@ -1,4 +1,4 @@
-namespace TWF.Generation
+namespace TWF
 {
     /// <summary>
     /// An interface to generate random noise on a given float bidimensional array.

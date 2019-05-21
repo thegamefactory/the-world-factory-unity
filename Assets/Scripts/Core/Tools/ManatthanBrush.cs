@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace TWF.Tool
+namespace TWF
 {
     /// <summary>
     /// A tool brush that yields the positions of all the tiles corresponding with a manatthan road between the start and the end

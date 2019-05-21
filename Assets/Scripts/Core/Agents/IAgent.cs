@@ -1,6 +1,6 @@
 using System;
 
-namespace TWF.Agent
+namespace TWF
 {
     /// <summary>
     /// An agent mutates the state of the world.

@@ -1,4 +1,4 @@
-namespace TWF.Tool
+namespace TWF
 {
     /// <summary>
     /// The outcome of a tool usage.

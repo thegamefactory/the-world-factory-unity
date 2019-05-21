@@ -1,11 +1,8 @@
-﻿using TWF.Map.Tile;
-using TWF.Map.Building;
-
-namespace TWF.Statistics
+﻿namespace TWF
 {
     public interface IMapStatistics
     {
-        int GetCapacity(UsageType usageType);
-        int GetOccupation(UsageType usageType);
+        //int GetCapacity(UsageType usageType);
+        //int GetOccupation(UsageType usageType);
     }
 }

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace TWF.Tool
+namespace TWF
 {
     /// <summary>
     /// An interface to define the behavior of a tool.

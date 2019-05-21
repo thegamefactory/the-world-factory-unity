@@ -1,31 +1,30 @@
 ﻿using System.Collections.Generic;
-using TWF.Map.Tile;
 
-namespace TWF.Map.Accessors
+namespace TWF
 {
     /// <summary>
     /// A tuple world view / positions.
     /// Having the world view embedded alongside positions enables to map the positions to constructs that are specific to the state.
     /// </summary>
-    public class WorldPositions
+    public class WorldPositions<T>
     {
-        public WorldPositions(IWorldView worldView, IEnumerable<Vector> positions)
+        public WorldPositions(IMapView<T> mapView, IEnumerable<Vector> positions)
         {
-            WorldView = worldView;
+            MapView = mapView;
             Positions = positions;
         }
 
-        public IWorldView WorldView { get; }
+        public IMapView<T> MapView { get; }
         public IEnumerable<Vector> Positions { get; }
 
-        public ITileView GetTile(Vector position)
+        public T GetMapContent(Vector position)
         {
-            return WorldView.GetTile(position);
+            return MapView[position];
         }
 
-        public (Vector, ITileView) GetTilePositionTuple(Vector position)
+        public (Vector, T) GetMapContentPositionTuple(Vector position)
         {
-            return (position, WorldView.GetTile(position));
+            return (position, MapView[position]);
         }
     }
 }

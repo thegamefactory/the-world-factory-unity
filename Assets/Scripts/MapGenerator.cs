@@ -1,7 +1,5 @@
 using UnityEngine;
-using TWF.Generation;
 using TWF;
-using TWF.Map.Tile;
 
 public class MapGenerator : MonoBehaviour
 {
@@ -44,10 +42,10 @@ public class MapGenerator : MonoBehaviour
     public void Generate(GameService gameService)
     {
         System.Random random = new System.Random(seed);
-        ITileMapGenerator tileMapGenerator;
+        ITerrainGenerator tileMapGenerator;
         if (waterThreshold <= 0)
         {
-            tileMapGenerator = new UniformMapGenerator(TileTerrain.LAND);
+            tileMapGenerator = new UniformMapGenerator(TWF.Terrain.LAND);
         }
         else if (waterThreshold <= 1)
         {
@@ -57,7 +55,7 @@ public class MapGenerator : MonoBehaviour
         }
         else
         {
-            tileMapGenerator = new UniformMapGenerator(TileTerrain.WATER);
+            tileMapGenerator = new UniformMapGenerator(TWF.Terrain.WATER);
         }
 
         Root.GameService.SetWorld(WorldFactory.Create(new Vector(mapWidth, mapHeight), tileMapGenerator, random));

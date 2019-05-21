@@ -1,7 +1,4 @@
-﻿using TWF.Agent;
-using TWF.Map.Tile;
-using TWF.Tool;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System;
 
 namespace TWF
@@ -21,7 +18,7 @@ namespace TWF
             var agents = new List<(IAgent, float)>();
             agents.Add((
                 new Constructor(
-                    new HashSet<TileZone> { TileZone.RESIDENTIAL, TileZone.FARMLAND },
+                    new HashSet<Zone> { Zone.RESIDENTIAL, Zone.FARMLAND },
                     () => random.NextDouble() < 0.1,
                     random.Next),
                 1.0f));
@@ -38,7 +35,7 @@ namespace TWF
         private static IDictionary<ToolBehaviorType, ITool> CreateTools()
         {
             var tools = new Dictionary<ToolBehaviorType, ITool>();
-            tools.Add(ToolBehaviorType.ZONER, new Tool.Tool(new Zoner()));
+            tools.Add(ToolBehaviorType.ZONER, new Tool(new Zoner()));
             return tools;
         }
 

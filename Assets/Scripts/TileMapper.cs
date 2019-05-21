@@ -1,6 +1,5 @@
 using UnityEngine;
-using TWF.Map.Tile;
-using TWF.Map.Building;
+using TWF;
 
 public class TileMapper : MonoBehaviour
 {
@@ -15,37 +14,39 @@ public class TileMapper : MonoBehaviour
 
     public Color errorTile;
 
-    public Color GetTileColor(ITileView tile)
+    public Color GetTileColor(IMapView<Building> buildingMap, IMapView<TWF.Terrain> terrainMap, IMapView<Zone> zoneMap, int x, int y)
     {
-        IBuilding building = tile.Building;
+        Building building = buildingMap[x, y];
+        Zone zone = zoneMap[x, y];
+
         if (null != building)
         {
-
-            switch (tile.Zone)
+            switch (zone)
             {
-                case TileZone.RESIDENTIAL:
-                    return building.RenderingSeed % 2 == 0 ? building1Tile : building2Tile;
-                case TileZone.FARMLAND:
+                case Zone.RESIDENTIAL:
+                    return building.Variant % 2 == 0 ? building1Tile : building2Tile;
+                case Zone.FARMLAND:
                     return fieldTile;
                 default:
                     return errorTile;
             }
         }
 
-        if (TileTerrain.WATER == tile.Terrain)
+        TWF.Terrain terrain = terrainMap[x, y];
+        if (TWF.Terrain.WATER == terrain)
         {
             return waterTile;
         }
 
-        switch (tile.Zone)
+        switch (zone)
         {
-            case TileZone.EMPTY:
+            case Zone.EMPTY:
                 return emptyTile;
-            case TileZone.RESIDENTIAL:
+            case Zone.RESIDENTIAL:
                 return residentialTile;
-            case TileZone.FARMLAND:
+            case Zone.FARMLAND:
                 return farmlandTile;
-            case TileZone.ROAD:
+            case Zone.ROAD:
                 return roadTile;
             default:
                 return errorTile;

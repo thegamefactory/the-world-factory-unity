@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace TWF.Generation
+namespace TWF
 {
     /// <summary>
     /// An implementation of the noise generator using Perlin noise.

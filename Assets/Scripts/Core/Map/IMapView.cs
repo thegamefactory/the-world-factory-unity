@@ -1,9 +1,9 @@
-﻿namespace TWF.Map
+﻿namespace TWF
 {
     /// <summary>
     /// A generic interface for a read-only view of a map containing elements of type T.
     /// </summary>
-    public interface IMapView<T>
+    public interface IMapView<out T> : IGenericMap
     {
         /// <summary>
         /// Returns the T object corresponding to the given position, or null if the map is empty there.
@@ -11,31 +11,34 @@
         /// <returns>The T object corresponding to the given position, or null if the map is empty there.</returns>
         /// <param name="x">X position.</param>
         /// <param name="y">Y position.</param>
-        T GetElement(int x, int y);
+        T GetContent(int x, int y);
+
+        /// <summary>
+        /// Returns the T object corresponding to the given position, or null if the map is empty there.
+        /// </summary>
+        /// <returns>The T object corresponding to the given position, or null if the map is empty there.</returns>
+        /// <param name="x">X position.</param>
+        /// <param name="y">Y position.</param>
+        T this[int x, int y]
+        {
+            get;
+        }
 
         /// <summary>
         /// Returns the T object corresponding to the given position, or null if the map is empty there.
         /// </summary>
         /// <returns>The T object corresponding to the given position, or null if the map is empty there.</returns>
         /// <param name="position">position.</param>
-        T GetElement(Vector position);
+        T GetContent(Vector position);
 
         /// <summary>
-        /// Returns the size of the map.
+        /// Returns the T object corresponding to the given position, or null if the map is empty there.
         /// </summary>
-        /// <return>The size of the map.</return>
-        Vector Size { get; }
-
-        /// <summary>
-        /// Returns the size of the map on the X axis.
-        /// </summary>
-        /// <return>The size of the map on the X axis.</return>
-        int SizeX { get; }
-
-        /// <summary>
-        /// Returns the size of the map on the Y axis.
-        /// </summary>
-        /// <return>The size of the map on the Y axis.</return>
-        int SizeY { get; }
+        /// <returns>The T object corresponding to the given position, or null if the map is empty there.</returns>
+        /// <param name="position">position.</param>
+        T this[Vector position]
+        {
+            get;
+        }
     }
 }

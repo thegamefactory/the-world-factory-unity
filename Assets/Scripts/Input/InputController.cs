@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using TWF;
-using TWF.Map.Tile;
-using TWF.Tool;
 using UnityEngine;
 
 public class InputController : MonoBehaviour
@@ -10,10 +8,10 @@ public class InputController : MonoBehaviour
     public KeyCode ResidentialModifierKey;
     public KeyCode FarmlandModifierKey;
 
-    private Modifier EmptyModifier = new Modifier(TileZone.EMPTY.ToString());
-    private Modifier ResidentialModifier = new Modifier(TileZone.RESIDENTIAL.ToString());
-    private Modifier FarmlandModifier = new Modifier(TileZone.FARMLAND.ToString());
-    private Modifier RoadModifier = new Modifier(TileZone.ROAD.ToString());
+    private Modifier EmptyModifier = new Modifier(Zone.EMPTY.ToString());
+    private Modifier ResidentialModifier = new Modifier(Zone.RESIDENTIAL.ToString());
+    private Modifier FarmlandModifier = new Modifier(Zone.FARMLAND.ToString());
+    private Modifier RoadModifier = new Modifier(Zone.ROAD.ToString());
 
     private Modifier CurrentModifier;
     LinkedList<Vector> positions = new LinkedList<Vector>();

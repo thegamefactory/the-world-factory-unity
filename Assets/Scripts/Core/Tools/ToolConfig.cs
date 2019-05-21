@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-namespace TWF.Tool
+namespace TWF
 {
     /// <summary>
     /// Defines which tool behaviors and which tool brushes are available.

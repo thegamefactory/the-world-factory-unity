@@ -21,11 +21,15 @@ public class MapDisplay : MonoBehaviour
 
         Color[] colorMap = GetColorMap(width, height);
 
+        IMapView<Building> buildingMap = worldView.GetBuildingMapView();
+        IMapView<Zone> zoneMap = worldView.GetZoneMapView();
+        IMapView<TWF.Terrain> terrainMap = worldView.GetTerrainMapView();
+
         for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < height; y++)
             {
-                colorMap[y * width + x] = tileMapper.GetTileColor(worldView.GetTile(x, y));
+                colorMap[y * width + x] = tileMapper.GetTileColor(buildingMap, terrainMap, zoneMap, x, y);
             }
         }
 

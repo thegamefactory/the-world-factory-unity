@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace TWF.Tool
+namespace TWF
 {
     /// <summary>
     /// An interface to define objects that mutate the state of the world based on the player actions.

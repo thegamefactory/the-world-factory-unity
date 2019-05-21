@@ -1,6 +1,6 @@
 using System;
 
-namespace TWF.Tool
+namespace TWF
 {
     public class Modifier
     {
@@ -15,7 +15,7 @@ namespace TWF.Tool
         {
             if (o == null) return false;
             if (!(o is Modifier)) return false;
-            Modifier other = (Modifier) o;
+            Modifier other = (Modifier)o;
             return this.Identifier.Equals(other.Identifier);
         }
 

@@ -1,12 +1,9 @@
-using TWF.Map.Tile;
-using TWF.Map;
-
-namespace TWF.Generation
+namespace TWF
 {
     /// <summary>
     /// A tile generator which considers all the noise below a certain threshold as water and the rest land.
     /// </summary>
-    public class WaterThresholdTileMapGenerator : ITileMapGenerator
+    public class WaterThresholdTileMapGenerator : ITerrainGenerator
     {
         private INoiseGenerator noiseGenerator;
         private float waterThreshold;
@@ -22,11 +19,11 @@ namespace TWF.Generation
             this.waterThreshold = waterThreshold;
         }
 
-        public IMap<Tile> Generate(Vector size)
+        public IMap<Terrain> Generate(Vector size)
         {
             float[,] noiseMap = new float[size.X, size.Y];
             noiseGenerator.Generate(noiseMap);
-            Tile[,] tiles = new Tile[size.X, size.Y];
+            Terrain[,] tiles = new Terrain[size.X, size.Y];
             for (int x = 0; x < size.X; ++x)
             {
                 for (int y = 0; y < size.Y; ++y)
@@ -34,18 +31,18 @@ namespace TWF.Generation
                     tiles[x, y] = CreateTile(noiseMap[x, y]);
                 }
             }
-            return new ArrayMap<Tile>(tiles);
+            return new ArrayMap<Terrain>(tiles);
         }
 
-        Tile CreateTile(float noiseValue)
+        Terrain CreateTile(float noiseValue)
         {
             if (noiseValue < waterThreshold)
             {
-                return new Tile(TileZone.EMPTY, TileTerrain.WATER);
+                return Terrain.WATER;
             }
             else
             {
-                return new Tile(TileZone.EMPTY, TileTerrain.LAND);
+                return Terrain.LAND;
             }
         }
     }

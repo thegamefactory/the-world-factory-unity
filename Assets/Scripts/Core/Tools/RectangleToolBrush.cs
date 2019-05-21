@@ -1,8 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
-using TWF.Map;
 
-namespace TWF.Tool
+namespace TWF
 {
     /// <summary>
     /// A tool brush that yields all rectangle tiles given rectangle corners (inclusive).

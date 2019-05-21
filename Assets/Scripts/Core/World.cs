@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using TWF.Map;
-using TWF.Map.Tile;
-using TWF.Agent;
-using TWF.Map.Building;
 
 namespace TWF
 {
@@ -12,52 +8,42 @@ namespace TWF
     /// </summary>
     public class World : IWorldView
     {
-        private IMap<Tile> tileMap;
+        private Maps maps;
         private Ticker ticker;
 
-        public World(IMap<Tile> tileMap, Ticker ticker)
+        public World(Maps maps, Ticker ticker)
         {
-            this.tileMap = tileMap;
+            this.maps = maps;
             this.ticker = ticker;
         }
 
         /// <inheritdoc/>
-        public Vector Size { get => tileMap.Size; }
+        public Vector Size { get => maps.Size; }
 
         /// <inheritdoc/>
-        public int SizeX { get => tileMap.SizeX; }
+        public int SizeX { get => maps.SizeX; }
 
         /// <inheritdoc/>
-        public int SizeY { get => tileMap.SizeY; }
+        public int SizeY { get => maps.SizeY; }
 
-        public ITileView GetTile(int x, int y)
+        /// <summary>
+        /// Get the map view corresponding to the given type.
+        /// </summary>
+        /// <return>The map view corresponding to the given type.</return>
+        /// <param name="mapType">The type of the map.</param>
+        public IMapView<T> GetMapView<T>(MapType mapType)
         {
-            return tileMap.GetElement(x, y);
+            return maps.GetMap<T>(mapType);
         }
 
-        public ITileView GetTile(Vector position)
+        /// <summary>
+        /// Get the map corresponding to the given type.
+        /// </summary>
+        /// <return>The map view corresponding to the given type.</return>
+        /// <param name="mapType">The type of the map.</param>
+        public IMap<T> GetMap<T>(MapType mapType)
         {
-            return tileMap.GetElement(position);
-        }
-
-        public void SetTileZone(TileZone zone, int x, int y)
-        {
-            tileMap.GetElement(x, y).Zone = zone;
-        }
-
-        public void SetTileZone(TileZone zone, Vector position)
-        {
-            SetTileZone(zone, position.X, position.Y);
-        }
-
-        public void SetTileBuilding(IBuilding building, int x, int y)
-        {
-            tileMap.GetElement(x, y).Building = building;
-        }
-
-        public void SetTileBuilding(IBuilding entity, Vector position)
-        {
-            SetTileBuilding(entity, position.X, position.Y);
+            return maps.GetMap<T>(mapType);
         }
 
         /// <summary>

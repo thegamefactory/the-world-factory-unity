@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace TWF.Tool
+namespace TWF
 {
     /// <summary>
     /// The default implementation for Tool.

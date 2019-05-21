@@ -1,4 +1,4 @@
-namespace TWF.Tool
+namespace TWF
 {
     /// <summary>
     /// Lists all the possible types of tool behaviour.

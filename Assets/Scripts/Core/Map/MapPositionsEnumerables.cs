@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System;
 
-namespace TWF.Map
+namespace TWF
 {
     /// <summary>
     /// An utility class to iterate over maps positions.
@@ -15,7 +15,7 @@ namespace TWF.Map
         /// <return>An enumerable to iterate over all the positions.</return>
         public static IEnumerable<Vector> GetAllPositions<T>(this IMapView<T> map)
         {
-            return UnsafeGetPositions(0, 0, map.SizeX, map.SizeY);
+            return UnsafeGetPositions(0, 0, map.SizeX - 1, map.SizeY - 1);
         }
 
 
