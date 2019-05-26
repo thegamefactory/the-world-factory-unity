@@ -14,6 +14,7 @@ public class TileMapper : MonoBehaviour
 
     public Color errorTile;
 
+    // hack - This method is just to get something working.
     public Color GetTileColor(IMapView<Building> buildingMap, IMapView<TWF.Terrain> terrainMap, IMapView<Zone> zoneMap, int x, int y)
     {
         Building building = buildingMap[x, y];
@@ -21,11 +22,11 @@ public class TileMapper : MonoBehaviour
 
         if (null != building)
         {
-            switch (zone)
+            switch (zone.Name)
             {
-                case Zone.RESIDENTIAL:
+                case "Residential":
                     return building.Variant % 2 == 0 ? building1Tile : building2Tile;
-                case Zone.FARMLAND:
+                case "Farmland":
                     return fieldTile;
                 default:
                     return errorTile;
@@ -38,15 +39,15 @@ public class TileMapper : MonoBehaviour
             return waterTile;
         }
 
-        switch (zone)
+        switch (zone.Name)
         {
-            case Zone.EMPTY:
+            case "Empty":
                 return emptyTile;
-            case Zone.RESIDENTIAL:
+            case "Residential":
                 return residentialTile;
-            case Zone.FARMLAND:
+            case "Farmland":
                 return farmlandTile;
-            case Zone.ROAD:
+            case "Road":
                 return roadTile;
             default:
                 return errorTile;

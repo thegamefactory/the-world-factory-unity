@@ -9,11 +9,13 @@ namespace TWF
     public class World : IWorldView
     {
         private Maps maps;
+        private WorldConfig config;
         private Ticker ticker;
 
-        public World(Maps maps, Ticker ticker)
+        public World(Maps maps, WorldConfig config, Ticker ticker)
         {
             this.maps = maps;
+            this.config = config;
             this.ticker = ticker;
         }
 
@@ -25,6 +27,18 @@ namespace TWF
 
         /// <inheritdoc/>
         public int SizeY { get => maps.SizeY; }
+
+        /// <inheritdoc/>
+        public IReadOnlyDictionary<string, Zone> Zones => config.Zones;
+
+        /// <inheritdoc/>
+        public IReadOnlyDictionary<string, ScheduledAgent> Agents => config.Agents;
+
+        /// <inheritdoc/>
+        public IReadOnlyDictionary<string, IToolBehavior> ToolBehaviors => config.ToolBehaviors;
+
+        /// <inheritdoc/>
+        public IReadOnlyDictionary<string, IToolBrush> ToolBrushes => config.ToolBrushes;
 
         /// <summary>
         /// Get the map view corresponding to the given type.
@@ -51,7 +65,7 @@ namespace TWF
         /// </summary>
         /// <param name="agents">The agents (jobs) that are mutating the world.</param>
         /// <param name="currentTime">The current time, given in seconds.</param>
-        public void Tick(IList<(IAgent, float)> agents, float currentTime)
+        public void Tick(IEnumerable<ScheduledAgent> agents, float currentTime)
         {
             ticker.Tick(GetActionQueue(), this, agents, currentTime);
         }

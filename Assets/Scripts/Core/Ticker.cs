@@ -15,22 +15,22 @@ namespace TWF
     {
         IDictionary<String, float> lastTicks = new Dictionary<String, float>();
 
-        public void Tick(IActionQueue actionQueue, IWorldView worldView, IList<(IAgent, float)> agents, float currentTime)
+        public void Tick(IActionQueue actionQueue, IWorldView worldView, IEnumerable<ScheduledAgent> agents, float currentTime)
         {
             foreach (var agent in agents)
             {
-                if (lastTicks.ContainsKey(agent.Item1.Name))
+                if (lastTicks.ContainsKey(agent.Agent.Name))
                 {
-                    float lastTick = lastTicks[agent.Item1.Name];
-                    if (lastTick + agent.Item2 < currentTime)
+                    float lastTick = lastTicks[agent.Agent.Name];
+                    if (lastTick + agent.Period < currentTime)
                     {
-                        actionQueue.ExecuteSynchronously(agent.Item1.execute(worldView));
-                        lastTicks[agent.Item1.Name] = lastTick + agent.Item2;
+                        actionQueue.ExecuteSynchronously(agent.Agent.execute(worldView));
+                        lastTicks[agent.Agent.Name] = lastTick + agent.Period;
                     }
                 }
                 else
                 {
-                    lastTicks[agent.Item1.Name] = currentTime;
+                    lastTicks[agent.Agent.Name] = currentTime;
                 }
             }
         }

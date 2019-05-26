@@ -1,6 +1,6 @@
 namespace TWF
 {
-    public interface IWorldView
+    public interface IWorldView : IWorldConfig
     {
         /// <summary>
         /// <summary>

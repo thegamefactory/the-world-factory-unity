@@ -1,49 +1,38 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Diagnostics;
 
 namespace TWF
 {
     /// <summary>
-    /// A tool behavior that attempts to set the zone of the input positions to the zone corresponding to the given modifier.
+    /// A tool behavior that attempts to set the zone of the input positions.
     /// </summary>
     public class Zoner : IToolBehavior
     {
-        public ToolBehaviorType ToolBehaviorType { get; } = ToolBehaviorType.ZONER;
-        private HashSet<Modifier> Modifiers { get; } = new HashSet<Modifier> {
-            new Modifier(Zone.EMPTY.ToString()),
-            new Modifier(Zone.FARMLAND.ToString()),
-            new Modifier(Zone.RESIDENTIAL.ToString()),
-            new Modifier(Zone.ROAD.ToString())
-        };
-
-        public Action<World> CreateActions(Modifier modifier, IEnumerable<Vector> inputPositions)
+        public Zoner(Zone zone)
         {
-            Zone zone;
-            if (!Enum.TryParse(modifier.Identifier, out zone))
-            {
-                throw new InvalidOperationException("Zone modifier is invalid: " + modifier);
-            }
+            Zone = zone;
+            Debug.Assert(zone.HasTrait(ManuallyZonable.Instance.GetType()));
+        }
 
+        public Zone Zone { get; }
+
+        public string Name => Zone.ZonerName();
+
+        public Action<World> CreateActions(IEnumerable<Vector> inputPositions)
+        {
             return (world) =>
             {
                 IMap<Zone> zoneMap = world.GetZoneMap();
                 foreach (var pos in inputPositions)
                 {
-                    zoneMap[pos] = zone;
+                    zoneMap[pos] = Zone;
                 }
             };
         }
 
-        public PreviewOutcome Preview(IWorldView worldView, Modifier modifier, IEnumerable<Vector> inputPositions)
+        public PreviewOutcome Preview(IWorldView worldView, IEnumerable<Vector> inputPositions)
         {
-            if (!Modifiers.Contains(modifier))
-            {
-                return PreviewOutcome.builder()
-                    .WithOutcomePositions(ToolOutcome.FAILURE, inputPositions.ToList())
-                    .Build();
-            }
-
             IMapView<Terrain> terrainMap = worldView.GetTerrainMapView();
             IMapView<Building> buildingMap = worldView.GetBuildingMapView();
 
@@ -54,6 +43,19 @@ namespace TWF
                 builder.WithPositionOutcome(pos, possible ? ToolOutcome.SUCCESS : ToolOutcome.FAILURE);
             }
             return builder.Build();
+        }
+    }
+
+    static class ZonerExtensions
+    {
+        public static Zoner Zoner(this Zone zone)
+        {
+            return new Zoner(zone);
+        }
+
+        public static String ZonerName(this Zone zone)
+        {
+            return zone.Name + "Zoner";
         }
     }
 }

@@ -7,18 +7,15 @@ namespace TWF
     /// <summary>
     /// This agent is creating buildings on unoccupied zoned tiles.
     /// </summary>
-    public class Constructor : IAgent
+    public class ZoneDeveloper : IAgent
     {
-        private ISet<Zone> constructibleZones;
         private Func<bool> doBuild;
         private Func<int> random;
 
-        /// <param name="constructibleZones">A set of zones on which buildings can be created.</param>
         /// <param name="doBuild">A function called for each unoccupied zoned tile; if it returns true, the agent creates a building.</param>
         /// <param name="random">A function that generates random numbers.</param>
-        public Constructor(ISet<Zone> constructibleZones, Func<bool> doBuild, Func<int> random)
+        public ZoneDeveloper(Func<bool> doBuild, Func<int> random)
         {
-            this.constructibleZones = constructibleZones;
             this.doBuild = doBuild;
             this.random = random;
         }
@@ -27,10 +24,12 @@ namespace TWF
 
         public Action<World> execute(IWorldView worldView)
         {
+            ISet<Zone> developableZones = new HashSet<Zone>(worldView.Zones.Values.Where((z) => z.IsDevelopable()));
+
             List<(Vector, Zone)> positionsToBuild = worldView.GetZoneMapView()
                 .ToAllPositions()
                 .ToPositionTuples()
-                .Where((z) => constructibleZones.Contains(z.Item2) && doBuild())
+                .Where((z) => developableZones.Contains(z.Item2) && doBuild())
                 .ToList();
 
             return (world) =>

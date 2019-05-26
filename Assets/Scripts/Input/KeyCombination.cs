@@ -1,43 +1,45 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 
-//TODO: Consider using predicates
-public class KeyCombination
+namespace TWF.Input
 {
-    LinkedList<KeyCode> keys;
-
-    private KeyCombination(LinkedList<KeyCode> keys)
+    /// <summary>
+    /// A wrapper to determine if a certain combination of keys is active or not.
+    /// </summary>
+    public class KeyCombination
     {
-        this.keys = keys;
-    }
+        LinkedList<KeyCode> keys;
 
-    public class Builder
-    {
-        LinkedList<KeyCode> keys = new LinkedList<KeyCode>();
-
-        public Builder And(KeyCode key)
+        private KeyCombination(LinkedList<KeyCode> keys)
         {
-            keys.AddLast(key);
-            return this;
+            this.keys = keys;
         }
 
-        public KeyCombination build()
+        public class Builder
         {
-            return new KeyCombination(keys);
+            LinkedList<KeyCode> keys = new LinkedList<KeyCode>();
+
+            public Builder And(KeyCode key)
+            {
+                keys.AddLast(key);
+                return this;
+            }
+
+            public KeyCombination build()
+            {
+                return new KeyCombination(keys);
+            }
         }
-    }
 
-    public static Builder builder(KeyCode key)
-    {
-        return new Builder().And(key);
-    }
-
-    public bool Evaluate()
-    {
-        foreach (KeyCode key in keys)
+        public static Builder builder(KeyCode key)
         {
-            if (!Input.GetKey(key)) return false;
+            return new Builder().And(key);
         }
-        return true;
+
+        public bool IsActive()
+        {
+            return keys.All(k => UnityEngine.Input.GetKey(k));
+        }
     }
 }

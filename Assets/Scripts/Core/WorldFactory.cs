@@ -10,7 +10,7 @@ namespace TWF
         public static World Create(Vector size, ITerrainGenerator terrainGenerator, Random random)
         {
             var terrainMap = terrainGenerator.Generate(size);
-            var zoneMap = new ArrayMap<Zone>(size, Zone.EMPTY);
+            var zoneMap = new ArrayMap<Zone>(size, Zones.Empty);
             var buildingMap = new ArrayMap<Building>(size, null);
 
             var maps = new Maps(size);
@@ -18,7 +18,7 @@ namespace TWF
             zoneMap.Register(maps);
             buildingMap.Register(maps);
 
-            return new World(maps, new Ticker());
+            return new World(maps, new WorldConfigFactory().CreateDefaultWorldConfig(random), new Ticker());
         }
     }
 }

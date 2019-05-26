@@ -8,6 +8,8 @@ namespace TWF
     /// </summary>
     public class PenToolBrush : IToolBrush
     {
+        public string Name => "Pen";
+
         public bool IsValid(IEnumerable<Vector> brushPositions)
         {
             return true;

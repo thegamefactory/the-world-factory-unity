@@ -25,10 +25,10 @@ namespace TWF
     /// </summary>
     public interface IToolBehavior
     {
-        ToolBehaviorType ToolBehaviorType { get; }
+        string Name { get; }
 
-        Action<World> CreateActions(Modifier modifier, IEnumerable<Vector> inputPositions);
+        Action<World> CreateActions(IEnumerable<Vector> inputPositions);
 
-        PreviewOutcome Preview(IWorldView worldView, Modifier modifier, IEnumerable<Vector> inputPositions);
+        PreviewOutcome Preview(IWorldView worldView, IEnumerable<Vector> inputPositions);
     }
 }

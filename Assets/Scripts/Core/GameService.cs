@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace TWF
@@ -14,25 +15,20 @@ namespace TWF
     /// 
     /// As convenience, the current world can never be null; this means the game service needs to be initialized with a valid world.
     /// </summary>
-    public class GameService : IWorldView
+    public class GameService
     {
         World world;
-        IList<(IAgent, float)> agents;
-        ToolConfig toolConfig;
         Ticker ticker = new Ticker();
+        Tool tool = new Tool();
 
         /// <summary>
         /// Constructs a new game service.
         /// </summary>
         /// <param name="world">The world.</param>
-        /// <param name="agents">Background jobs that update the world based on defined rules.
         /// Defined as a list of tuples (IAgent, float), where float is the period in seconds at which the agent should be executed.</param>
-        /// <param name="toolConfig">Tools that can be used by the player to interact with the world.</param>
-        public GameService(World world, IList<(IAgent, float)> agents, ToolConfig toolConfig)
+        public GameService(World world)
         {
             this.world = world;
-            this.agents = agents;
-            this.toolConfig = toolConfig;
         }
 
         /// <summary>
@@ -41,6 +37,15 @@ namespace TWF
         public void SetWorld(World world)
         {
             this.world = world;
+        }
+
+        /// <summary>
+        /// Returns the active world.
+        /// </summary>
+        /// <return>The active world view.</return>
+        public IWorldView GetWorldView()
+        {
+            return this.world;
         }
 
         /// <summary>
@@ -58,17 +63,21 @@ namespace TWF
         /// <summary>
         /// Applies the given toolType and associated modifier to the given positions processed with the brush type.
         /// </summary>
-        public ToolOutcome ApplyTool(ToolBehaviorType toolType, Modifier modifier, IEnumerable<Vector> positions, ToolBrushType toolBrushType)
+        public ToolOutcome ApplyTool(string toolBehaviorName, string toolBrushName, IEnumerable<Vector> positions)
         {
-            return toolConfig.GetTool(toolType).Apply(world.GetActionQueue(), modifier, positions, toolConfig.GetToolBrush(toolBrushType));
+            IToolBehavior toolBehavior = world.ToolBehaviors[toolBehaviorName] ?? throw new ArgumentException("Invalid tool behavior: " + toolBehaviorName);
+            IToolBrush toolBrush = world.ToolBrushes[toolBrushName] ?? throw new ArgumentException("Invalid tool brush: " + toolBrushName);
+            return tool.Apply(world.GetActionQueue(), toolBehavior, toolBrush, positions);
         }
 
         /// <summary>
         /// Previews the application of the given toolType and associated modifier to the given positions processed with the brush type.
         /// </summary>
-        public PreviewOutcome PreviewTool(ToolBehaviorType toolType, Modifier modifier, IEnumerable<Vector> positions, ToolBrushType toolBrushType)
+        public PreviewOutcome PreviewTool(string toolBehaviorName, string toolBrushName, IEnumerable<Vector> positions)
         {
-            return toolConfig.GetTool(toolType).Preview(world, modifier, positions, toolConfig.GetToolBrush(toolBrushType));
+            IToolBehavior toolBehavior = world.ToolBehaviors[toolBehaviorName] ?? throw new ArgumentException("Invalid tool behavior: " + toolBehaviorName);
+            IToolBrush toolBrush = world.ToolBrushes[toolBrushName] ?? throw new ArgumentException("Invalid tool brush: " + toolBrushName);
+            return tool.Preview(world, toolBehavior, toolBrush, positions);
         }
 
         /// <summary>
@@ -77,22 +86,7 @@ namespace TWF
         /// <param name="currentTime">The current time, given in seconds.</param>
         public void Tick(float currentTime)
         {
-            world.Tick(agents, currentTime);
+            world.Tick(world.Agents.Values, currentTime);
         }
-
-        /// <inheritdoc/>
-        public IMapView<T> GetMapView<T>(MapType mapType)
-        {
-            return world.GetMapView<T>(mapType);
-        }
-
-        /// <inheritdoc/>
-        public Vector Size { get => world.Size; }
-
-        /// <inheritdoc/>
-        public int SizeX { get => world.SizeX; }
-
-        /// <inheritdoc/>
-        public int SizeY { get => world.SizeY; }
     }
 }

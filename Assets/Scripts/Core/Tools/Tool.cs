@@ -4,46 +4,31 @@ using System.Collections.Generic;
 namespace TWF
 {
     /// <summary>
-    /// The default implementation for Tool.
+    /// An class to mutate the state of the world based on the player actions.
+    /// The tool offers a dry run mode (preview) that can be used to generate feedback on the effect of the action before enacting it.
     /// 
-    /// Wraps the IToolBehavior interface which is designed to separate logical concerns of tool validation and tool enactment 
-    /// from the ITool interface which is designed to be presented to the player.
-    /// 
-    /// Note how the Apply method creates an Action closure which encapsulate validation and enactement.
-    /// 
+    /// This interface is implemented by Tool. The approach to implement a new tool is to create a new IToolBehavior implementation.
     /// </summary>
-    public class Tool : ITool
+    public class Tool
     {
-        private IToolBehavior toolBehavior;
-
-        public Tool(IToolBehavior toolBehavior)
-        {
-            this.toolBehavior = toolBehavior;
-        }
-
-        ToolBehaviorType ToolBehaviorType
-        {
-            get { return toolBehavior.ToolBehaviorType; }
-        }
-
-        public PreviewOutcome Preview(IWorldView worldView, Modifier modifier, IEnumerable<Vector> inputPositions, IToolBrush toolBrush)
+        public PreviewOutcome Preview(IWorldView worldView, IToolBehavior toolBehavior, IToolBrush toolBrush, IEnumerable<Vector> inputPositions)
         {
             IEnumerable<Vector> toolPositions = toolBrush.computePositions(inputPositions);
-            return toolBehavior.Preview(worldView, modifier, inputPositions);
+            return toolBehavior.Preview(worldView, inputPositions);
         }
 
-        private bool Validate(IWorldView worldView, Modifier modifier, IEnumerable<Vector> toolPositions)
+        private bool Validate(IWorldView worldView, IToolBehavior toolBehavior, IEnumerable<Vector> toolPositions)
         {
-            return toolBehavior.Preview(worldView, modifier, toolPositions).IsPossible();
+            return toolBehavior.Preview(worldView, toolPositions).IsPossible();
         }
 
-        public ToolOutcome Apply(IActionQueue actionQueue, Modifier modifier, IEnumerable<Vector> inputPositions, IToolBrush toolBrush)
+        public ToolOutcome Apply(IActionQueue actionQueue, IToolBehavior toolBehavior, IToolBrush toolBrush, IEnumerable<Vector> inputPositions)
         {
             IEnumerable<Vector> toolPositions = toolBrush.computePositions(inputPositions);
-            var action = toolBehavior.CreateActions(modifier, toolPositions);
+            var action = toolBehavior.CreateActions(toolPositions);
             Action<World> validatedAction = (gs) =>
             {
-                if (Validate(gs, modifier, toolPositions))
+                if (Validate(gs, toolBehavior, toolPositions))
                 {
                     action(gs);
                 }

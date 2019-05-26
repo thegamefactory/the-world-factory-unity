@@ -9,6 +9,7 @@ namespace TWF
     /// </summary>
     public interface IToolBrush
     {
+        string Name { get; }
         bool IsValid(IEnumerable<Vector> brushPositions);
         IEnumerable<Vector> computePositions(IEnumerable<Vector> brushPositions);
     }

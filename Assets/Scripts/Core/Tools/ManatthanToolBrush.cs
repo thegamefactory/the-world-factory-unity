@@ -6,8 +6,10 @@ namespace TWF
     /// <summary>
     /// A tool brush that yields the positions of all the tiles corresponding with a manatthan road between the start and the end
     /// </summary>
-    public class ManatthanBrush : IToolBrush
+    public class ManatthanToolBrush : IToolBrush
     {
+        public string Name => "Manatthan";
+
         public bool IsValid(IEnumerable<Vector> brushPositions)
         {
             return brushPositions.Count() == 2;

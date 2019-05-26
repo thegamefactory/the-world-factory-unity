@@ -11,7 +11,7 @@ namespace TWF
     /// </summary>
     public interface IAgent
     {
-        String Name { get; }
+        string Name { get; }
 
         /// <summary>
         /// Executes the agent, returns a list of actions to be processed.

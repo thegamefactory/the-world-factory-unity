@@ -8,6 +8,8 @@ namespace TWF
     /// </summary>
     public class RectangleToolBrush : IToolBrush
     {
+        public string Name => "Rectangle";
+
         public bool IsValid(IEnumerable<Vector> brushPositions)
         {
             return brushPositions.Count() == 2;
