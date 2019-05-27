@@ -151,6 +151,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ResidentialModifierKey: 49
   FarmlandModifierKey: 50
+  RoadModifierKey: 51
 --- !u!4 &131899330
 Transform:
   m_ObjectHideFlags: 0

@@ -54,5 +54,10 @@ namespace TWF
         {
             return !(zone1 == zone2);
         }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }
