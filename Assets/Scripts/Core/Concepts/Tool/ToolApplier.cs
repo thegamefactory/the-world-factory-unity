@@ -9,9 +9,36 @@ namespace TWF
     /// 
     /// This interface is implemented by Tool. The approach to implement a new tool is to create a new IToolBehavior implementation.
     /// </summary>
-    public class Tool
+    public class ToolApplier : IToolApplier
     {
-        public PreviewOutcome Preview(IWorldView worldView, IToolBehavior toolBehavior, IToolBrush toolBrush, IEnumerable<Vector> inputPositions)
+        private World world;
+
+        public ToolApplier(World world)
+        {
+            this.world = world;
+        }
+
+        public ToolOutcome ApplyTool(string toolBehaviorName, string modifier, string toolBrushName, IEnumerable<Vector> positions)
+        {
+            IToolBehavior toolBehavior = GetToolBehavior(toolBehaviorName, modifier);
+            IToolBrush toolBrush = world.ToolBrushes[toolBrushName] ?? throw new ArgumentException("Invalid tool brush: " + toolBrushName);
+            return Apply(world.GetActionQueue(), toolBehavior, toolBrush, positions);
+        }
+
+        public PreviewOutcome PreviewTool(string toolBehaviorName, string modifier, string toolBrushName, IEnumerable<Vector> positions)
+        {
+            IToolBehavior toolBehavior = GetToolBehavior(toolBehaviorName, modifier);
+            IToolBrush toolBrush = world.ToolBrushes[toolBrushName] ?? throw new ArgumentException("Invalid tool brush: " + toolBrushName);
+            return Preview(world, toolBehavior, toolBrush, positions);
+        }
+
+        private IToolBehavior GetToolBehavior(string toolBehaviorName, string modifier)
+        {
+            var toolBehaviorProvider = world.ToolBehaviors[toolBehaviorName] ?? throw new ArgumentException("Invalid tool behavior: " + toolBehaviorName);
+            return toolBehaviorProvider(modifier);
+        }
+
+        private PreviewOutcome Preview(IWorldView worldView, IToolBehavior toolBehavior, IToolBrush toolBrush, IEnumerable<Vector> inputPositions)
         {
             IEnumerable<Vector> toolPositions = toolBrush.computePositions(inputPositions);
             return toolBehavior.Preview(worldView, inputPositions);
@@ -22,7 +49,7 @@ namespace TWF
             return toolBehavior.Preview(worldView, toolPositions).IsPossible();
         }
 
-        public ToolOutcome Apply(IActionQueue actionQueue, IToolBehavior toolBehavior, IToolBrush toolBrush, IEnumerable<Vector> inputPositions)
+        private ToolOutcome Apply(IActionQueue actionQueue, IToolBehavior toolBehavior, IToolBrush toolBrush, IEnumerable<Vector> inputPositions)
         {
             IEnumerable<Vector> toolPositions = toolBrush.computePositions(inputPositions);
             var action = toolBehavior.CreateActions(toolPositions);

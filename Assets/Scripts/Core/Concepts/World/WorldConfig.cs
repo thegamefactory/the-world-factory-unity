@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System;
 
 namespace TWF
 {
@@ -7,20 +8,34 @@ namespace TWF
     /// </summary>
     public class WorldConfig : IWorldConfig
     {
-        public WorldConfig(Dictionary<string, Zone> Zones,
+        public WorldConfig(
+            Registry zones,
+            Registry terrains,
             Dictionary<string, ScheduledAgent> Agents,
-            Dictionary<string, IToolBehavior> ToolBehaviors,
+            Dictionary<string, Func<string, IToolBehavior>> ToolBehaviors,
             Dictionary<string, IToolBrush> ToolBrushes)
         {
-            this.Zones = Zones;
+            this.Zones = zones;
+            this.Terrains = terrains;
             this.Agents = Agents;
             this.ToolBehaviors = ToolBehaviors;
             this.ToolBrushes = ToolBrushes;
         }
 
-        public IReadOnlyDictionary<string, Zone> Zones { get; }
-        public IReadOnlyDictionary<string, ScheduledAgent> Agents { get; }
-        public IReadOnlyDictionary<string, IToolBehavior> ToolBehaviors { get; }
-        public IReadOnlyDictionary<string, IToolBrush> ToolBrushes { get; }
+        public Registry Terrains { get; }
+        public Registry Zones { get; }
+        public Dictionary<string, ScheduledAgent> Agents { get; }
+        public Dictionary<string, Func<string, IToolBehavior>> ToolBehaviors { get; }
+        public Dictionary<string, IToolBrush> ToolBrushes { get; }
+
+        IReadOnlyRegistry IWorldConfig.Terrains => Terrains;
+
+        IReadOnlyRegistry IWorldConfig.Zones => Zones;
+
+        IReadOnlyDictionary<string, ScheduledAgent> IWorldConfig.Agents => Agents;
+
+        IReadOnlyDictionary<string, Func<string, IToolBehavior>> IWorldConfig.ToolBehaviors => ToolBehaviors;
+
+        IReadOnlyDictionary<string, IToolBrush> IWorldConfig.ToolBrushes => ToolBrushes;
     }
 }

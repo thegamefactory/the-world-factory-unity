@@ -1,21 +1,27 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace TWF
 {
     /// <summary>
     /// A definition of all the tool behaviors.
     /// </summary>
-    public class ToolBehaviors
+    public static class ToolBehaviors
     {
-        public static Dictionary<string, IToolBehavior> Zoners(IEnumerable<Zone> allZones)
+        public static string ZONER = "zoners";
+
+        public static Func<string, IToolBehavior> Zoners(Registry zones)
         {
-            var zoners = new List<IToolBehavior>();
-            foreach (Zone z in allZones.Where((z) => z.HasTrait(ManuallyZonable.Instance.GetType())))
+            return (m) =>
             {
-                zoners.Add(z.Zoner());
-            }
-            return zoners.ToDictionary((z) => z.Name);
+                var zone = zones.GetNamedEntity(m);
+                if (!zones.GetMarkerComponentRegistry(Zones.MANUALLY_ZONABLE).IsMarked(zone.Id))
+                {
+                    throw new ArgumentException(zone.Name);
+                }
+                return new Zoner(zone);
+            };
         }
     }
 }

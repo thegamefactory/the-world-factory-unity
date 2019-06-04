@@ -1,12 +1,13 @@
 using TWF;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class MapDisplay : MonoBehaviour
 {
     public Renderer textureRender;
 
     private Color[] cachedColorMap;
-    private Texture2D texture2D;
+    private readonly Texture2D texture2D;
 
     public void Update()
     {
@@ -18,12 +19,14 @@ public class MapDisplay : MonoBehaviour
         Vector size = worldView.Size;
         int width = size.X;
         int height = size.Y;
+        Assert.IsTrue(width > 0);
+        Assert.IsTrue(height > 0);
 
         Color[] colorMap = GetColorMap(width, height);
 
         IMapView<Building> buildingMap = worldView.GetBuildingMapView();
-        IMapView<Zone> zoneMap = worldView.GetZoneMapView();
-        IMapView<TWF.Terrain> terrainMap = worldView.GetTerrainMapView();
+        IMapView<int> zoneMap = worldView.GetZoneMapView();
+        IMapView<int> terrainMap = worldView.GetTerrainMapView();
 
         for (int x = 0; x < width; x++)
         {
@@ -53,8 +56,10 @@ public class MapDisplay : MonoBehaviour
         Texture2D texture = textureRender.sharedMaterial.mainTexture as Texture2D;
         if (null == texture || texture.width != width || texture.height != height)
         {
-            texture = new Texture2D(width, height);
-            texture.filterMode = FilterMode.Point;
+            texture = new Texture2D(width, height)
+            {
+                filterMode = FilterMode.Point
+            };
             textureRender.transform.localScale = new Vector3(width, height, 1);
         }
         return texture;

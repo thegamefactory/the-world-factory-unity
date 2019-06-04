@@ -1,6 +1,6 @@
-using UnityEngine;
 using TWF;
-
+using UnityEngine;
+using UnityEngine.Assertions;
 public class MapGenerator : MonoBehaviour
 {
     public int mapWidth;
@@ -10,7 +10,7 @@ public class MapGenerator : MonoBehaviour
     public bool autoUpdate;
     public int seed;
 
-    void OnValidate()
+    public void OnValidate()
     {
         if (mapWidth <= 0)
         {
@@ -34,34 +34,36 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
-    void Start()
+    public void Start()
     {
-        Generate(Root.GameService);
+#if DEBUG
+        Assert.raiseExceptions = true;
+#endif
+        Generate();
     }
 
-    public void Generate(GameService gameService)
+    public void Generate()
     {
         System.Random random = new System.Random(seed);
-        ITerrainGenerator tileMapGenerator;
+        ITerrainGenerator terrainGenerator;
         if (waterThreshold <= 0)
         {
-            tileMapGenerator = new UniformMapGenerator(TWF.Terrain.LAND);
+            terrainGenerator = new UniformMapGenerator(Terrains.LAND);
         }
         else if (waterThreshold <= 1)
         {
-            tileMapGenerator = new WaterThresholdTileMapGenerator(
+            terrainGenerator = new WaterThresholdTerrainGenerator(
                 new PerlinNoiseGenerator(noisePeriod, (float)random.NextDouble(), (float)random.NextDouble()),
                 waterThreshold);
         }
         else
         {
-            tileMapGenerator = new UniformMapGenerator(TWF.Terrain.WATER);
+            terrainGenerator = new UniformMapGenerator(Terrains.WATER);
         }
 
-        Root.GameService.SetWorld(
-            WorldFactory.Create(new Vector(mapWidth, mapHeight),
-            tileMapGenerator,
-            random));
+        Root.Size = new Vector(mapWidth, mapHeight);
+        Root.TerrainGenerator = terrainGenerator;
+        Root.Recreate();
 
         if (autoUpdate)
         {

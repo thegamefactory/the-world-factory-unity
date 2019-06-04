@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System;
 
 namespace TWF
 {
@@ -7,9 +8,10 @@ namespace TWF
     /// </summary>
     public interface IWorldConfig
     {
-        IReadOnlyDictionary<string, Zone> Zones { get; }
+        IReadOnlyRegistry Terrains { get; }
+        IReadOnlyRegistry Zones { get; }
         IReadOnlyDictionary<string, ScheduledAgent> Agents { get; }
-        IReadOnlyDictionary<string, IToolBehavior> ToolBehaviors { get; }
+        IReadOnlyDictionary<string, Func<string, IToolBehavior>> ToolBehaviors { get; }
         IReadOnlyDictionary<string, IToolBrush> ToolBrushes { get; }
     }
 }

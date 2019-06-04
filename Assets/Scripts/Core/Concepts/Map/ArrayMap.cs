@@ -37,48 +37,36 @@
             }
         }
 
-        /// <inheritdoc/>
         public Vector Size { get => new Vector(contentMap.GetLength(0), contentMap.GetLength(1)); }
 
-        /// <inheritdoc/>
         public int SizeX { get => contentMap.GetLength(0); }
 
-        /// <inheritdoc/>
         public int SizeY { get => contentMap.GetLength(0); }
 
-        /// <inheritdoc/>
         T IMapView<T>.this[Vector position] => contentMap[position.X, position.Y];
 
-        /// <inheritdoc/>
         T IMapView<T>.this[int x, int y] => contentMap[x, y];
 
-        /// <inheritdoc/>
         public T this[Vector position] { get => contentMap[position.X, position.Y]; set => contentMap[position.X, position.Y] = value; }
 
-        /// <inheritdoc/>
         public T this[int x, int y] { get => contentMap[x, y]; set => contentMap[x, y] = value; }
 
 
-        /// <inheritdoc/>
         public T GetContent(int x, int y)
         {
             return contentMap[x, y];
         }
 
-        /// <inheritdoc/>
         public T GetContent(Vector position)
         {
             return contentMap[position.X, position.Y];
         }
 
-
-        /// <inheritdoc/>
         public void SetContent(T content, int x, int y)
         {
             contentMap[x, y] = content;
         }
 
-        /// <inheritdoc/>
         public void SetContent(T content, Vector position)
         {
             contentMap[position.X, position.Y] = content;

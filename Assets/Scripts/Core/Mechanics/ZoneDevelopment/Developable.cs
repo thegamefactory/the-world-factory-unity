@@ -1,24 +1,16 @@
-﻿using System;
-namespace TWF
+﻿namespace TWF
 {
-    /// <summary>
-    /// A Zone trait that indicates that the ZoneDeveloper game engine is controlling the zone building development automatically.
-    /// </summary>
-    public class Developable : ITrait
+    public partial class Zones
     {
-        private Developable()
+        public static string DEVELOPABLE = "deveoplable";
+        public static void DefaultDevelopableComponent(WorldConfig worldConfig)
         {
+            Registry zones = worldConfig.Zones;
+            MarkerComponent developable = new MarkerComponent(DEVELOPABLE);
 
-        }
-
-        public static Developable Instance { get; } = new Developable();
-    }
-
-    static class DevelopableExtensions
-    {
-        public static Boolean IsDevelopable(this Zone zone)
-        {
-            return zone.HasTrait(Developable.Instance.GetType());
+            developable.MarkEntity(zones[RESIDENTIAL]);
+            developable.MarkEntity(zones[FARMLAND]);
+            zones.Extend(developable);
         }
     }
 }

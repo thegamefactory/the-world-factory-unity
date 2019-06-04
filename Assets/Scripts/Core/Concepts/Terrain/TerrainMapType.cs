@@ -5,21 +5,21 @@
     /// </summary>
     public static partial class MapTypes
     {
-        public static MapType Terrain { get; } = new MapType("Terrain");
+        public static string TERRAIN = "terrain";
 
-        public static IMapView<Terrain> GetTerrainMapView(this IWorldView worldView)
+        public static IMapView<int> GetTerrainMapView(this IWorldView worldView)
         {
-            return worldView.GetMapView<Terrain>(MapTypes.Terrain);
+            return worldView.GetMapView<int>(MapTypes.TERRAIN);
         }
 
-        public static IMap<Terrain> GetTerrainMap(this World world)
+        public static IMap<int> GetTerrainMap(this World world)
         {
-            return world.GetMap<Terrain>(MapTypes.Terrain);
+            return world.GetMap<int>(MapTypes.TERRAIN);
         }
 
-        public static void Register(this IMap<Terrain> map, Maps maps)
+        public static void RegisterTerrain(this IMap<int> map, Maps maps)
         {
-            maps.RegisterMap(MapTypes.Terrain, map);
+            maps.RegisterMap(MapTypes.TERRAIN, map);
         }
     }
 }

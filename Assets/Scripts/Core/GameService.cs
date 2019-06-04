@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-
 namespace TWF
 {
     /// <summary>
@@ -18,8 +15,6 @@ namespace TWF
     public class GameService
     {
         World world;
-        Ticker ticker = new Ticker();
-        Tool tool = new Tool();
 
         /// <summary>
         /// Constructs a new game service.
@@ -61,23 +56,12 @@ namespace TWF
         }
 
         /// <summary>
-        /// Applies the given toolType and associated modifier to the given positions processed with the brush type.
+        /// Return a tool applier to use tools against the current world.
         /// </summary>
-        public ToolOutcome ApplyTool(string toolBehaviorName, string toolBrushName, IEnumerable<Vector> positions)
+        /// <return>A tool applier to use tools against the current world.</return>
+        public IToolApplier GetToolApplier()
         {
-            IToolBehavior toolBehavior = world.ToolBehaviors[toolBehaviorName] ?? throw new ArgumentException("Invalid tool behavior: " + toolBehaviorName);
-            IToolBrush toolBrush = world.ToolBrushes[toolBrushName] ?? throw new ArgumentException("Invalid tool brush: " + toolBrushName);
-            return tool.Apply(world.GetActionQueue(), toolBehavior, toolBrush, positions);
-        }
-
-        /// <summary>
-        /// Previews the application of the given toolType and associated modifier to the given positions processed with the brush type.
-        /// </summary>
-        public PreviewOutcome PreviewTool(string toolBehaviorName, string toolBrushName, IEnumerable<Vector> positions)
-        {
-            IToolBehavior toolBehavior = world.ToolBehaviors[toolBehaviorName] ?? throw new ArgumentException("Invalid tool behavior: " + toolBehaviorName);
-            IToolBrush toolBrush = world.ToolBrushes[toolBrushName] ?? throw new ArgumentException("Invalid tool brush: " + toolBrushName);
-            return tool.Preview(world, toolBehavior, toolBrush, positions);
+            return new ToolApplier(world);
         }
 
         /// <summary>

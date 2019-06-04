@@ -26,6 +26,6 @@ namespace TWF
         /// </summary>
         /// <return>The map view corresponding to the given type.</return>
         /// <param name="mapType">The type of the map.</param>
-        IMapView<T> GetMapView<T>(MapType mapType);
+        IMapView<T> GetMapView<T>(string mapType);
     }
 }

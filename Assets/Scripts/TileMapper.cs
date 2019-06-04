@@ -15,9 +15,9 @@ public class TileMapper : MonoBehaviour
     public Color errorTile;
 
     // hack - This method is just to get something working.
-    public Color GetTileColor(IMapView<Building> buildingMap, IMapView<TWF.Terrain> terrainMap, IMapView<Zone> zoneMap, int x, int y)
+    public Color GetTileColor(IMapView<Building> buildingMap, IMapView<int> terrainMap, IMapView<int> zoneMap, int x, int y)
     {
-        Building building = buildingMap[x, y];
+        /*Building building = buildingMap[x, y];
         Zone zone = zoneMap[x, y];
 
         if (null != building)
@@ -51,6 +51,7 @@ public class TileMapper : MonoBehaviour
                 return roadTile;
             default:
                 return errorTile;
-        }
+        }*/
+        return Color.white;
     }
 }

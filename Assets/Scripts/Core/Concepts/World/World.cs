@@ -19,25 +19,13 @@ namespace TWF
             this.ticker = ticker;
         }
 
-        /// <inheritdoc/>
         public Vector Size { get => maps.Size; }
-
-        /// <inheritdoc/>
         public int SizeX { get => maps.SizeX; }
-
-        /// <inheritdoc/>
         public int SizeY { get => maps.SizeY; }
-
-        /// <inheritdoc/>
-        public IReadOnlyDictionary<string, Zone> Zones => config.Zones;
-
-        /// <inheritdoc/>
+        public IReadOnlyRegistry Terrains => config.Terrains;
+        public IReadOnlyRegistry Zones => config.Zones;
         public IReadOnlyDictionary<string, ScheduledAgent> Agents => config.Agents;
-
-        /// <inheritdoc/>
-        public IReadOnlyDictionary<string, IToolBehavior> ToolBehaviors => config.ToolBehaviors;
-
-        /// <inheritdoc/>
+        public IReadOnlyDictionary<string, Func<string, IToolBehavior>> ToolBehaviors => config.ToolBehaviors;
         public IReadOnlyDictionary<string, IToolBrush> ToolBrushes => config.ToolBrushes;
 
         /// <summary>
@@ -45,7 +33,7 @@ namespace TWF
         /// </summary>
         /// <return>The map view corresponding to the given type.</return>
         /// <param name="mapType">The type of the map.</param>
-        public IMapView<T> GetMapView<T>(MapType mapType)
+        public IMapView<T> GetMapView<T>(string mapType)
         {
             return maps.GetMap<T>(mapType);
         }
@@ -55,7 +43,7 @@ namespace TWF
         /// </summary>
         /// <return>The map view corresponding to the given type.</return>
         /// <param name="mapType">The type of the map.</param>
-        public IMap<T> GetMap<T>(MapType mapType)
+        public IMap<T> GetMap<T>(string mapType)
         {
             return maps.GetMap<T>(mapType);
         }

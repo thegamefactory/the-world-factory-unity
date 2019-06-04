@@ -11,12 +11,12 @@ namespace TWF
     /// </summary>
     public class Maps
     {
-        IDictionary<MapType, IGenericMap> maps;
+        IDictionary<string, IGenericMap> maps;
 
         public Maps(Vector size)
         {
             Size = size;
-            maps = new Dictionary<MapType, IGenericMap>();
+            maps = new Dictionary<string, IGenericMap>();
         }
 
         /// <summary>
@@ -24,7 +24,7 @@ namespace TWF
         /// </summary>
         /// <param name="mapType">Type of the map that is being fetched.</param>
         /// <return>The map corresponding to the given mapType.</return>
-        public IMap<T> GetMap<T>(MapType mapType)
+        public IMap<T> GetMap<T>(string mapType)
         {
             return (IMap<T>)this.maps[mapType];
         }
@@ -34,7 +34,7 @@ namespace TWF
         /// </summary>
         /// <param name="mapType">Type of the map that is being registered.</param>
         /// <param name="map">Actual map that is being registered.</param>
-        public void RegisterMap(MapType mapType, IGenericMap map)
+        public void RegisterMap(string mapType, IGenericMap map)
         {
             if (maps.ContainsKey(mapType))
             {

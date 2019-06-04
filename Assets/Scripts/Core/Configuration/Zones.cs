@@ -1,24 +1,23 @@
-﻿using System.Collections.Generic;
-
-namespace TWF
+﻿namespace TWF
 {
     /// <summary>
     /// A definition of all zones.
     /// </summary>
-    public static class Zones
+    public static partial class Zones
     {
-        public static Dictionary<string, Zone> AllZones { get; } = new Dictionary<string, Zone>();
+        public static string EMPTY = "empty";
+        public static string RESIDENTIAL = "residential";
+        public static string FARMLAND = "farmland";
+        public static string ROAD = "road";
 
-        public static Zone Empty = RegisterZone("Empty", ManuallyZonable.Instance);
-        public static Zone Residential = RegisterZone("Residential", ManuallyZonable.Instance, Developable.Instance);
-        public static Zone Farmland = RegisterZone("Farmland", ManuallyZonable.Instance, Developable.Instance);
-        public static Zone Road = RegisterZone("Road", ManuallyZonable.Instance);
-
-        private static Zone RegisterZone(string name, params ITrait[] zoneTraits)
+        public static Registry DefaultZones()
         {
-            Zone z = new Zone(name, zoneTraits);
-            AllZones.Add(z.Name, z);
-            return z;
+            Registry zones = new Registry();
+            zones.Register(EMPTY);
+            zones.Register(RESIDENTIAL);
+            zones.Register(FARMLAND);
+            zones.Register(ROAD);
+            return zones;
         }
     }
 }

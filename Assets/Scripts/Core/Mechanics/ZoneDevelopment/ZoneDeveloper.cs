@@ -24,18 +24,18 @@ namespace TWF
 
         public Action<World> execute(IWorldView worldView)
         {
-            ISet<Zone> developableZones = new HashSet<Zone>(worldView.Zones.Values.Where((z) => z.IsDevelopable()));
+            var developableZones = worldView.Zones.GetMarkerComponentRegistry(Zones.DEVELOPABLE);
 
-            List<(Vector, Zone)> positionsToBuild = worldView.GetZoneMapView()
+            List<(Vector, int)> positionsToBuild = worldView.GetZoneMapView()
                 .ToAllPositions()
                 .ToPositionTuples()
-                .Where((z) => developableZones.Contains(z.Item2) && doBuild())
+                .Where((z) => developableZones.IsMarked(z.Item2) && doBuild())
                 .ToList();
 
             return (world) =>
             {
                 IMap<Building> buildingMap = world.GetBuildingMap();
-                foreach ((Vector, Zone) z in positionsToBuild.Where((z) => null == buildingMap[z.Item1]))
+                foreach (var z in positionsToBuild.Where((z) => null == buildingMap[z.Item1]))
                 {
                     buildingMap[z.Item1] = new Building(random());
                 }

@@ -1,15 +1,18 @@
 ﻿namespace TWF
 {
-    /// <summary>
-    /// A trait for zones which can be manually zoned (e.g by the action of a tool controlled by the player). 
-    /// </summary>
-    public class ManuallyZonable : ITrait
+    public static partial class Zones
     {
-        private ManuallyZonable()
+        public static string MANUALLY_ZONABLE = "manuallyZonable";
+
+        public static void DefaultManuallyZonableComponent(WorldConfig worldConfig)
         {
+            Registry zones = worldConfig.Zones;
+            MarkerComponent manuallyZonable = new MarkerComponent(MANUALLY_ZONABLE);
 
+            manuallyZonable.MarkEntity(zones[RESIDENTIAL]);
+            manuallyZonable.MarkEntity(zones[FARMLAND]);
+            manuallyZonable.MarkEntity(zones[ROAD]);
+            zones.Extend(manuallyZonable);
         }
-
-        public static ManuallyZonable Instance { get; } = new ManuallyZonable();
     }
 }

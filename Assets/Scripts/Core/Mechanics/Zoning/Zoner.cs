@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace TWF
 {
@@ -9,53 +8,45 @@ namespace TWF
     /// </summary>
     public class Zoner : IToolBehavior
     {
-        public Zoner(Zone zone)
+        public Zoner(NamedEntity zone)
         {
             Zone = zone;
-            Debug.Assert(zone.HasTrait(ManuallyZonable.Instance.GetType()));
         }
 
-        public Zone Zone { get; }
+        public NamedEntity Zone { get; }
 
-        public string Name => Zone.ZonerName();
+        public string Name => NameFromZone(Zone.Name);
+
+        public static string NameFromZone(string zoneName)
+        {
+            return zoneName + "Zoner";
+        }
 
         public Action<World> CreateActions(IEnumerable<Vector> inputPositions)
         {
             return (world) =>
             {
-                IMap<Zone> zoneMap = world.GetZoneMap();
+                IMap<int> zoneMap = world.GetZoneMap();
                 foreach (var pos in inputPositions)
                 {
-                    zoneMap[pos] = Zone;
+                    zoneMap[pos] = Zone.Id;
                 }
             };
         }
 
         public PreviewOutcome Preview(IWorldView worldView, IEnumerable<Vector> inputPositions)
         {
-            IMapView<Terrain> terrainMap = worldView.GetTerrainMapView();
+            IMapView<int> terrainMap = worldView.GetTerrainMapView();
             IMapView<Building> buildingMap = worldView.GetBuildingMapView();
+            IZonableTerrain zonableTerrains = worldView.Zones.GetTypedComponentRegistry<IZonableTerrain>(Zones.ZONABLE_TERRAINS).GetComponent(Zone.Id);
 
             PreviewOutcome.Builder builder = PreviewOutcome.builder();
             foreach (Vector pos in inputPositions)
             {
-                bool possible = null == buildingMap[pos] && Terrain.LAND == terrainMap[pos];
+                bool possible = null == buildingMap[pos] && zonableTerrains.IsZonable(terrainMap[pos]);
                 builder.WithPositionOutcome(pos, possible ? ToolOutcome.SUCCESS : ToolOutcome.FAILURE);
             }
             return builder.Build();
-        }
-    }
-
-    static class ZonerExtensions
-    {
-        public static Zoner Zoner(this Zone zone)
-        {
-            return new Zoner(zone);
-        }
-
-        public static String ZonerName(this Zone zone)
-        {
-            return zone.Name + "Zoner";
         }
     }
 }

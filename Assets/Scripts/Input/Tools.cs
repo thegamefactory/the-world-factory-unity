@@ -15,11 +15,19 @@ namespace TWF.Input
     /// </summary>
     public class Tools
     {
-        private ToolName currentTool;
-        private ToolName activeTool;
+        private Tool currentTool;
+        private Tool activeTool;
+        private PreviewOutcome currentPreviewOutcome;
         private LinkedList<Vector> positions = new LinkedList<Vector>();
+
+        private Func<IToolApplier> toolApplierProvider;
         private List<KeyCombinationSubject> keyCombinationSubjects = new List<KeyCombinationSubject>();
-        private IDictionary<ToolName, Func<ICollection<Vector>, ToolOutcome>> tools = new Dictionary<ToolName, Func<ICollection<Vector>, ToolOutcome>>();
+        private ICollection<Tool> tools = new List<Tool>();
+
+        public Tools(Func<IToolApplier> toolApplierProvider)
+        {
+            this.toolApplierProvider = toolApplierProvider;
+        }
 
         public Tools()
         {
@@ -27,8 +35,9 @@ namespace TWF.Input
                 .OnActivate(() => SwitchTool(null))
                 .build());
             keyCombinationSubjects.Add(KeyCombinationSubject.builder(KeyCombination.builder(KeyCode.Mouse0).build())
-                .OnActivate(() => BeginTool())
-                .OnDeactivate(() => EndTool())
+                .OnActivate(() => ActivateTool())
+                .OnContinuous(() => ContinueTool())
+                .OnDeactivate(() => EnactTool())
                 .build());
         }
 
@@ -37,47 +46,63 @@ namespace TWF.Input
             keyCombinationSubjects.ForEach((kep) => kep.Enact());
         }
 
-        public void RegisterTool(KeyCombination keyCombination, ToolName toolName, Func<ICollection<Vector>, ToolOutcome> onCommit)
+        public void RegisterTool(KeyCombination keyCombination, Tool tool)
         {
             keyCombinationSubjects.Add(KeyCombinationSubject.builder(keyCombination)
-                .OnActivate(() => SwitchTool(toolName))
+                .OnActivate(() => SwitchTool(tool))
                 .build());
-            tools.Add(toolName, onCommit);
+            tools.Add(tool);
         }
 
-        public void SwitchTool(ToolName newTool)
+        public void SwitchTool(Tool newTool)
         {
-            activeTool = null;
-            ResetPositions();
             currentTool = newTool;
+            ResetActiveTool();
         }
 
-        public void BeginTool()
+        public void ActivateTool()
         {
-            activeTool = currentTool;
             ResetPositions();
-            AddCurrentMousePosition();
+            if (AddCurrentMousePosition())
+            {
+                activeTool = currentTool;
+            }
         }
 
-        public void EndTool()
+        public void ContinueTool()
+        {
+            doIfToolIsActive(() =>
+            {
+                currentPreviewOutcome = activeTool.Preview(toolApplierProvider(), positions);
+            });
+        }
+
+        public void EnactTool()
+        {
+            doIfToolIsActive(() =>
+            {
+                ToolOutcome outcome = activeTool.Apply(toolApplierProvider(), positions);
+                if (ToolOutcome.SUCCESS != outcome)
+                {
+                    Debug.LogError("Failed to enact " + activeTool);
+                }
+                else
+                {
+                    Debug.Log("Enacted " + activeTool);
+                }
+            });
+            ResetActiveTool();
+        }
+
+        private void doIfToolIsActive(Action action)
         {
             if (null != activeTool && activeTool == currentTool)
             {
                 if (AddCurrentMousePosition())
                 {
-                    ToolOutcome outcome = tools[activeTool](positions);
-                    if (ToolOutcome.SUCCESS != outcome)
-                    {
-                        Debug.LogError("Failed to enact " + activeTool);
-                    }
-                    else
-                    {
-                        Debug.Log("Enacted " + activeTool);
-                    }
+                    action();
                 }
             }
-            activeTool = null;
-            ResetPositions();
         }
 
         public bool AddCurrentMousePosition()
@@ -94,7 +119,13 @@ namespace TWF.Input
             }
         }
 
-        public void ResetPositions()
+        private void ResetActiveTool()
+        {
+            ResetPositions();
+            this.activeTool = null;
+            this.currentPreviewOutcome = null;
+        }
+        private void ResetPositions()
         {
             positions.Clear();
         }
