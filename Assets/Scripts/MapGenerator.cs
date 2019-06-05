@@ -1,4 +1,5 @@
 using TWF;
+using TWF.Graphics;
 using UnityEngine;
 using UnityEngine.Assertions;
 public class MapGenerator : MonoBehaviour
@@ -61,9 +62,10 @@ public class MapGenerator : MonoBehaviour
             terrainGenerator = new UniformMapGenerator(Terrains.WATER);
         }
 
-        Root.Size = new Vector(mapWidth, mapHeight);
-        Root.TerrainGenerator = terrainGenerator;
-        Root.Recreate();
+        var worldFactory = Root.GameService.WorldFactory;
+        worldFactory.Size = new Vector(mapWidth, mapHeight);
+        worldFactory.TerrainGenerator = terrainGenerator;
+        Root.GameService.NewWorld();
 
         if (autoUpdate)
         {

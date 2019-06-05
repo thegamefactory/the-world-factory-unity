@@ -8,10 +8,10 @@ public class CameraController : MonoBehaviour
 
     void Update()
     {
-        handleInput();
+        HandleInput();
     }
 
-    void handleInput()
+    void HandleInput()
     {
         this.transform.localPosition += Input.GetAxis("Horizontal") * horizontalDirectionVector * Time.deltaTime * speed;
         this.transform.localPosition += Input.GetAxis("Vertical") * verticalDirectionVector * Time.deltaTime * speed;

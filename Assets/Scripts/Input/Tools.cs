@@ -26,11 +26,9 @@ namespace TWF.Input
 
         public Tools(Func<IToolApplier> toolApplierProvider)
         {
+            Debug.Assert(null != toolApplierProvider);
             this.toolApplierProvider = toolApplierProvider;
-        }
 
-        public Tools()
-        {
             keyCombinationSubjects.Add(KeyCombinationSubject.builder(KeyCombination.builder(KeyCode.Escape).build())
                 .OnActivate(() => SwitchTool(null))
                 .build());
@@ -71,7 +69,7 @@ namespace TWF.Input
 
         public void ContinueTool()
         {
-            doIfToolIsActive(() =>
+            DoIfToolIsActive(() =>
             {
                 currentPreviewOutcome = activeTool.Preview(toolApplierProvider(), positions);
             });
@@ -79,7 +77,7 @@ namespace TWF.Input
 
         public void EnactTool()
         {
-            doIfToolIsActive(() =>
+            DoIfToolIsActive(() =>
             {
                 ToolOutcome outcome = activeTool.Apply(toolApplierProvider(), positions);
                 if (ToolOutcome.SUCCESS != outcome)
@@ -94,7 +92,7 @@ namespace TWF.Input
             ResetActiveTool();
         }
 
-        private void doIfToolIsActive(Action action)
+        private void DoIfToolIsActive(Action action)
         {
             if (null != activeTool && activeTool == currentTool)
             {

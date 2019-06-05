@@ -1,14 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace TWF
 {
     public class Registry : IReadOnlyRegistry
     {
+        public string Name { get; }
         readonly Dictionary<string, int> nameIdLookup = new Dictionary<string, int>();
         readonly List<string> names = new List<string>();
         readonly Dictionary<string, IComponentRegistry> componentRegistries = new Dictionary<string, IComponentRegistry>();
+
+        public Registry(string name)
+        {
+            Name = name;
+        }
+
         public int Register(string entityName)
         {
             int id = names.Count;
@@ -35,7 +41,10 @@ namespace TWF
 
         public IComponentRegistry GetComponentRegistry(string componentName)
         {
-            TwfDebug.Assert(componentRegistries.ContainsKey(componentName));
+            if (!componentRegistries.ContainsKey(componentName))
+            {
+                throw new KeyNotFoundException(Name + "[" + componentName + "]");
+            }
             return componentRegistries[componentName];
         }
 

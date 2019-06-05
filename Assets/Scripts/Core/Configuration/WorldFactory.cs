@@ -2,23 +2,31 @@ using System;
 
 namespace TWF
 {
-    public static class WorldFactory
+    public class WorldFactory
     {
+        public Vector Size { get; set; } = new Vector(1, 1);
+
+        public ITerrainGenerator TerrainGenerator { get; set; } = new UniformMapGenerator(Terrains.LAND);
+
+        public WorldConfigFactory WorldConfigFactory { get; set; } = new WorldConfigFactory();
+
+        public Random Random { get; set; } = new Random();
+
         /// <summary>
         /// Return a list of tuples (IAgent, float), where float is the period in seconds at which the agent should be executed.
         /// </summary>
-        public static World Create(Vector size, ITerrainGenerator terrainGenerator, WorldConfigFactory worldConfigFactory, Random random)
+        public World Create()
         {
-            TwfDebug.Assert(size.X > 0, "size.X must be positive");
-            TwfDebug.Assert(size.Y > 0, "size.Y must be positive");
+            TwfDebug.Assert(Size.X > 0, "size.X must be positive");
+            TwfDebug.Assert(Size.Y > 0, "size.Y must be positive");
 
-            WorldConfig worldConfig = worldConfigFactory.CreateDefaultWorldConfig(random);
+            WorldConfig worldConfig = WorldConfigFactory.CreateDefaultWorldConfig(Random);
 
-            var terrainMap = terrainGenerator.GenerateTerrainMap(worldConfig, size);
-            var zoneMap = new ArrayMap<int>(size, worldConfig.Zones[Zones.EMPTY]);
-            var buildingMap = new ArrayMap<Building>(size, null);
+            var terrainMap = TerrainGenerator.GenerateTerrainMap(worldConfig, Size);
+            var zoneMap = new ArrayMap<int>(Size, worldConfig.Zones[Zones.EMPTY]);
+            var buildingMap = new ArrayMap<Building>(Size, null);
 
-            Maps maps = new Maps(size);
+            Maps maps = new Maps(Size);
             terrainMap.RegisterTerrain(maps);
             zoneMap.RegisterZone(maps);
             buildingMap.RegisterBuilding(maps);

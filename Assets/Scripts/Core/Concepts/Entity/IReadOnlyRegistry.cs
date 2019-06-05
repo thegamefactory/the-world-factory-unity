@@ -2,6 +2,7 @@
 {
     public interface IReadOnlyRegistry
     {
+        string Name { get; }
         string this[int id] { get; }
         int this[string name] { get; }
         int NumberOfEntities { get; }

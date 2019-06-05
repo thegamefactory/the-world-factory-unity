@@ -253,7 +253,7 @@ Transform:
   m_GameObject: {fileID: 230618657}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 32, y: 32, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
@@ -366,8 +366,8 @@ GameObject:
   - component: {fileID: 1133443526}
   - component: {fileID: 1133443525}
   - component: {fileID: 1133443527}
-  - component: {fileID: 1133443528}
   - component: {fileID: 1133443529}
+  - component: {fileID: 1133443528}
   m_Layer: 0
   m_Name: MapGenerator
   m_TagString: Untagged
@@ -419,7 +419,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39009022d9e37062c89f548e4691b288, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textureRender: {fileID: 230618659}
+  TextureRender: {fileID: 230618659}
+  ActiveTileLayers:
+  - buildingColor
+  - zoneColor
+  - terrainColor
+  EmptyColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &1133443528
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -429,18 +434,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 1133443524}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e2a611c0c70c522ebd6c8af16b31ebb, type: 3}
+  m_Script: {fileID: 11500000, guid: 1bcaad6d7f55d58438bac789a3898bdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  emptyTile: {r: 0.83544075, g: 0.9339623, b: 0.38768244, a: 0}
-  residentialTile: {r: 0, g: 1, b: 0, a: 0}
-  farmlandTile: {r: 1, g: 0.5019608, b: 0, a: 0}
-  fieldTile: {r: 1, g: 1, b: 0, a: 0}
-  building1Tile: {r: 0.7169812, g: 0.7169812, b: 0.7169812, a: 0}
-  building2Tile: {r: 0.33962262, g: 0.33962262, b: 0.33962262, a: 0}
-  waterTile: {r: 0, g: 0.78241277, b: 1, a: 0}
-  roadTile: {r: 0, g: 0, b: 0, a: 0}
-  errorTile: {r: 1, g: 0, b: 1, a: 0}
+  LandTile: {r: 0.78431374, g: 1, b: 0, a: 0}
+  ResidentialTile: {r: 0, g: 1, b: 0, a: 0}
+  FarmlandTile: {r: 0.78431374, g: 0.78431374, b: 0, a: 0}
+  FieldTile: {r: 1, g: 1, b: 0, a: 0}
+  Building1Tile: {r: 0.5882353, g: 0.5882353, b: 0.5882353, a: 0}
+  Building2Tile: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0}
+  WaterTile: {r: 0.5019608, g: 0.5019608, b: 1, a: 0}
+  RoadTile: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 0}
+  ErrorTile: {r: 1, g: 0, b: 0, a: 0}
 --- !u!114 &1133443529
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -8,7 +8,7 @@ namespace TWF.Input
         public KeyCode FarmlandModifierKey;
         public KeyCode RoadModifierKey;
 
-        readonly private Tools tools = new Tools();
+        readonly private Tools tools = new Tools(() => Root.GameService.GetToolApplier());
 
         private void Start()
         {

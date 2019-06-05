@@ -1,3 +1,5 @@
+using TWF.Graphics;
+
 namespace TWF
 {
     /// <summary>
@@ -14,16 +16,30 @@ namespace TWF
     /// </summary>
     public class GameService
     {
-        World world;
+        public WorldFactory WorldFactory { get; }
+        private World world;
+
+        public GraphicConfig GraphicConfig { get; } = new GraphicConfig();
 
         /// <summary>
         /// Constructs a new game service.
         /// </summary>
         /// <param name="world">The world.</param>
         /// Defined as a list of tuples (IAgent, float), where float is the period in seconds at which the agent should be executed.</param>
-        public GameService(World world)
+        public GameService()
         {
-            this.world = world;
+            WorldFactory = new WorldFactory();
+            NewWorld();
+        }
+
+        /// <summary>
+        /// Recreates the world.
+        /// </summary>
+        public IWorldView NewWorld()
+        {
+            world = WorldFactory.Create();
+            GraphicConfig.OnNewWorld(world);
+            return world;
         }
 
         /// <summary>

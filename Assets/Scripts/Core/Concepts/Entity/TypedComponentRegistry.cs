@@ -28,7 +28,7 @@ namespace TWF
 
         public T GetComponent(int entityId)
         {
-            if (values.Count > entityId)
+            if (values.Count <= entityId)
             {
                 AttachComponent(entityId, defaultProvider());
             }

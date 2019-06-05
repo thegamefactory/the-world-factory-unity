@@ -5,6 +5,7 @@
     /// </summary>
     public static partial class Zones
     {
+        public static string REGISTRY = "zone";
         public static string EMPTY = "empty";
         public static string RESIDENTIAL = "residential";
         public static string FARMLAND = "farmland";
@@ -12,7 +13,7 @@
 
         public static Registry DefaultZones()
         {
-            Registry zones = new Registry();
+            Registry zones = new Registry(REGISTRY);
             zones.Register(EMPTY);
             zones.Register(RESIDENTIAL);
             zones.Register(FARMLAND);
