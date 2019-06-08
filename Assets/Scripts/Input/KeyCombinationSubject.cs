@@ -31,7 +31,8 @@ namespace TWF.Input
             private Action onActivate;
             private Action onDeactivate;
 
-            public KeyCombinationSubjectBuilder(IKeyCombination keyCombination)
+            public KeyCombinationSubjectBuilder
+                (IKeyCombination keyCombination)
             {
                 this.keyCombination = keyCombination;
             }
@@ -54,7 +55,7 @@ namespace TWF.Input
                 return this;
             }
 
-            public KeyCombinationSubject build()
+            public KeyCombinationSubject Build()
             {
                 return new KeyCombinationSubject(keyCombination, onActivate, onContinuous, onDeactivate);
             }

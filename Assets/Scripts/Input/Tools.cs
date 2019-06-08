@@ -16,28 +16,66 @@ namespace TWF.Input
     /// </summary>
     public class Tools
     {
-        private Tool selectedTool;
-        private Tool activeTool;
-        private PreviewOutcome currentPreviewOutcome;
-        private LinkedList<Vector> positions = new LinkedList<Vector>();
+        public PreviewOutcome CurrentPreviewOutcome { get; private set; }
 
-        private Func<IToolApplier> toolApplierProvider;
-        private List<KeyCombinationSubject> keyCombinationSubjects = new List<KeyCombinationSubject>();
-        private ICollection<Tool> tools = new List<Tool>();
+        private Tool _SelectedTool;
+        private Tool _ActiveTool;
+        public Tool SelectedTool
+        {
+            get
+            {
+                return this._SelectedTool;
+            }
+            set
+            {
+                _SelectedTool = value;
+                ResetActiveTool();
+            }
+        }
+        public Tool ActiveTool
+        {
+            get
+            {
+                return this._ActiveTool;
+            }
+            set
+            {
+                ResetPositions();
+                if (null == value || AddCurrentMousePosition())
+                {
+                    _ActiveTool = value;
+                }
+            }
+        }
 
-        public Tools(Func<IToolApplier> toolApplierProvider)
+        private readonly LinkedList<Vector> positions = new LinkedList<Vector>();
+
+        private readonly Func<IToolApplier> toolApplierProvider;
+        private readonly IMousePositionProvider mousePositionProvider;
+        private readonly List<KeyCombinationSubject> keyCombinationSubjects = new List<KeyCombinationSubject>();
+        private readonly ICollection<Tool> tools = new List<Tool>();
+
+        public Tools(Func<IToolApplier> toolApplierProvider, IMousePositionProvider mousePositionProvider)
+            : this(toolApplierProvider, mousePositionProvider, KeyCombination.Builder(KeyCode.Escape).Build(), KeyCombination.Builder(KeyCode.Mouse0).Build())
+        {
+        }
+
+        public Tools(Func<IToolApplier> toolApplierProvider, IMousePositionProvider mousePositionProvider, IKeyCombination escape, IKeyCombination activator)
         {
             Debug.Assert(null != toolApplierProvider);
+            Debug.Assert(null != mousePositionProvider);
             this.toolApplierProvider = toolApplierProvider;
+            this.mousePositionProvider = mousePositionProvider;
 
-            keyCombinationSubjects.Add(KeyCombinationSubject.Builder(KeyCombination.Builder(KeyCode.Escape).Build())
-                .OnActivate(() => SwitchTool(null))
-                .build());
-            keyCombinationSubjects.Add(KeyCombinationSubject.Builder(KeyCombination.Builder(KeyCode.Mouse0).Build())
-                .OnActivate(() => ActivateTool())
+            keyCombinationSubjects.Add(KeyCombinationSubject.Builder(escape)
+                .OnActivate(() => SelectedTool = null)
+                .Build());
+            keyCombinationSubjects.Add(KeyCombinationSubject.Builder(activator)
+                .OnActivate(() => ActiveTool = SelectedTool)
                 .OnContinuous(() => ContinueTool())
                 .OnDeactivate(() => EnactTool())
-                .build());
+                .Build());
+
         }
 
         public void Update()
@@ -48,46 +86,31 @@ namespace TWF.Input
         public void RegisterTool(IKeyCombination keyCombination, Tool tool)
         {
             keyCombinationSubjects.Add(KeyCombinationSubject.Builder(keyCombination)
-                .OnActivate(() => SwitchTool(tool))
-                .build());
+                .OnActivate(() => SelectedTool = tool)
+                .Build());
             tools.Add(tool);
         }
 
-        public void SwitchTool(Tool newTool)
-        {
-            selectedTool = newTool;
-            ResetActiveTool();
-        }
-
-        public void ActivateTool()
-        {
-            ResetPositions();
-            if (AddCurrentMousePosition())
-            {
-                activeTool = selectedTool;
-            }
-        }
-
-        public void ContinueTool()
+        private void ContinueTool()
         {
             DoIfToolIsActive(() =>
             {
-                currentPreviewOutcome = activeTool.Preview(toolApplierProvider(), positions);
+                CurrentPreviewOutcome = ActiveTool.Preview(toolApplierProvider(), positions);
             });
         }
 
-        public void EnactTool()
+        private void EnactTool()
         {
             DoIfToolIsActive(() =>
             {
-                ToolOutcome outcome = activeTool.Apply(toolApplierProvider(), positions);
+                ToolOutcome outcome = ActiveTool.Apply(toolApplierProvider(), positions);
                 if (ToolOutcome.SUCCESS != outcome)
                 {
-                    Debug.LogError("Failed to enact " + activeTool);
+                    Debug.LogError("Failed to enact " + ActiveTool);
                 }
                 else
                 {
-                    Debug.Log("Enacted " + activeTool);
+                    Debug.Log("Enacted " + ActiveTool);
                 }
             });
             ResetActiveTool();
@@ -95,7 +118,7 @@ namespace TWF.Input
 
         private void DoIfToolIsActive(Action action)
         {
-            if (null != activeTool && activeTool == selectedTool)
+            if (null != ActiveTool && ActiveTool == SelectedTool)
             {
                 if (AddCurrentMousePosition())
                 {
@@ -104,25 +127,21 @@ namespace TWF.Input
             }
         }
 
-        public bool AddCurrentMousePosition()
+        private bool AddCurrentMousePosition()
         {
-            try
+            Vector? position = mousePositionProvider.GetMousePosition();
+            if (null != position)
             {
-                Tuple<float, float> clickedPosition = CoordinateMapper.ScreenPositionToMeshPosition(UnityEngine.Input.mousePosition);
-                positions.AddLast(Root.GameService.ConvertPosition(clickedPosition.Item1, clickedPosition.Item2));
-                return true;
+                positions.AddLast(position.Value);
             }
-            catch (ArgumentOutOfRangeException)
-            {
-                return false;
-            }
+            return position.HasValue;
         }
 
         private void ResetActiveTool()
         {
             ResetPositions();
-            this.activeTool = null;
-            this.currentPreviewOutcome = null;
+            this.ActiveTool = null;
+            this.CurrentPreviewOutcome = null;
         }
         private void ResetPositions()
         {
