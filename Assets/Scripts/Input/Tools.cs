@@ -30,10 +30,10 @@ namespace TWF.Input
             Debug.Assert(null != toolApplierProvider);
             this.toolApplierProvider = toolApplierProvider;
 
-            keyCombinationSubjects.Add(KeyCombinationSubject.builder(KeyCombination.builder(KeyCode.Escape).build())
+            keyCombinationSubjects.Add(KeyCombinationSubject.Builder(KeyCombination.Builder(KeyCode.Escape).Build())
                 .OnActivate(() => SwitchTool(null))
                 .build());
-            keyCombinationSubjects.Add(KeyCombinationSubject.builder(KeyCombination.builder(KeyCode.Mouse0).build())
+            keyCombinationSubjects.Add(KeyCombinationSubject.Builder(KeyCombination.Builder(KeyCode.Mouse0).Build())
                 .OnActivate(() => ActivateTool())
                 .OnContinuous(() => ContinueTool())
                 .OnDeactivate(() => EnactTool())
@@ -45,9 +45,9 @@ namespace TWF.Input
             keyCombinationSubjects.ForEach((kep) => kep.Enact());
         }
 
-        public void RegisterTool(KeyCombination keyCombination, Tool tool)
+        public void RegisterTool(IKeyCombination keyCombination, Tool tool)
         {
-            keyCombinationSubjects.Add(KeyCombinationSubject.builder(keyCombination)
+            keyCombinationSubjects.Add(KeyCombinationSubject.Builder(keyCombination)
                 .OnActivate(() => SwitchTool(tool))
                 .build());
             tools.Add(tool);

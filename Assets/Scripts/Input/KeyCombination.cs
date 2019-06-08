@@ -7,7 +7,7 @@ namespace TWF.Input
     /// <summary>
     /// A wrapper to determine if a certain combination of keys is active or not.
     /// </summary>
-    public class KeyCombination
+    public class KeyCombination : IKeyCombination
     {
         LinkedList<KeyCode> keys;
 
@@ -16,25 +16,25 @@ namespace TWF.Input
             this.keys = keys;
         }
 
-        public class Builder
+        public class KeyCombinationBuilder
         {
-            LinkedList<KeyCode> keys = new LinkedList<KeyCode>();
+            private LinkedList<KeyCode> keys = new LinkedList<KeyCode>();
 
-            public Builder And(KeyCode key)
+            public KeyCombinationBuilder And(KeyCode key)
             {
                 keys.AddLast(key);
                 return this;
             }
 
-            public KeyCombination build()
+            public KeyCombination Build()
             {
                 return new KeyCombination(keys);
             }
         }
 
-        public static Builder builder(KeyCode key)
+        public static KeyCombinationBuilder Builder(KeyCode key)
         {
-            return new Builder().And(key);
+            return new KeyCombinationBuilder().And(key);
         }
 
         public bool IsActive()

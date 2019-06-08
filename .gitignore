@@ -57,3 +57,10 @@ crashlytics-build.properties
 
 # No unity meta files for core
 Assets/Scripts/Core/**/*.meta
+
+# Dependency packages
+Packages/
+
+# Tests
+Tests/Assembly-CSharp-Tests/obj
+Tests/Assembly-CSharp-Tests/bin

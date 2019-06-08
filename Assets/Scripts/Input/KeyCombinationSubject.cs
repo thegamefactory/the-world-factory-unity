@@ -8,13 +8,13 @@ namespace TWF.Input
     /// </summary>
     public class KeyCombinationSubject
     {
-        private KeyCombination keyCombination;
+        private IKeyCombination keyCombination;
         private Action onActivate;
         private Action onContinuous;
         private Action onDeactivate;
         private bool active;
 
-        private KeyCombinationSubject(KeyCombination keyCombination, Action onActivate, Action onContinuous,
+        private KeyCombinationSubject(IKeyCombination keyCombination, Action onActivate, Action onContinuous,
             Action onDeactivate)
         {
             this.keyCombination = keyCombination;
@@ -24,31 +24,31 @@ namespace TWF.Input
             this.active = false;
         }
 
-        public class Builder
+        public class KeyCombinationSubjectBuilder
         {
-            private KeyCombination keyCombination;
+            private IKeyCombination keyCombination;
             private Action onContinuous;
             private Action onActivate;
             private Action onDeactivate;
 
-            public Builder(KeyCombination keyCombination)
+            public KeyCombinationSubjectBuilder(IKeyCombination keyCombination)
             {
                 this.keyCombination = keyCombination;
             }
 
-            public Builder OnContinuous(Action action)
+            public KeyCombinationSubjectBuilder OnContinuous(Action action)
             {
                 this.onContinuous += action;
                 return this;
             }
 
-            public Builder OnActivate(Action action)
+            public KeyCombinationSubjectBuilder OnActivate(Action action)
             {
                 this.onActivate += action;
                 return this;
             }
 
-            public Builder OnDeactivate(Action action)
+            public KeyCombinationSubjectBuilder OnDeactivate(Action action)
             {
                 this.onDeactivate += action;
                 return this;
@@ -60,9 +60,9 @@ namespace TWF.Input
             }
         }
 
-        public static Builder builder(KeyCombination keyCombination)
+        public static KeyCombinationSubjectBuilder Builder(IKeyCombination keyCombination)
         {
-            return new Builder(keyCombination);
+            return new KeyCombinationSubjectBuilder(keyCombination);
         }
 
         public void Enact()

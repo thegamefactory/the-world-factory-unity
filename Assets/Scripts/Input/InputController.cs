@@ -13,15 +13,15 @@ namespace TWF.Input
         private void Awake()
         {
             tools.RegisterTool(
-                KeyCombination.builder(ResidentialModifierKey).build(),
+                KeyCombination.Builder(ResidentialModifierKey).Build(),
                 new Tool("ZoneResidential", ToolBehaviors.ZONER, Zones.RESIDENTIAL, ToolBrushes.Rectangle.Name));
 
             tools.RegisterTool(
-                KeyCombination.builder(FarmlandModifierKey).build(),
+                KeyCombination.Builder(FarmlandModifierKey).Build(),
                 new Tool("ZoneFarmland", ToolBehaviors.ZONER, Zones.FARMLAND, ToolBrushes.Rectangle.Name));
 
             tools.RegisterTool(
-                KeyCombination.builder(RoadModifierKey).build(),
+                KeyCombination.Builder(RoadModifierKey).Build(),
                 new Tool("BuildRoad", ToolBehaviors.ZONER, Zones.ROAD, ToolBrushes.Manatthan.Name));
         }
 
