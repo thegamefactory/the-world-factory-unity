@@ -10,7 +10,7 @@ namespace TWF.Graphics
         private IMapView<int> terrainMap;
         private TerrainColorProvider terrainColorProvider;
 
-        public void OnNewWorld(IWorldView worldView)
+        public TerrainLayer(IWorldView worldView)
         {
             this.terrainMap = worldView.GetTerrainMapView();
 

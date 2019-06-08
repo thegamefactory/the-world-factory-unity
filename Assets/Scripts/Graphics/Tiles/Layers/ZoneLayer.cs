@@ -10,7 +10,7 @@ namespace TWF.Graphics
 
         public static string COMPONENT = "zoneColor";
 
-        public void OnNewWorld(IWorldView worldView)
+        public ZoneLayer(IWorldView worldView)
         {
             this.zoneMap = worldView.GetZoneMapView();
 

@@ -15,14 +15,14 @@ namespace TWF.Graphics
 
         public Color ErrorTile;
 
-        public void Start()
+        public void Awake()
         {
             Root.GameService.WorldFactory.WorldConfigFactory.WorldRulesCustomizer += ConfigureTileColors;
             var worldView = Root.WorldView;
             var tileLayers = Root.GameService.GraphicConfig.TileLayers;
-            tileLayers.RegisterLayer(new ZoneLayer());
-            tileLayers.RegisterLayer(new BuildingLayer());
-            tileLayers.RegisterLayer(new TerrainLayer());
+            tileLayers.RegisterLayerProvider(wv => new ZoneLayer(wv));
+            tileLayers.RegisterLayerProvider(wv => new BuildingLayer(wv));
+            tileLayers.RegisterLayerProvider(wv => new TerrainLayer(wv));
         }
 
         private void ConfigureTileColors(WorldRules worldConfig)

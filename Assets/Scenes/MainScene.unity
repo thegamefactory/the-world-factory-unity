@@ -387,12 +387,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b288e3e5e59f46fa9830c13837c6f86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapWidth: 32
-  mapHeight: 32
-  noisePeriod: 1
-  waterThreshold: 0.6
-  autoUpdate: 1
-  seed: 343
+  MapWidth: 32
+  MapHeight: 32
+  NoisePeriod: 1
+  WaterThreshold: 0.6
+  AutoUpdate: 1
+  Seed: 0
 --- !u!4 &1133443526
 Transform:
   m_ObjectHideFlags: 0

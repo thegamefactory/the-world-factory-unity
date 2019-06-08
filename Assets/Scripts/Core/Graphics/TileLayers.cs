@@ -11,18 +11,21 @@ namespace TWF.Graphics
     /// </summary>
     public class TileLayers
     {
+        private LinkedList<Func<IWorldView, ITileLayer>> layerProviders = new LinkedList<Func<IWorldView, ITileLayer>>();
         private IDictionary<string, ITileLayer> layers = new Dictionary<string, ITileLayer>();
 
-        public void RegisterLayer(ITileLayer layer)
+        public void RegisterLayerProvider(Func<IWorldView, ITileLayer> layerProvider)
         {
-            layers[layer.Name] = layer;
+            layerProviders.AddLast(layerProvider);
         }
 
         public void OnNewWorld(IWorldView worldView)
         {
-            foreach (ITileLayer layer in layers.Values)
+            layers = new Dictionary<string, ITileLayer>();
+            foreach (var layerProvider in layerProviders)
             {
-                layer.OnNewWorld(worldView);
+                var layer = layerProvider(worldView);
+                layers[layer.Name] = layer;
             }
         }
 

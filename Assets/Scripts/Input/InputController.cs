@@ -10,7 +10,7 @@ namespace TWF.Input
 
         readonly private Tools tools = new Tools(() => Root.GameService.GetToolApplier());
 
-        private void Start()
+        private void Awake()
         {
             tools.RegisterTool(
                 KeyCombination.builder(ResidentialModifierKey).build(),

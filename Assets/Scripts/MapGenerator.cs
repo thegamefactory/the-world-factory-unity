@@ -4,34 +4,34 @@ using UnityEngine;
 using UnityEngine.Assertions;
 public class MapGenerator : MonoBehaviour
 {
-    public int mapWidth;
-    public int mapHeight;
-    public float noisePeriod;
-    public float waterThreshold;
-    public bool autoUpdate;
-    public int seed;
+    public int MapWidth;
+    public int MapHeight;
+    public float NoisePeriod;
+    public float WaterThreshold;
+    public bool AutoUpdate;
+    public int Seed;
 
     public void OnValidate()
     {
-        if (mapWidth <= 0)
+        if (MapWidth <= 0)
         {
-            mapWidth = 1;
+            MapWidth = 1;
         }
-        if (mapWidth > 255)
+        if (MapWidth > 255)
         {
-            mapWidth = 255;
+            MapWidth = 255;
         }
-        if (mapHeight <= 0)
+        if (MapHeight <= 0)
         {
-            mapHeight = 1;
+            MapHeight = 1;
         }
-        if (mapHeight > 255)
+        if (MapHeight > 255)
         {
-            mapHeight = 255;
+            MapHeight = 255;
         }
-        if (noisePeriod < 1.0f)
+        if (NoisePeriod < 1.0f)
         {
-            noisePeriod = 1.0f;
+            NoisePeriod = 1.0f;
         }
     }
 
@@ -45,17 +45,17 @@ public class MapGenerator : MonoBehaviour
 
     public void Generate()
     {
-        System.Random random = new System.Random(seed);
+        System.Random random = new System.Random(Seed);
         ITerrainGenerator terrainGenerator;
-        if (waterThreshold <= 0)
+        if (WaterThreshold <= 0)
         {
             terrainGenerator = new UniformMapGenerator(Terrains.LAND);
         }
-        else if (waterThreshold <= 1)
+        else if (WaterThreshold <= 1)
         {
             terrainGenerator = new WaterThresholdTerrainGenerator(
-                new PerlinNoiseGenerator(noisePeriod, (float)random.NextDouble(), (float)random.NextDouble()),
-                waterThreshold);
+                new PerlinNoiseGenerator(NoisePeriod, (float)random.NextDouble(), (float)random.NextDouble()),
+                WaterThreshold);
         }
         else
         {
@@ -63,11 +63,11 @@ public class MapGenerator : MonoBehaviour
         }
 
         var worldFactory = Root.GameService.WorldFactory;
-        worldFactory.Size = new Vector(mapWidth, mapHeight);
+        worldFactory.Size = new Vector(MapWidth, MapHeight);
         worldFactory.TerrainGenerator = terrainGenerator;
         Root.GameService.NewWorld();
 
-        if (autoUpdate)
+        if (AutoUpdate)
         {
             MapDisplay mapDisplay = GetComponent<MapDisplay>();
             mapDisplay.Update();

@@ -13,7 +13,7 @@ namespace TWF.Graphics
 
         public static string COMPONENT = "buildingColor";
 
-        public void OnNewWorld(IWorldView worldView)
+        public BuildingLayer(IWorldView worldView)
         {
             buildingMap = worldView.GetBuildingMapView();
             zoneMap = worldView.GetZoneMapView();
