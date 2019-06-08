@@ -31,7 +31,7 @@ namespace TWF
             {
                 for (int y = 0; y < size.Y; ++y)
                 {
-                    tiles[x, y] = noiseMap[x, y] < waterThreshold ? land : water;
+                    tiles[x, y] = noiseMap[x, y] > waterThreshold ? land : water;
                 }
             }
             return new ArrayMap<int>(tiles);
