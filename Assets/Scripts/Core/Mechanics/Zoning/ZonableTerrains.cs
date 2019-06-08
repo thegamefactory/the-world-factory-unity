@@ -8,12 +8,12 @@ namespace TWF
 
         public static void DefaultZonableTerrainComponent(WorldConfig worldConfig)
         {
-            Registry ZoneRegistry = worldConfig.Zones;
-            Registry TerrainRegistry = worldConfig.Terrains;
-            ZonableOnlyOn zonableOnlyOnLand = new ZonableOnlyOn(TerrainRegistry[Terrains.LAND]);
+            var Zones = worldConfig.Zones;
+            var Terrains = worldConfig.Terrains;
+            ZonableOnlyOn zonableOnlyOnLand = new ZonableOnlyOn(Terrains[TWF.Terrains.LAND]);
             TypedComponent<IZonableTerrain> zonableTerrains = new TypedComponent<IZonableTerrain>(ZONABLE_TERRAINS, () => zonableOnlyOnLand);
-            zonableTerrains.AttachComponent(ZoneRegistry[Zones.EMPTY], new AlwaysZonable());
-            ZoneRegistry.Extend(zonableTerrains);
+            zonableTerrains.AttachComponent(Zones[TWF.Zones.EMPTY], new AlwaysZonable());
+            Zones.Extend(zonableTerrains);
         }
     }
 

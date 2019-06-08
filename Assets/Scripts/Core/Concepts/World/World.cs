@@ -22,8 +22,8 @@ namespace TWF
         public Vector Size { get => maps.Size; }
         public int SizeX { get => maps.SizeX; }
         public int SizeY { get => maps.SizeY; }
-        public IReadOnlyRegistry Terrains => config.Terrains;
-        public IReadOnlyRegistry Zones => config.Zones;
+        public IReadOnlyEntities Terrains => config.Terrains;
+        public IReadOnlyEntities Zones => config.Zones;
         public IReadOnlyDictionary<string, ScheduledAgent> Agents => config.Agents;
         public IReadOnlyDictionary<string, Func<string, IToolBehavior>> ToolBehaviors => config.ToolBehaviors;
         public IReadOnlyDictionary<string, IToolBrush> ToolBrushes => config.ToolBrushes;

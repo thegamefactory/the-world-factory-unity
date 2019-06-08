@@ -14,7 +14,7 @@ namespace TWF.Graphics
         {
             this.terrainMap = worldView.GetTerrainMapView();
 
-            var terrainColor = worldView.Terrains.GetTypedComponentRegistry<Color>(COMPONENT);
+            var terrainColor = worldView.Terrains.GetTypedComponents<Color>(COMPONENT);
             this.terrainColorProvider = (t) => terrainColor.GetComponent(t);
         }
 

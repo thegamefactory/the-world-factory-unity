@@ -27,8 +27,8 @@ namespace TWF.Graphics
 
         private void ConfigureTileColors(WorldConfig worldConfig)
         {
-            Registry terrains = worldConfig.Terrains;
-            Registry zones = worldConfig.Zones;
+            Entities terrains = worldConfig.Terrains;
+            Entities zones = worldConfig.Zones;
 
             TypedComponent<Color> terrainColor = new TypedComponent<Color>(TerrainLayer.COMPONENT, () => ErrorTile);
             terrainColor.AttachComponent(terrains[Terrains.LAND], LandTile);

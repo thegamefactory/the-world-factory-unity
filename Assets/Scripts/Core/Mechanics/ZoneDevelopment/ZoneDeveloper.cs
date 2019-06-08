@@ -24,7 +24,7 @@ namespace TWF
 
         public Action<World> execute(IWorldView worldView)
         {
-            var developableZones = worldView.Zones.GetMarkerComponentRegistry(Zones.DEVELOPABLE);
+            var developableZones = worldView.Zones.GetMarkerComponents(Zones.DEVELOPABLE);
 
             List<(Vector, int)> positionsToBuild = worldView.GetZoneMapView()
                 .ToAllPositions()

@@ -11,12 +11,12 @@ namespace TWF
     {
         public static string ZONER = "zoners";
 
-        public static Func<string, IToolBehavior> Zoners(Registry zones)
+        public static Func<string, IToolBehavior> Zoners(Entities zones)
         {
             return (m) =>
             {
                 var zone = zones.GetNamedEntity(m);
-                if (!zones.GetMarkerComponentRegistry(Zones.MANUALLY_ZONABLE).IsMarked(zone.Id))
+                if (!zones.GetMarkerComponents(Zones.MANUALLY_ZONABLE).IsMarked(zone.Id))
                 {
                     throw new ArgumentException(zone.Name);
                 }

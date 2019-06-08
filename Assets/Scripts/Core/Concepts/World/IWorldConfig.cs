@@ -8,8 +8,8 @@ namespace TWF
     /// </summary>
     public interface IWorldConfig
     {
-        IReadOnlyRegistry Terrains { get; }
-        IReadOnlyRegistry Zones { get; }
+        IReadOnlyEntities Terrains { get; }
+        IReadOnlyEntities Zones { get; }
         IReadOnlyDictionary<string, ScheduledAgent> Agents { get; }
         IReadOnlyDictionary<string, Func<string, IToolBehavior>> ToolBehaviors { get; }
         IReadOnlyDictionary<string, IToolBrush> ToolBrushes { get; }

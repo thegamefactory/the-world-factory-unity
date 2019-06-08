@@ -3,7 +3,10 @@ using System;
 
 namespace TWF
 {
-    class TypedComponent<T> : ITypedComponentRegistry<T>
+    /// <summary>
+    /// Richly typed components that can be attached to entities.
+    /// </summary>
+    class TypedComponent<T> : IReadOnlyTypedComponents<T>
     {
         List<T> values = new List<T>();
         Func<T> defaultProvider;

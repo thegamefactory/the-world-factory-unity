@@ -3,14 +3,21 @@ using System.Collections.Generic;
 
 namespace TWF
 {
-    public class Registry : IReadOnlyRegistry
+    /// <summary>
+    /// A registry of entities.
+    /// An entity is modeled by an integer and a string identifier.
+    /// The entity can be fetched by both but repeated lookups or iterations across all the entities should use the efficient integer identifier.
+    /// 
+    /// The entity is a bare interface. To provide meaning to entities, implementers must attach them components.
+    /// </summary>
+    public class Entities : IReadOnlyEntities
     {
         public string Name { get; }
         readonly Dictionary<string, int> nameIdLookup = new Dictionary<string, int>();
         readonly List<string> names = new List<string>();
-        readonly Dictionary<string, IComponentRegistry> componentRegistries = new Dictionary<string, IComponentRegistry>();
+        readonly Dictionary<string, IReadOnlyComponents> componentRegistries = new Dictionary<string, IReadOnlyComponents>();
 
-        public Registry(string name)
+        public Entities(string name)
         {
             Name = name;
         }
@@ -23,7 +30,7 @@ namespace TWF
             return id;
         }
 
-        public void Extend(IComponentRegistry component)
+        public void Extend(IReadOnlyComponents component)
         {
             if (null == component.Name)
             {
@@ -39,25 +46,13 @@ namespace TWF
         public string this[int id] => names[id];
         public int this[string name] => nameIdLookup[name];
 
-        public IComponentRegistry GetComponentRegistry(string componentName)
+        public IReadOnlyComponents GetComponents(string componentName)
         {
             if (!componentRegistries.ContainsKey(componentName))
             {
                 throw new KeyNotFoundException(Name + "[" + componentName + "]");
             }
             return componentRegistries[componentName];
-        }
-
-        public IMarkerComponentRegistry GetMarkerComponentRegistry(string componentName)
-        {
-            TwfDebug.Assert(GetComponentRegistry(componentName) is IMarkerComponentRegistry);
-            return GetComponentRegistry(componentName) as IMarkerComponentRegistry;
-        }
-
-        public ITypedComponentRegistry<T> GetTypedComponentRegistry<T>(string componentName)
-        {
-            TwfDebug.Assert(GetComponentRegistry(componentName) is ITypedComponentRegistry<T>);
-            return GetComponentRegistry(componentName) as ITypedComponentRegistry<T>;
         }
 
         public int NumberOfEntities => names.Count;

@@ -9,8 +9,8 @@ namespace TWF
     public class WorldConfig : IWorldConfig
     {
         public WorldConfig(
-            Registry zones,
-            Registry terrains,
+            Entities zones,
+            Entities terrains,
             Dictionary<string, ScheduledAgent> Agents,
             Dictionary<string, Func<string, IToolBehavior>> ToolBehaviors,
             Dictionary<string, IToolBrush> ToolBrushes)
@@ -22,15 +22,15 @@ namespace TWF
             this.ToolBrushes = ToolBrushes;
         }
 
-        public Registry Terrains { get; }
-        public Registry Zones { get; }
+        public Entities Terrains { get; }
+        public Entities Zones { get; }
         public Dictionary<string, ScheduledAgent> Agents { get; }
         public Dictionary<string, Func<string, IToolBehavior>> ToolBehaviors { get; }
         public Dictionary<string, IToolBrush> ToolBrushes { get; }
 
-        IReadOnlyRegistry IWorldConfig.Terrains => Terrains;
+        IReadOnlyEntities IWorldConfig.Terrains => Terrains;
 
-        IReadOnlyRegistry IWorldConfig.Zones => Zones;
+        IReadOnlyEntities IWorldConfig.Zones => Zones;
 
         IReadOnlyDictionary<string, ScheduledAgent> IWorldConfig.Agents => Agents;
 

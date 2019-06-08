@@ -6,7 +6,7 @@
 
         public static void DefaultManuallyZonableComponent(WorldConfig worldConfig)
         {
-            Registry zones = worldConfig.Zones;
+            Entities zones = worldConfig.Zones;
             MarkerComponent manuallyZonable = new MarkerComponent(MANUALLY_ZONABLE);
 
             manuallyZonable.MarkEntity(zones[RESIDENTIAL]);

@@ -18,7 +18,7 @@ namespace TWF.Graphics
             buildingMap = worldView.GetBuildingMapView();
             zoneMap = worldView.GetZoneMapView();
 
-            var buildingColor = worldView.Zones.GetTypedComponentRegistry<BuildingColor>(COMPONENT);
+            var buildingColor = worldView.Zones.GetTypedComponents<BuildingColor>(COMPONENT);
             buildingColorProvider = (zoneId, buildingId) => buildingColor.GetComponent(zoneId).Invoke(buildingId);
         }
 

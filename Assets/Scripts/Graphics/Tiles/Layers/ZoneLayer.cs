@@ -14,7 +14,7 @@ namespace TWF.Graphics
         {
             this.zoneMap = worldView.GetZoneMapView();
 
-            var zoneColor = worldView.Zones.GetTypedComponentRegistry<Color?>(COMPONENT);
+            var zoneColor = worldView.Zones.GetTypedComponents<Color?>(COMPONENT);
             this.zoneColorProvider = (z) => zoneColor.GetComponent(z);
         }
 

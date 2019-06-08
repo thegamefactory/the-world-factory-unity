@@ -25,8 +25,8 @@ namespace TWF
 
         public WorldConfig CreateDefaultWorldConfig(Random random)
         {
-            Registry zones = Zones.DefaultZones();
-            Registry terrains = Terrains.DefaultTerrains();
+            Entities zones = Zones.DefaultZones();
+            Entities terrains = Terrains.DefaultTerrains();
 
             WorldConfig wc = new WorldConfig(
                 zones,

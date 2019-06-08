@@ -3,6 +3,10 @@ using System.Collections.Generic;
 
 namespace TWF
 {
+    /// <summary>
+    /// A tuple (id, name) to represent an entity.
+    /// The bare integer representation should be preferred when possible but for code maintainability it is sometimes better to reference the name.
+    /// </summary>
     public struct NamedEntity : IEquatable<NamedEntity>
     {
         public NamedEntity(int id, string name)
