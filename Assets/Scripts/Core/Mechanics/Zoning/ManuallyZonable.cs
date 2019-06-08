@@ -1,10 +1,14 @@
 ﻿namespace TWF
 {
+    /// <summary>
+    /// A zone component to mark a zone as manually zonable.
+    /// Such zones can be defined by the user using tools.
+    /// </summary>
     public static partial class Zones
     {
         public static string MANUALLY_ZONABLE = "manuallyZonable";
 
-        public static void DefaultManuallyZonableComponent(WorldConfig worldConfig)
+        public static void DefaultManuallyZonableComponent(WorldRules worldConfig)
         {
             Entities zones = worldConfig.Zones;
             MarkerComponent manuallyZonable = new MarkerComponent(MANUALLY_ZONABLE);

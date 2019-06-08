@@ -13,7 +13,7 @@ namespace TWF
             this.terrain = terrain;
         }
 
-        public IMap<int> GenerateTerrainMap(IWorldConfig worldConfig, Vector size)
+        public IMap<int> GenerateTerrainMap(IWorldRules worldConfig, Vector size)
         {
             int terrainId = worldConfig.Terrains[terrain];
             int[,] tiles = new int[size.X, size.Y];

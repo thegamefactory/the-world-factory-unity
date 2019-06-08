@@ -7,15 +7,16 @@ namespace TWF.Input
     /// <summary>
     /// A controller for Tools.
     /// 
-    /// Define a tool mode that is 
-    /// - entered when the mouse is clicked and there is an active tool
+    /// Tool selection is made via custom key combination injected at construction.
+    /// Tool mode is:
+    /// - entered when the mouse is clicked and there is a selected tool (the tool is then considered active)
     /// - exited when the escape key is pressed or the tool usage is committed
     /// 
-    /// Switching tool cancels the current tool usage
+    /// Switching tool cancels and exits tool mode.
     /// </summary>
     public class Tools
     {
-        private Tool currentTool;
+        private Tool selectedTool;
         private Tool activeTool;
         private PreviewOutcome currentPreviewOutcome;
         private LinkedList<Vector> positions = new LinkedList<Vector>();
@@ -54,7 +55,7 @@ namespace TWF.Input
 
         public void SwitchTool(Tool newTool)
         {
-            currentTool = newTool;
+            selectedTool = newTool;
             ResetActiveTool();
         }
 
@@ -63,7 +64,7 @@ namespace TWF.Input
             ResetPositions();
             if (AddCurrentMousePosition())
             {
-                activeTool = currentTool;
+                activeTool = selectedTool;
             }
         }
 
@@ -94,7 +95,7 @@ namespace TWF.Input
 
         private void DoIfToolIsActive(Action action)
         {
-            if (null != activeTool && activeTool == currentTool)
+            if (null != activeTool && activeTool == selectedTool)
             {
                 if (AddCurrentMousePosition())
                 {

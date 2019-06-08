@@ -1,8 +1,5 @@
 ﻿namespace TWF
 {
-    /// <summary>
-    /// A definition of all zones.
-    /// </summary>
     public static partial class Zones
     {
         public static string ENTITIES_NAME = "zone";

@@ -3,7 +3,7 @@
 namespace TWF.Input
 {
     /// <summary>
-    /// An identifier for a user action that can be triggered by a key combination.
+    /// A fully defined tool (behavior, modifier, brush).
     /// </summary>
     public class Tool
     {

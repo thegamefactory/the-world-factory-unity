@@ -19,7 +19,7 @@ namespace TWF
             this.waterThreshold = waterThreshold;
         }
 
-        public IMap<int> GenerateTerrainMap(IWorldConfig worldConfig, Vector size)
+        public IMap<int> GenerateTerrainMap(IWorldRules worldConfig, Vector size)
         {
             int land = worldConfig.Terrains[Terrains.LAND];
             int water = worldConfig.Terrains[Terrains.WATER];

@@ -2,11 +2,14 @@
 
 namespace TWF
 {
+    /// <summary>
+    /// A zone component to define legal terrains corresponding to each zone. By default, the only legal terrain is LAND.
+    /// </summary>
     public static partial class Zones
     {
         public static string ZONABLE_TERRAINS = "zonableTerrains";
 
-        public static void DefaultZonableTerrainComponent(WorldConfig worldConfig)
+        public static void DefaultZonableTerrainComponent(WorldRules worldConfig)
         {
             var Zones = worldConfig.Zones;
             var Terrains = worldConfig.Terrains;

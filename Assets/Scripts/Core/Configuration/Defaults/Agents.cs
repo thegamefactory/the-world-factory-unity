@@ -5,7 +5,7 @@ using System.Linq;
 namespace TWF
 {
     /// <summary>
-    /// Defines all the world agents.
+    /// Defines default background agents scheduled at fixed interval which mutate the state of the world.
     /// </summary>
     public static class Agents
     {

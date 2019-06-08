@@ -4,10 +4,8 @@ using System.Collections.Generic;
 namespace TWF
 {
     /// <summary>
-    /// An class to mutate the state of the world based on the player actions.
+    /// An object that can receive tool instructions and apply them to modify the state of the world.
     /// The tool offers a dry run mode (preview) that can be used to generate feedback on the effect of the action before enacting it.
-    /// 
-    /// This interface is implemented by Tool. The approach to implement a new tool is to create a new IToolBehavior implementation.
     /// </summary>
     public class ToolApplier : IToolApplier
     {

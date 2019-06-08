@@ -4,9 +4,6 @@ using System;
 
 namespace TWF
 {
-    /// <summary>
-    /// A definition of all the tool behaviors.
-    /// </summary>
     public static class ToolBehaviors
     {
         public static string ZONER = "zoners";

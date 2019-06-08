@@ -5,6 +5,6 @@ namespace TWF
     /// </summary>
     public interface ITerrainGenerator
     {
-        IMap<int> GenerateTerrainMap(IWorldConfig worldConfig, Vector size);
+        IMap<int> GenerateTerrainMap(IWorldRules worldConfig, Vector size);
     }
 }

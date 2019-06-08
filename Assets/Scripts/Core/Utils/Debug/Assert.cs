@@ -3,6 +3,10 @@ using System.Diagnostics;
 
 namespace TWF
 {
+    /// <summary>
+    /// A minimal assertion package which is only compiled when the DEBUG symbol is defined.
+    /// This should not be necessary but I could not get the System.Diagnostics assertions to work as desired.
+    /// </summary>
     public static class TwfDebug
     {
         public class AssertionException : Exception

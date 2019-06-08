@@ -8,7 +8,7 @@ namespace TWF
 
         public ITerrainGenerator TerrainGenerator { get; set; } = new UniformMapGenerator(Terrains.LAND);
 
-        public WorldConfigFactory WorldConfigFactory { get; set; } = new WorldConfigFactory();
+        public WorldRulesFactory WorldConfigFactory { get; set; } = new WorldRulesFactory();
 
         public Random Random { get; set; } = new Random();
 
@@ -20,7 +20,7 @@ namespace TWF
             TwfDebug.Assert(Size.X > 0, "size.X must be positive");
             TwfDebug.Assert(Size.Y > 0, "size.Y must be positive");
 
-            WorldConfig worldConfig = WorldConfigFactory.CreateDefaultWorldConfig(Random);
+            WorldRules worldConfig = WorldConfigFactory.Create(Random);
 
             var terrainMap = TerrainGenerator.GenerateTerrainMap(worldConfig, Size);
             var zoneMap = new ArrayMap<int>(Size, worldConfig.Zones[Zones.EMPTY]);

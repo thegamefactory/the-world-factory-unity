@@ -12,7 +12,7 @@ namespace TWF
     /// 
     /// All the UI interactions should go via the this class (facade pattern).
     /// 
-    /// As convenience, the current world can never be null; this means the game service needs to be initialized with a valid world.
+    /// As convenience, the current world can never be null.
     /// </summary>
     public class GameService
     {

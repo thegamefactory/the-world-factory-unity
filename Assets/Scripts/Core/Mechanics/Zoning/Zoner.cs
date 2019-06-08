@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace TWF
 {
     /// <summary>
-    /// A tool behavior that attempts to set the zone of the input positions.
+    /// A tool behavior that sets the zone of the input positions.
     /// </summary>
     public class Zoner : IToolBehavior
     {

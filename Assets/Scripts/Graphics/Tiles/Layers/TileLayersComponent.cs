@@ -17,7 +17,7 @@ namespace TWF.Graphics
 
         public void Start()
         {
-            Root.GameService.WorldFactory.WorldConfigFactory.WorldConfigCustomizer += ConfigureTileColors;
+            Root.GameService.WorldFactory.WorldConfigFactory.WorldRulesCustomizer += ConfigureTileColors;
             var worldView = Root.WorldView;
             var tileLayers = Root.GameService.GraphicConfig.TileLayers;
             tileLayers.RegisterLayer(new ZoneLayer());
@@ -25,7 +25,7 @@ namespace TWF.Graphics
             tileLayers.RegisterLayer(new TerrainLayer());
         }
 
-        private void ConfigureTileColors(WorldConfig worldConfig)
+        private void ConfigureTileColors(WorldRules worldConfig)
         {
             Entities terrains = worldConfig.Terrains;
             Entities zones = worldConfig.Zones;

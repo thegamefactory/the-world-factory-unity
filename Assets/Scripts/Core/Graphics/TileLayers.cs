@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace TWF.Graphics
 {
+    /// <summary>
+    /// A registry of all the layers that exist.
+    /// </summary>
     public class TileLayers
     {
         private IDictionary<string, ITileLayer> layers = new Dictionary<string, ITileLayer>();

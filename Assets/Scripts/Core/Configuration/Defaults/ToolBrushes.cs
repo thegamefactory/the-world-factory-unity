@@ -2,9 +2,6 @@
 
 namespace TWF
 {
-    /// <summary>
-    /// A definition of all tool brushes.
-    /// </summary>
     public static class ToolBrushes
     {
         public static Dictionary<string, IToolBrush> AllToolBrushes { get; } = new Dictionary<string, IToolBrush>();

@@ -4,11 +4,11 @@ using System;
 namespace TWF
 {
     /// <summary>
-    /// Root structure to define a world configuration.
+    /// See interface definition.
     /// </summary>
-    public class WorldConfig : IWorldConfig
+    public class WorldRules : IWorldRules
     {
-        public WorldConfig(
+        public WorldRules(
             Entities zones,
             Entities terrains,
             Dictionary<string, ScheduledAgent> Agents,
@@ -28,14 +28,14 @@ namespace TWF
         public Dictionary<string, Func<string, IToolBehavior>> ToolBehaviors { get; }
         public Dictionary<string, IToolBrush> ToolBrushes { get; }
 
-        IReadOnlyEntities IWorldConfig.Terrains => Terrains;
+        IReadOnlyEntities IWorldRules.Terrains => Terrains;
 
-        IReadOnlyEntities IWorldConfig.Zones => Zones;
+        IReadOnlyEntities IWorldRules.Zones => Zones;
 
-        IReadOnlyDictionary<string, ScheduledAgent> IWorldConfig.Agents => Agents;
+        IReadOnlyDictionary<string, ScheduledAgent> IWorldRules.Agents => Agents;
 
-        IReadOnlyDictionary<string, Func<string, IToolBehavior>> IWorldConfig.ToolBehaviors => ToolBehaviors;
+        IReadOnlyDictionary<string, Func<string, IToolBehavior>> IWorldRules.ToolBehaviors => ToolBehaviors;
 
-        IReadOnlyDictionary<string, IToolBrush> IWorldConfig.ToolBrushes => ToolBrushes;
+        IReadOnlyDictionary<string, IToolBrush> IWorldRules.ToolBrushes => ToolBrushes;
     }
 }

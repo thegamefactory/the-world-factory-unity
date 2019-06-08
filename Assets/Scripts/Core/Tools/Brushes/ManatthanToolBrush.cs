@@ -15,7 +15,6 @@ namespace TWF
             return brushPositions.Count() == 2;
         }
 
-
         public IEnumerable<Vector> computePositions(IEnumerable<Vector> brushPositions)
         {
             LinkedList<Vector> result = new LinkedList<Vector>();
