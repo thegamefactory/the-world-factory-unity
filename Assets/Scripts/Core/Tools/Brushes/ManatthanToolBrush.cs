@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace TWF
 {
@@ -27,16 +28,38 @@ namespace TWF
             var second = brushPositions.Last();
             var horizontalStart = first.X < second.X ? first : second;
             var horizontalEnd = first.X < second.X ? second : first;
-            for (int x = horizontalStart.X; x <= horizontalEnd.X; x++)
-            {
-                result.AddLast(new Vector(x, first.Y));
-            }
             var verticalStart = first.Y < second.Y ? first : second;
             var verticalEnd = first.Y < second.Y ? second : first;
-            for (int y = verticalStart.Y; y <= verticalEnd.Y; y++)
+
+            Action<int> processHorizontal = (y) =>
             {
-                result.AddLast(new Vector(second.X, y));
+                for (int x = horizontalStart.X; x <= horizontalEnd.X; x++)
+                {
+                    result.AddLast(new Vector(x, y));
+                }
+            };
+            Action<int> processVertical = (x) =>
+            {
+                for (int y = verticalStart.Y; y <= verticalEnd.Y; y++)
+                {
+                    result.AddLast(new Vector(x, y));
+                }
+            };
+
+            var horizontalDist = horizontalEnd.X - horizontalStart.X;
+            var verticalDist = verticalEnd.Y - verticalStart.Y;
+
+            if (verticalDist > horizontalDist)
+            {
+                processVertical(first.X);
+                processHorizontal(second.Y);
             }
+            else
+            {
+                processHorizontal(first.Y);
+                processVertical(second.X);
+            }
+
             return result;
         }
 
