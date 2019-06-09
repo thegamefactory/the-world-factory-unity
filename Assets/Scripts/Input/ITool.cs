@@ -7,6 +7,7 @@ namespace TWF.Input
     {
         ToolPreviewOutcome Preview(IToolApplier toolApplier, ICollection<Vector> positions);
         ToolOutcome Apply(IToolApplier toolApplier, ICollection<Vector> positions);
+        string ToolBrushName { get; }
         Color? PreviewColor { get; } // this seems out of place
     }
 }

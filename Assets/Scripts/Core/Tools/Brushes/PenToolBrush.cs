@@ -14,9 +14,14 @@ namespace TWF
             return true;
         }
 
-        public IEnumerable<Vector> computePositions(IEnumerable<Vector> brushPositions)
+        public IEnumerable<Vector> ComputePositions(IEnumerable<Vector> brushPositions)
         {
             return brushPositions;
+        }
+
+        public void AddPosition(LinkedList<Vector> positions, Vector position)
+        {
+            positions.AddLast(position);
         }
     }
 }

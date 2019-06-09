@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System;
-using TWF.Graphics;
 
 namespace TWF.Input
 {
@@ -9,6 +9,7 @@ namespace TWF.Input
         public KeyCode ResidentialModifierKey;
         public KeyCode FarmlandModifierKey;
         public KeyCode RoadModifierKey;
+        public Text DebugText;
 
         readonly private Tools tools = new Tools(() => Root.GameService.GetToolApplier(), new MousePositionProvider());
 
@@ -45,6 +46,10 @@ namespace TWF.Input
         void Update()
         {
             tools.Update();
+            if (null != DebugText)
+            {
+                DebugText.text = tools.ToString();
+            }
         }
     }
 }

@@ -18,16 +18,17 @@ namespace TWF
 
         public ToolOutcome ApplyTool(string toolBehaviorName, string modifier, string toolBrushName, IEnumerable<Vector> positions)
         {
-            IToolBehavior toolBehavior = GetToolBehavior(toolBehaviorName, modifier);
-            IToolBrush toolBrush = world.Rules.ToolBrushes[toolBrushName] ?? throw new ArgumentException("Invalid tool brush: " + toolBrushName);
-            return Apply(world.GetActionQueue(), toolBehavior, toolBrush, positions);
+            return Apply(world.GetActionQueue(), GetToolBehavior(toolBehaviorName, modifier), GetToolBrush(toolBrushName), positions);
         }
 
         public ToolPreviewOutcome PreviewTool(string toolBehaviorName, string modifier, string toolBrushName, IEnumerable<Vector> positions)
         {
-            IToolBehavior toolBehavior = GetToolBehavior(toolBehaviorName, modifier);
-            IToolBrush toolBrush = world.Rules.ToolBrushes[toolBrushName] ?? throw new ArgumentException("Invalid tool brush: " + toolBrushName);
-            return Preview(world, toolBehavior, toolBrush, positions);
+            return Preview(world, GetToolBehavior(toolBehaviorName, modifier), GetToolBrush(toolBrushName), positions);
+        }
+
+        public void AddPosition(string toolBrushName, LinkedList<Vector> positions, Vector position)
+        {
+            GetToolBrush(toolBrushName).AddPosition(positions, position);
         }
 
         private IToolBehavior GetToolBehavior(string toolBehaviorName, string modifier)
@@ -36,9 +37,14 @@ namespace TWF
             return toolBehaviorProvider(modifier);
         }
 
+        private IToolBrush GetToolBrush(string toolBrushName)
+        {
+            return world.Rules.ToolBrushes[toolBrushName] ?? throw new ArgumentException("Invalid tool brush: " + toolBrushName);
+        }
+
         private ToolPreviewOutcome Preview(IWorldView worldView, IToolBehavior toolBehavior, IToolBrush toolBrush, IEnumerable<Vector> inputPositions)
         {
-            IEnumerable<Vector> toolPositions = toolBrush.computePositions(inputPositions);
+            IEnumerable<Vector> toolPositions = toolBrush.ComputePositions(inputPositions);
             return toolBehavior.Preview(worldView, toolPositions);
         }
 
@@ -49,7 +55,7 @@ namespace TWF
 
         private ToolOutcome Apply(IActionQueue actionQueue, IToolBehavior toolBehavior, IToolBrush toolBrush, IEnumerable<Vector> inputPositions)
         {
-            IEnumerable<Vector> toolPositions = toolBrush.computePositions(inputPositions);
+            IEnumerable<Vector> toolPositions = toolBrush.ComputePositions(inputPositions);
             var action = toolBehavior.CreateActions(toolPositions);
             Action<World> validatedAction = (gs) =>
             {
@@ -79,7 +85,7 @@ namespace TWF
         {
             if (toolBrush.IsValid(input))
             {
-                return toolBrush.computePositions(input);
+                return toolBrush.ComputePositions(input);
             }
             else
             {

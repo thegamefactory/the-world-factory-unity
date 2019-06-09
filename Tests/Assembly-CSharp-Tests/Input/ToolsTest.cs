@@ -166,6 +166,12 @@ namespace TWF.Input.Tests
         {
             var previewOutcome = PreviewOutcomeFor(positions);
             toolApplier
+                .Setup(ta => ta.AddPosition(
+                    It.IsAny<string>(),
+                    It.IsAny<LinkedList<Vector>>(),
+                    It.IsAny<Vector>()))
+                .Callback<string, LinkedList<Vector>, Vector>((_, l, v) => l.AddLast(v));
+            toolApplier
                 .Setup(ta => ta.PreviewTool(
                     "do1",
                     "modify1",

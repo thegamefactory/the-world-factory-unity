@@ -15,7 +15,7 @@ namespace TWF
             return brushPositions.Count() == 2;
         }
 
-        public IEnumerable<Vector> computePositions(IEnumerable<Vector> brushPositions)
+        public IEnumerable<Vector> ComputePositions(IEnumerable<Vector> brushPositions)
         {
             LinkedList<Vector> result = new LinkedList<Vector>();
             var first = brushPositions.First();
@@ -33,6 +33,15 @@ namespace TWF
                 result.AddLast(new Vector(second.X, y));
             }
             return result;
+        }
+
+        public void AddPosition(LinkedList<Vector> positions, Vector position)
+        {
+            if (positions.Count >= 2)
+            {
+                positions.RemoveLast();
+            }
+            positions.AddLast(position);
         }
     }
 }

@@ -94,6 +94,11 @@ namespace TWF.Input
             tools.Add(tool);
         }
 
+        public override string ToString()
+        {
+            return "Tools[selected=" + SelectedTool + ", active=" + ActiveTool + ", positions" + positions.ToReadableString(5) + "]";
+        }
+
         private void ContinueTool()
         {
             ProcessMousePosition(() =>
@@ -127,7 +132,7 @@ namespace TWF.Input
             Vector? position = mousePositionProvider.GetMousePosition();
             if (null != position && (positions.Count == 0 || positions.Last.Value != position))
             {
-                positions.AddLast(position.Value);
+                toolApplierProvider().AddPosition(ActiveTool.ToolBrushName, positions, position.Value);
             }
             return position.HasValue;
         }
