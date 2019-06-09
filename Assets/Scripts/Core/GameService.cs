@@ -16,16 +16,10 @@ namespace TWF
     /// </summary>
     public class GameService
     {
-        public WorldFactory WorldFactory { get; }
-
         private World world;
 
-        public OnNewWorldListener OnNewWorldListener { get; set; }
-
-        public GraphicConfig GraphicConfig { get; } = new GraphicConfig();
-
         /// <summary>
-        /// Constructs a new game service.
+        /// Initializes a new instance of the <see cref="GameService"/> class.
         /// </summary>
         /// <param name="world">The world.</param>
         /// Defined as a list of tuples (IAgent, float), where float is the period in seconds at which the agent should be executed.</param>
@@ -35,6 +29,12 @@ namespace TWF
             this.OnNewWorldListener += this.GraphicConfig.OnNewWorld;
             this.NewWorld();
         }
+
+        public WorldFactory WorldFactory { get; }
+
+        public OnNewWorldListener OnNewWorldListener { get; set; }
+
+        public GraphicConfig GraphicConfig { get; } = new GraphicConfig();
 
         /// <summary>
         /// Recreates the world.

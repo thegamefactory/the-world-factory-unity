@@ -5,7 +5,7 @@ namespace TWF
     /// </summary>
     public enum ToolOutcome
     {
-        SUCCESS,
-        FAILURE
+        Success,
+        Failure,
     }
 }

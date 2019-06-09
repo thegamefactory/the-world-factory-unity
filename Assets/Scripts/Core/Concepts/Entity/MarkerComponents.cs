@@ -5,11 +5,11 @@
     /// <summary>
     /// A simple component that is used to mark entities; this enable a simple component existence check for the entity.
     /// </summary>
-    public class MarkerComponent : IReadOnlyMarkerComponentRegistry
+    public class MarkerComponents : IReadOnlyMarkerComponentRegistry
     {
         private readonly List<bool> markers = new List<bool>();
 
-        public MarkerComponent(string name)
+        public MarkerComponents(string name)
         {
             this.Name = name;
         }

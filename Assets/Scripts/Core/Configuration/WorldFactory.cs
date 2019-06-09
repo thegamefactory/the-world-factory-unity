@@ -1,12 +1,13 @@
 namespace TWF
 {
     using System;
+    using System.Diagnostics.Contracts;
 
     public class WorldFactory
     {
         public Vector Size { get; set; } = new Vector(1, 1);
 
-        public ITerrainGenerator TerrainGenerator { get; set; } = new UniformMapGenerator(Terrains.LAND);
+        public ITerrainGenerator TerrainGenerator { get; set; } = new UniformMapGenerator(Terrains.Land);
 
         public WorldRulesFactory WorldConfigFactory { get; set; } = new WorldRulesFactory();
 
@@ -17,8 +18,8 @@ namespace TWF
         /// </summary>
         public World Create()
         {
-            TwfDebug.Assert(this.Size.X > 0, "size.X must be positive");
-            TwfDebug.Assert(this.Size.Y > 0, "size.Y must be positive");
+            Contract.Requires(this.Size.X > 0, "size.X must be positive");
+            Contract.Requires(this.Size.Y > 0, "size.Y must be positive");
 
             WorldRules worldConfig = this.WorldConfigFactory.Create(this.Random);
 

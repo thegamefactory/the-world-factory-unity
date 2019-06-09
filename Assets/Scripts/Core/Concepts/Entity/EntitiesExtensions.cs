@@ -1,6 +1,7 @@
 ﻿namespace TWF
 {
     using System.Collections.Generic;
+    using System.Diagnostics.Contracts;
 
     /// <summary>
     /// Static class extending Entities.
@@ -9,29 +10,34 @@
     {
         public static IReadOnlyMarkerComponentRegistry GetMarkerComponents(this IReadOnlyEntities entities, string componentName)
         {
-            TwfDebug.Assert(entities.GetComponents(componentName) is IReadOnlyMarkerComponentRegistry);
+            Contract.Requires(entities != null);
+            Contract.Requires(entities.GetComponents(componentName) is IReadOnlyMarkerComponentRegistry);
             return entities.GetComponents(componentName) as IReadOnlyMarkerComponentRegistry;
         }
 
         public static IReadOnlyTypedComponents<T> GetTypedComponents<T>(this IReadOnlyEntities entities, string componentName)
         {
-            TwfDebug.Assert(entities.GetComponents(componentName) is IReadOnlyTypedComponents<T>);
+            Contract.Requires(entities != null);
+            Contract.Requires(entities.GetComponents(componentName) is IReadOnlyTypedComponents<T>);
             return entities.GetComponents(componentName) as IReadOnlyTypedComponents<T>;
         }
 
         public static NamedEntity GetNamedEntity(this IReadOnlyEntities entities, string entityName)
         {
+            Contract.Requires(entities != null);
             return new NamedEntity(entities[entityName], entityName);
         }
 
         public static LinkedList<int> GetMarkedEntities(this IReadOnlyEntities entities, string componentName)
         {
+            Contract.Requires(entities != null);
             var componentRegistry = entities.GetMarkerComponents(componentName);
             return componentRegistry.MarkedEntities();
         }
 
         public static IList<NamedEntity> GetMarkedNamedEntities(this IReadOnlyEntities entities, string componentName)
         {
+            Contract.Requires(entities != null);
             var markedEntities = GetMarkedEntities(entities, componentName);
             var namedEntites = new List<NamedEntity>(markedEntities.Count);
             int i = 0;

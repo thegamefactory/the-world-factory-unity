@@ -30,7 +30,8 @@
         /// Get the map view corresponding to the given type.
         /// </summary>
         /// <return>The map view corresponding to the given type.</return>
-        /// <param name="mapType">The type of the map.</param>
+        /// <param name="mapType">The identifier of the map.</param>
+        /// <typeparam name="T">The type of the returned map view.</param>
         public IMapView<T> GetMapView<T>(string mapType)
         {
             return this.maps.GetMap<T>(mapType);
@@ -40,7 +41,8 @@
         /// Get the map corresponding to the given type.
         /// </summary>
         /// <return>The map view corresponding to the given type.</return>
-        /// <param name="mapType">The type of the map.</param>
+        /// <param name="mapType">The identifier of the map.</param>
+        /// <typeparam name="T">The type of the returned map view.</param>
         public IMap<T> GetMap<T>(string mapType)
         {
             return this.maps.GetMap<T>(mapType);

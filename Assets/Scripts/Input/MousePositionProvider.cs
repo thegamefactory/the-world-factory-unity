@@ -6,12 +6,12 @@
     {
         public Vector? GetMousePosition()
         {
-            try
+            Tuple<float, float> clickedPosition = CoordinateMapper.ScreenPositionToMeshPosition(UnityEngine.Input.mousePosition);
+            if (clickedPosition != null)
             {
-                Tuple<float, float> clickedPosition = CoordinateMapper.ScreenPositionToMeshPosition(UnityEngine.Input.mousePosition);
                 return Root.GameService.ConvertPosition(clickedPosition.Item1, clickedPosition.Item2);
             }
-            catch (ArgumentOutOfRangeException)
+            else
             {
                 return null;
             }

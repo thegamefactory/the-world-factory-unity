@@ -10,33 +10,15 @@ namespace TWF
     /// </summary>
     public class ToolPreviewOutcome : IToolPreviewOutcomeMap
     {
+        public static readonly ToolPreviewOutcome EMPTY = ToolPreviewOutcome.Builder().Build();
+
         private readonly Dictionary<Vector, ToolOutcome> outcomes;
         private readonly bool isPossible;
 
-        public static readonly ToolPreviewOutcome EMPTY = ToolPreviewOutcome.Builder().Build();
-
-        private ToolPreviewOutcome(Dictionary<Vector, ToolOutcome> outcomes, bool isPossible)
+        public ToolPreviewOutcome(Dictionary<Vector, ToolOutcome> outcomes, bool isPossible)
         {
             this.outcomes = outcomes;
             this.isPossible = isPossible;
-        }
-
-        public class PreviewOutcomeBuilder
-        {
-            private readonly Dictionary<Vector, ToolOutcome> outcomes = new Dictionary<Vector, ToolOutcome>();
-            private bool isPossible = true;
-
-            public PreviewOutcomeBuilder WithPositionOutcome(Vector position, ToolOutcome outcome)
-            {
-                this.outcomes[position] = outcome;
-                this.isPossible &= outcome != ToolOutcome.FAILURE;
-                return this;
-            }
-
-            public ToolPreviewOutcome Build()
-            {
-                return new ToolPreviewOutcome(this.outcomes, this.isPossible);
-            }
         }
 
         public static PreviewOutcomeBuilder Builder()

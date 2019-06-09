@@ -8,9 +8,7 @@
 
     public class BuildingLayer : ITileLayer
     {
-#pragma warning disable SA1401 // Fields should be private
-        public static string COMPONENT = "building_color";
-#pragma warning restore SA1401 // Fields should be private
+        public static readonly string Component = "building_color";
 
         private readonly IMapView<Building> buildingMap;
         private readonly IMapView<int> zoneMap;
@@ -21,11 +19,11 @@
             this.buildingMap = worldView.GetBuildingMapView();
             this.zoneMap = worldView.GetZoneMapView();
 
-            var buildingColor = worldView.Rules.Zones.GetTypedComponents<BuildingColor>(COMPONENT);
+            var buildingColor = worldView.Rules.Zones.GetTypedComponents<BuildingColor>(Component);
             this.buildingColorProvider = (zoneId, buildingId) => buildingColor.GetComponent(zoneId).Invoke(buildingId);
         }
 
-        public string Name => COMPONENT;
+        public string Name => Component;
 
         public Color? GetColor(Vector pos)
         {

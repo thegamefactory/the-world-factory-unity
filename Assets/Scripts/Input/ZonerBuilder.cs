@@ -11,7 +11,7 @@
         public ZonerBuilder(IWorldView worldView)
         {
             this.zones = worldView.Rules.Zones;
-            this.zoneColor = this.zones.GetTypedComponents<Color?>(ZoneLayer.COMPONENT);
+            this.zoneColor = this.zones.GetTypedComponents<Color?>(ZoneLayer.Component);
         }
 
         public Tool BuildZoner(string zone, string prefix, string brush)

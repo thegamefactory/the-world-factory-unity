@@ -3,6 +3,7 @@
     /// <summary>
     /// A concrete map implementation based on a bidimensional array.
     /// </summary>
+    /// <typeparam name="T">The type of elements stored in the map.</typeparam>
     public class ArrayMap<T> : IMap<T>
     {
         private readonly T[,] contentMap;
@@ -49,7 +50,9 @@
 
         T IMapView<T>.this[int x, int y] => this.contentMap[x, y];
 
+#pragma warning disable CA1043 // Use Integral Or String Argument For Indexers
         public T this[Vector position] { get => this.contentMap[position.X, position.Y]; set => this.contentMap[position.X, position.Y] = value; }
+#pragma warning restore CA1043 // Use Integral Or String Argument For Indexers
 
         public T this[int x, int y] { get => this.contentMap[x, y]; set => this.contentMap[x, y] = value; }
 

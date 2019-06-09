@@ -5,6 +5,7 @@
     /// <summary>
     /// Interface for richly typed components that can be attached to entities.
     /// </summary>
+    /// <typeparam name="T">The type of the component.</param>
     public interface IReadOnlyTypedComponents<T> : IReadOnlyComponents
     {
         T GetComponent(int entityId);

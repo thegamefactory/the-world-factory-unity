@@ -9,12 +9,12 @@
     /// </summary>
     public class WorldRulesFactory
     {
-        public WorldRulesCustomizer WorldRulesCustomizer { get; set; }
-
         public WorldRulesFactory()
         {
             this.WorldRulesCustomizer = DefaultCustomizer();
         }
+
+        public WorldRulesCustomizer WorldRulesCustomizer { get; set; }
 
         public static WorldRulesCustomizer DefaultCustomizer()
         {

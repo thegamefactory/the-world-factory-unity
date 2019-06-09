@@ -1,5 +1,6 @@
 namespace TWF
 {
+    using System.Diagnostics.Contracts;
     using UnityEngine;
 
     /// <summary>
@@ -11,6 +12,9 @@ namespace TWF
         private readonly float offsetX;
         private readonly float offsetY;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PerlinNoiseGenerator"/> class.
+        /// </summary>
         /// <param name="noisePeriod">
         /// The noise period.
         /// The smaller the number, the higher the noise frequency.
@@ -35,6 +39,8 @@ namespace TWF
 
         public void Generate(float[,] noiseMap)
         {
+            Contract.Requires(noiseMap != null);
+
             int width = noiseMap.GetLength(0);
             int height = noiseMap.GetLength(1);
 
@@ -42,8 +48,8 @@ namespace TWF
             {
                 for (int y = 0; y < noiseMap.GetLength(1); ++y)
                 {
-                    float sampleX = (float)(x) / width * this.noisePeriod + this.offsetX;
-                    float sampleY = (float)(y) / height * this.noisePeriod + this.offsetY;
+                    float sampleX = ((float)x / width * this.noisePeriod) + this.offsetX;
+                    float sampleY = ((float)y / height * this.noisePeriod) + this.offsetY;
                     noiseMap[x, y] = Mathf.PerlinNoise(sampleX, sampleY);
                 }
             }

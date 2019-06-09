@@ -31,6 +31,11 @@ namespace TWF
             this.GetToolBrush(toolBrushName).AddPosition(positions, position);
         }
 
+        private static bool Validate(IWorldView worldView, IToolBehavior toolBehavior, IEnumerable<Vector> toolPositions)
+        {
+            return toolBehavior.Preview(worldView, toolPositions).IsPossible();
+        }
+
         private IToolBehavior GetToolBehavior(string toolBehaviorName, string modifier)
         {
             var toolBehaviorProvider = this.world.Rules.ToolBehaviors[toolBehaviorName] ?? throw new ArgumentException("Invalid tool behavior: " + toolBehaviorName);
@@ -48,18 +53,13 @@ namespace TWF
             return toolBehavior.Preview(worldView, toolPositions);
         }
 
-        private bool Validate(IWorldView worldView, IToolBehavior toolBehavior, IEnumerable<Vector> toolPositions)
-        {
-            return toolBehavior.Preview(worldView, toolPositions).IsPossible();
-        }
-
         private ToolOutcome Apply(IActionQueue actionQueue, IToolBehavior toolBehavior, IToolBrush toolBrush, IEnumerable<Vector> inputPositions)
         {
             IEnumerable<Vector> toolPositions = toolBrush.ComputePositions(inputPositions);
             var action = toolBehavior.CreateActions(toolPositions);
-            void validatedAction(World gs)
+            void ValidatedAction(World gs)
             {
-                if (this.Validate(gs, toolBehavior, toolPositions))
+                if (Validate(gs, toolBehavior, toolPositions))
                 {
                     action(gs);
                 }
@@ -72,12 +72,12 @@ namespace TWF
             // TODO: don't use exception to control the flow. Need google for this.
             try
             {
-                actionQueue.ExecuteSynchronously(validatedAction);
-                return ToolOutcome.SUCCESS;
+                actionQueue.ExecuteSynchronously(ValidatedAction);
+                return ToolOutcome.Success;
             }
             catch (InvalidOperationException)
             {
-                return ToolOutcome.FAILURE;
+                return ToolOutcome.Failure;
             }
         }
 

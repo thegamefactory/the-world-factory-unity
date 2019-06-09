@@ -26,7 +26,7 @@
             error.a = success?.a ?? 1.0f;
             if (outcome != null)
             {
-                if (outcome == ToolOutcome.SUCCESS)
+                if (outcome == ToolOutcome.Success)
                 {
                     return this.toolSuccessColorProvider();
                 }

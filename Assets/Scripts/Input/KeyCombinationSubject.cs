@@ -6,7 +6,7 @@
     /// A subject which notifies observers when events related to the given keyCombination happen.
     /// The subject needs to be enacted by regularly calling the enact method.
     /// </summary>
-    public partial class KeyCombinationSubject
+    public class KeyCombinationSubject
     {
         private readonly IKeyCombination keyCombination;
         private readonly Action onActivate;
@@ -14,7 +14,7 @@
         private readonly Action onDeactivate;
         private bool active;
 
-        private KeyCombinationSubject(IKeyCombination keyCombination, Action onActivate, Action onContinuous, Action onDeactivate)
+        public KeyCombinationSubject(IKeyCombination keyCombination, Action onActivate, Action onContinuous, Action onDeactivate)
         {
             this.keyCombination = keyCombination;
             this.onActivate = onActivate;

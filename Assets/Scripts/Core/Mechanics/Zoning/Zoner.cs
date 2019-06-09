@@ -2,6 +2,7 @@ namespace TWF
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.Contracts;
 
     /// <summary>
     /// A tool behavior that sets the zone of the input positions.
@@ -36,15 +37,17 @@ namespace TWF
 
         public ToolPreviewOutcome Preview(IWorldView worldView, IEnumerable<Vector> inputPositions)
         {
+            Contract.Requires(inputPositions != null);
+
             IMapView<int> terrainMap = worldView.GetTerrainMapView();
             IMapView<Building> buildingMap = worldView.GetBuildingMapView();
-            IZonableTerrain zonableTerrains = worldView.Rules.Zones.GetTypedComponents<IZonableTerrain>(Zones.ZONABLE_TERRAINS).GetComponent(this.Zone.Id);
+            IZonableTerrain zonableTerrains = worldView.Rules.Zones.GetTypedComponents<IZonableTerrain>(Zones.ZonableTerrains).GetComponent(this.Zone.Id);
 
-            ToolPreviewOutcome.PreviewOutcomeBuilder builder = ToolPreviewOutcome.Builder();
+            PreviewOutcomeBuilder builder = ToolPreviewOutcome.Builder();
             foreach (Vector pos in inputPositions)
             {
                 bool possible = buildingMap[pos] == null && zonableTerrains.IsZonable(terrainMap[pos]);
-                builder.WithPositionOutcome(pos, possible ? ToolOutcome.SUCCESS : ToolOutcome.FAILURE);
+                builder.WithPositionOutcome(pos, possible ? ToolOutcome.Success : ToolOutcome.Failure);
             }
 
             return builder.Build();

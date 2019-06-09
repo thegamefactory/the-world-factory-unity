@@ -11,15 +11,15 @@
         public WorldRules(
             Entities zones,
             Entities terrains,
-            Dictionary<string, ScheduledAgent> Agents,
-            Dictionary<string, Func<string, IToolBehavior>> ToolBehaviors,
-            Dictionary<string, IToolBrush> ToolBrushes)
+            Dictionary<string, ScheduledAgent> agents,
+            Dictionary<string, Func<string, IToolBehavior>> toolBehaviors,
+            Dictionary<string, IToolBrush> toolBrushes)
         {
             this.Zones = zones;
             this.Terrains = terrains;
-            this.Agents = Agents;
-            this.ToolBehaviors = ToolBehaviors;
-            this.ToolBrushes = ToolBrushes;
+            this.Agents = agents;
+            this.ToolBehaviors = toolBehaviors;
+            this.ToolBrushes = toolBrushes;
         }
 
         public Entities Terrains { get; }

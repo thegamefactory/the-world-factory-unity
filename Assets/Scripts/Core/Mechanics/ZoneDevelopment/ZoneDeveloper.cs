@@ -2,8 +2,8 @@ namespace TWF
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Diagnostics.Contracts;
+    using System.Linq;
 
     /// <summary>
     /// This agent is creating buildings on unoccupied zoned tiles.
@@ -26,7 +26,7 @@ namespace TWF
 
         public string Name => "Constructor";
 
-        public Action<World> execute(IWorldView worldView)
+        public Action<World> Execute(IWorldView worldView)
         {
             Contract.Requires(worldView != null);
             var developableZones = worldView.Rules.Zones.GetMarkerComponents(Zones.DEVELOPABLE);

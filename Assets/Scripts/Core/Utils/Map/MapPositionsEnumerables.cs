@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.Contracts;
 
     /// <summary>
     /// An utility class to iterate over maps positions.
@@ -13,8 +14,9 @@
         /// </summary>
         /// <param name="map">The map to traverse.</param>
         /// <return>An enumerable to iterate over all the positions.</return>
-        public static IEnumerable<Vector> GetAllPositions<T>(this IMapView<T> map)
+        public static IEnumerable<Vector> GetAllPositions(this IGenericMap map)
         {
+            Contract.Requires(map != null);
             return UnsafeGetPositions(0, 0, map.SizeX - 1, map.SizeY - 1);
         }
 
@@ -24,13 +26,16 @@
         /// Coordinates outside of the map boundaries will be cropped.
         /// An invalid rectangle results in an empty result.
         /// </summary>
+        /// <param name="map">The map from which the coordinates are sourced.</param>
         /// <param name="x1">X position of the first corner.</param>
         /// <param name="y1">Y position of the first corner.</param>
         /// <param name="x2">X position of the second corner.</param>
         /// <param name="y2">Y position of the second corner.</param>
         /// <return>An enumerable to iterate over the tile positions.</return>
-        public static IEnumerable<Vector> GetPositions<T>(this IMapView<T> map, int x1, int y1, int x2, int y2)
+        public static IEnumerable<Vector> GetPositions(this IGenericMap map, int x1, int y1, int x2, int y2)
         {
+            Contract.Requires(map != null);
+
             int xMin = Math.Max(Math.Min(x1, x2), 0);
             int xMax = Math.Min(Math.Max(x1, x2), map.SizeX - 1);
             int yMin = Math.Max(Math.Min(y1, y2), 0);

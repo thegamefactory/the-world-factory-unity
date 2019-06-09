@@ -1,50 +1,24 @@
 ﻿namespace TWF
 {
-    using System.Collections.Generic;
+    using System.Diagnostics.Contracts;
 
     /// <summary>
     /// A zone component to define legal terrains corresponding to each zone. By default, the only legal terrain is LAND.
     /// </summary>
     public static partial class Zones
     {
-        public static string ZONABLE_TERRAINS = "zonableTerrains";
+        public static readonly string ZonableTerrains = "zonable_terrains";
 
         public static void DefaultZonableTerrainComponent(WorldRules worldConfig)
         {
-            var Zones = worldConfig.Zones;
-            var Terrains = worldConfig.Terrains;
-            ZonableOnlyOn zonableOnlyOnLand = new ZonableOnlyOn(Terrains[TWF.Terrains.LAND]);
-            TypedComponent<IZonableTerrain> zonableTerrains = new TypedComponent<IZonableTerrain>(ZONABLE_TERRAINS, () => zonableOnlyOnLand);
-            zonableTerrains.AttachComponent(Zones[TWF.Zones.EMPTY], new AlwaysZonable());
-            Zones.Extend(zonableTerrains);
-        }
-    }
+            Contract.Requires(worldConfig != null);
 
-    public interface IZonableTerrain
-    {
-        bool IsZonable(int terrainId);
-    }
-
-    public class ZonableOnlyOn : IZonableTerrain
-    {
-        private readonly int zonableTerrainId;
-
-        public ZonableOnlyOn(int zonableTerrainId)
-        {
-            this.zonableTerrainId = zonableTerrainId;
-        }
-
-        public bool IsZonable(int terrainId)
-        {
-            return terrainId == this.zonableTerrainId;
-        }
-    }
-
-    public class AlwaysZonable : IZonableTerrain
-    {
-        public bool IsZonable(int terrainId)
-        {
-            return true;
+            var zones = worldConfig.Zones;
+            var terrains = worldConfig.Terrains;
+            ZonableOnlyOn zonableOnlyOnLand = new ZonableOnlyOn(terrains[Terrains.Land]);
+            TypedComponents<IZonableTerrain> zonableTerrains = new TypedComponents<IZonableTerrain>(ZonableTerrains, () => zonableOnlyOnLand);
+            zonableTerrains.AttachComponent(zones[TWF.Zones.EMPTY], new AlwaysZonable());
+            zones.Extend(zonableTerrains);
         }
     }
 }

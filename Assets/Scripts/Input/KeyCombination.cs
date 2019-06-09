@@ -7,13 +7,13 @@
     /// <summary>
     /// A wrapper to determine if a certain combination of keys is active or not.
     /// </summary>
-    public partial class KeyCombination : IKeyCombination
+    public class KeyCombination : IKeyCombination
     {
-        private readonly LinkedList<KeyCode> keys;
+        private readonly IEnumerable<KeyCode> keys;
 
-        private KeyCombination(LinkedList<KeyCode> keys)
+        public KeyCombination(IEnumerable<KeyCode> keys)
         {
-            this.keys = keys;
+            this.keys = new LinkedList<KeyCode>(keys);
         }
 
         public static KeyCombinationBuilder Builder(KeyCode key)

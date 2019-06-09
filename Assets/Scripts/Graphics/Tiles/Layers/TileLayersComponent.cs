@@ -40,20 +40,20 @@
             Entities terrains = worldConfig.Terrains;
             Entities zones = worldConfig.Zones;
 
-            TypedComponent<Color> terrainColor = new TypedComponent<Color>(TerrainLayer.COMPONENT, () => this.ErrorTile);
-            terrainColor.AttachComponent(terrains[Terrains.LAND], this.LandTile);
-            terrainColor.AttachComponent(terrains[Terrains.WATER], this.WaterTile);
+            TypedComponents<Color> terrainColor = new TypedComponents<Color>(TerrainLayer.Component, () => this.ErrorTile);
+            terrainColor.AttachComponent(terrains[Terrains.Land], this.LandTile);
+            terrainColor.AttachComponent(terrains[Terrains.Water], this.WaterTile);
             terrains.Extend(terrainColor);
 
-            TypedComponent<Color?> zoneColor = new TypedComponent<Color?>(ZoneLayer.COMPONENT, () => null);
-            zoneColor.AttachComponent(zones[Zones.FARMLAND], this.FarmlandTile);
-            zoneColor.AttachComponent(zones[Zones.RESIDENTIAL], this.ResidentialTile);
-            zoneColor.AttachComponent(zones[Zones.ROAD], this.RoadTile);
+            TypedComponents<Color?> zoneColor = new TypedComponents<Color?>(ZoneLayer.Component, () => null);
+            zoneColor.AttachComponent(zones[Zones.Farmland], this.FarmlandTile);
+            zoneColor.AttachComponent(zones[Zones.Residential], this.ResidentialTile);
+            zoneColor.AttachComponent(zones[Zones.Road], this.RoadTile);
             zones.Extend(zoneColor);
 
-            TypedComponent<BuildingColor> tileColor = new TypedComponent<BuildingColor>(BuildingLayer.COMPONENT, () => (v) => this.ErrorTile);
-            tileColor.AttachComponent(zones[Zones.FARMLAND], new BuildingColor((v) => this.FieldTile));
-            tileColor.AttachComponent(zones[Zones.RESIDENTIAL], new BuildingColor((v) => v % 2 == 0 ? this.Building1Tile : this.Building2Tile));
+            TypedComponents<BuildingColor> tileColor = new TypedComponents<BuildingColor>(BuildingLayer.Component, () => (v) => this.ErrorTile);
+            tileColor.AttachComponent(zones[Zones.Farmland], new BuildingColor((v) => this.FieldTile));
+            tileColor.AttachComponent(zones[Zones.Residential], new BuildingColor((v) => v % 2 == 0 ? this.Building1Tile : this.Building2Tile));
             zones.Extend(tileColor);
         }
     }

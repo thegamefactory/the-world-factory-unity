@@ -1,5 +1,6 @@
 namespace TWF.Graphics
 {
+    using System.Diagnostics.Contracts;
     using TWF;
     using UnityEngine;
     using UnityEngine.Assertions;
@@ -7,13 +8,14 @@ namespace TWF.Graphics
     public class MapDisplay : MonoBehaviour
     {
 #pragma warning disable SA1401 // Fields should be private
+#pragma warning disable CA1051 // Do not declare visible instance fields
         public Renderer TextureRender;
         public string[] ActiveTileLayers;
         public Color EmptyColor;
+#pragma warning restore CA1051 // Do not declare visible instance fields
 #pragma warning restore SA1401 // Fields should be private
 
-        private readonly Texture2D texture2D;
-        private ITileLayer[] cachedTileLayers = new ITileLayer[0];
+        private ITileLayer[] cachedTileLayers = System.Array.Empty<ITileLayer>();
         private Color[] cachedColorMap;
 
         public void Update()
@@ -23,6 +25,8 @@ namespace TWF.Graphics
 
         public void Draw(IWorldView worldView)
         {
+            Contract.Requires(worldView != null);
+
             Vector size = worldView.Size;
             int width = size.X;
             int height = size.Y;

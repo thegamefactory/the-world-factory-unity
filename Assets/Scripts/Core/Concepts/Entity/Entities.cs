@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.Contracts;
 
     /// <summary>
     /// A registry of entities.
@@ -12,8 +13,6 @@
     /// </summary>
     public class Entities : IReadOnlyEntities
     {
-        public string Name { get; }
-
         private readonly Dictionary<string, int> nameIdLookup = new Dictionary<string, int>();
         private readonly List<string> names = new List<string>();
         private readonly Dictionary<string, IReadOnlyComponents> componentRegistries = new Dictionary<string, IReadOnlyComponents>();
@@ -22,6 +21,14 @@
         {
             this.Name = name;
         }
+
+        public string Name { get; }
+
+        public int NumberOfEntities => this.names.Count;
+
+        public string this[int id] => this.names[id];
+
+        public int this[string name] => this.nameIdLookup[name];
 
         public int Register(string entityName)
         {
@@ -33,10 +40,8 @@
 
         public void Extend(IReadOnlyComponents component)
         {
-            if (component.Name == null)
-            {
-                throw new NullReferenceException();
-            }
+            Contract.Requires(component != null);
+            Contract.Requires(component.Name != null);
 
             if (this.componentRegistries.ContainsKey(component.Name))
             {
@@ -45,10 +50,6 @@
 
             this.componentRegistries[component.Name] = component;
         }
-
-        public string this[int id] => this.names[id];
-
-        public int this[string name] => this.nameIdLookup[name];
 
         public IReadOnlyComponents GetComponents(string componentName)
         {
@@ -59,7 +60,5 @@
 
             return this.componentRegistries[componentName];
         }
-
-        public int NumberOfEntities => this.names.Count;
     }
 }

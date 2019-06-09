@@ -1,6 +1,7 @@
 ﻿namespace TWF
 {
     using System.Collections.Generic;
+    using System.Diagnostics.Contracts;
     using System.Linq;
 
     /// <summary>
@@ -8,16 +9,20 @@
     /// </summary>
     public static class WorldPositionsMappers
     {
-        public static IEnumerable<(Vector, T)> ToPositionTuples<T>(this WorldPositions<T> gamePositions)
+        public static IEnumerable<(Vector, T)> ToPositionTuples<T>(this WorldPositions<T> worldPositions)
         {
-            return gamePositions.Positions
-               .Select(gamePositions.GetMapContentPositionTuple);
+            Contract.Requires(worldPositions != null);
+
+            return worldPositions.Positions
+               .Select(worldPositions.GetMapContentPositionTuple);
         }
 
-        public static IEnumerable<T> ToContent<T>(this WorldPositions<T> gamePositions)
+        public static IEnumerable<T> ToContent<T>(this WorldPositions<T> worldPositions)
         {
-            return gamePositions.Positions
-               .Select(gamePositions.GetMapContent);
+            Contract.Requires(worldPositions != null);
+
+            return worldPositions.Positions
+               .Select(worldPositions.GetMapContent);
         }
     }
 }

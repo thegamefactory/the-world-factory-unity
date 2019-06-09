@@ -6,9 +6,7 @@
 
     public class ZoneLayer : ITileLayer
     {
-#pragma warning disable SA1401 // Fields should be private
-        public static string COMPONENT = "zone_color";
-#pragma warning restore SA1401 // Fields should be private
+        public static readonly string Component = "zone_color";
 
         private readonly IMapView<int> zoneMap;
         private readonly ZoneColorProvider zoneColorProvider;
@@ -17,11 +15,11 @@
         {
             this.zoneMap = worldView.GetZoneMapView();
 
-            var zoneColor = worldView.Rules.Zones.GetTypedComponents<Color?>(COMPONENT);
+            var zoneColor = worldView.Rules.Zones.GetTypedComponents<Color?>(Component);
             this.zoneColorProvider = (z) => zoneColor.GetComponent(z);
         }
 
-        public string Name => COMPONENT;
+        public string Name => Component;
 
         public Color? GetColor(Vector pos)
         {

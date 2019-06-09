@@ -1,6 +1,7 @@
 namespace TWF
 {
     using System.Collections.Generic;
+    using System.Diagnostics.Contracts;
     using System.Linq;
 
     /// <summary>
@@ -29,6 +30,8 @@ namespace TWF
 
         public void AddPosition(LinkedList<Vector> positions, Vector position)
         {
+            Contract.Requires(positions != null);
+
             if (positions.Count >= 2)
             {
                 positions.RemoveLast();

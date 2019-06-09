@@ -2,19 +2,19 @@
 {
     public static partial class Zones
     {
-        public static string ENTITIES_NAME = "zone";
-        public static string EMPTY = "empty";
-        public static string RESIDENTIAL = "residential";
-        public static string FARMLAND = "farmland";
-        public static string ROAD = "road";
+        public static readonly string ENTITIES = "zone";
+        public static readonly string EMPTY = "empty";
+        public static readonly string Residential = "residential";
+        public static readonly string Farmland = "farmland";
+        public static readonly string Road = "road";
 
         public static Entities DefaultZones()
         {
-            Entities zones = new Entities(ENTITIES_NAME);
+            Entities zones = new Entities(ENTITIES);
             zones.Register(EMPTY);
-            zones.Register(RESIDENTIAL);
-            zones.Register(FARMLAND);
-            zones.Register(ROAD);
+            zones.Register(Residential);
+            zones.Register(Farmland);
+            zones.Register(Road);
             return zones;
         }
     }

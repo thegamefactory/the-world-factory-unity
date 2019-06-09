@@ -2,15 +2,15 @@
 {
     public static class Terrains
     {
-        public static string ENTITIES_NAME = "terrain";
-        public static string LAND = "land";
-        public static string WATER = "water";
+        public static readonly string EntitiesName = "terrain";
+        public static readonly string Land = "land";
+        public static readonly string Water = "water";
 
         public static Entities DefaultTerrains()
         {
-            Entities terrains = new Entities(ENTITIES_NAME);
-            terrains.Register(LAND);
-            terrains.Register(WATER);
+            Entities terrains = new Entities(EntitiesName);
+            terrains.Register(Land);
+            terrains.Register(Water);
             return terrains;
         }
     }

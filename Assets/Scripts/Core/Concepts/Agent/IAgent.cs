@@ -25,6 +25,6 @@ namespace TWF
         /// </summary>
         /// <returns>Mutating actions to execute on the world.</returns>
         /// <param name="worldView">The world (read-only).</param>
-        Action<World> execute(IWorldView worldView);
+        Action<World> Execute(IWorldView worldView);
     }
 }

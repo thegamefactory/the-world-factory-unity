@@ -1,8 +1,8 @@
 namespace TWF
 {
     using System.Collections.Generic;
+    using System.Diagnostics.Contracts;
     using System.Linq;
-    using System;
 
     /// <summary>
     /// A tool brush that yields the positions of all the tiles corresponding with a manatthan road between the start and the end.
@@ -31,14 +31,15 @@ namespace TWF
             var verticalStart = first.Y < second.Y ? first : second;
             var verticalEnd = first.Y < second.Y ? second : first;
 
-            void processHorizontal(int y)
+            void ProcessHorizontal(int y)
             {
                 for (int x = horizontalStart.X; x <= horizontalEnd.X; x++)
                 {
                     result.AddLast(new Vector(x, y));
                 }
             }
-            void processVertical(int x)
+
+            void ProcessVertical(int x)
             {
                 for (int y = verticalStart.Y; y <= verticalEnd.Y; y++)
                 {
@@ -51,13 +52,13 @@ namespace TWF
 
             if (verticalDist > horizontalDist)
             {
-                processVertical(first.X);
-                processHorizontal(second.Y);
+                ProcessVertical(first.X);
+                ProcessHorizontal(second.Y);
             }
             else
             {
-                processHorizontal(first.Y);
-                processVertical(second.X);
+                ProcessHorizontal(first.Y);
+                ProcessVertical(second.X);
             }
 
             return result;
@@ -65,6 +66,8 @@ namespace TWF
 
         public void AddPosition(LinkedList<Vector> positions, Vector position)
         {
+            Contract.Requires(positions != null);
+
             if (positions.Count >= 2)
             {
                 positions.RemoveLast();

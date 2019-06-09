@@ -1,5 +1,7 @@
-namespace TWF
+﻿namespace TWF
 {
+    using System.Diagnostics.Contracts;
+
     /// <summary>
     /// A tile generator which considers all the noise below a certain threshold as water and the rest land.
     /// </summary>
@@ -8,6 +10,9 @@ namespace TWF
         private readonly INoiseGenerator noiseGenerator;
         private readonly float waterThreshold;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WaterThresholdTerrainGenerator"/> class.
+        /// </summary>
         /// <param name="noiseGenerator">The noise generator.</param>
         /// <param name="waterThreshold">
         /// The threshold under which the noise is considered as water.
@@ -21,8 +26,10 @@ namespace TWF
 
         public IMap<int> GenerateTerrainMap(IWorldRules worldConfig, Vector size)
         {
-            int land = worldConfig.Terrains[Terrains.LAND];
-            int water = worldConfig.Terrains[Terrains.WATER];
+            Contract.Requires(worldConfig != null);
+
+            int land = worldConfig.Terrains[Terrains.Land];
+            int water = worldConfig.Terrains[Terrains.Water];
 
             float[,] noiseMap = new float[size.X, size.Y];
             this.noiseGenerator.Generate(noiseMap);

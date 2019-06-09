@@ -5,11 +5,11 @@ namespace TWF
     /// </summary>
     public class Building
     {
-        public int Variant { get; }
-
         public Building(int variant)
         {
             this.Variant = variant;
         }
+
+        public int Variant { get; }
     }
 }

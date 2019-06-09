@@ -6,12 +6,14 @@ using UnityEngine.Assertions;
 public class MapGenerator : MonoBehaviour
 {
 #pragma warning disable CA1051 // Do not declare visible instance fields
+#pragma warning disable SA1401 // Fields should be private
     public int MapWidth;
     public int MapHeight;
     public float NoisePeriod;
     public float WaterThreshold;
     public bool AutoUpdate;
     public int Seed;
+#pragma warning restore SA1401 // Fields should be private
 #pragma warning restore CA1051 // Do not declare visible instance fields
 
     public void OnValidate()
@@ -56,7 +58,7 @@ public class MapGenerator : MonoBehaviour
         ITerrainGenerator terrainGenerator;
         if (this.WaterThreshold <= 0)
         {
-            terrainGenerator = new UniformMapGenerator(Terrains.LAND);
+            terrainGenerator = new UniformMapGenerator(Terrains.Land);
         }
         else if (this.WaterThreshold <= 1)
         {
@@ -66,7 +68,7 @@ public class MapGenerator : MonoBehaviour
         }
         else
         {
-            terrainGenerator = new UniformMapGenerator(Terrains.WATER);
+            terrainGenerator = new UniformMapGenerator(Terrains.Water);
         }
 
         var worldFactory = Root.GameService.WorldFactory;

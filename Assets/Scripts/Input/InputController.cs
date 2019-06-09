@@ -7,10 +7,12 @@
     public class InputController : MonoBehaviour
     {
 #pragma warning disable SA1401 // Fields should be private
+#pragma warning disable CA1051 // Do not declare visible instance fields
         public KeyCode ResidentialModifierKey;
         public KeyCode FarmlandModifierKey;
         public KeyCode RoadModifierKey;
         public Text DebugText;
+#pragma warning restore CA1051 // Do not declare visible instance fields
 #pragma warning restore SA1401 // Fields should be private
 
         private readonly Tools tools = new Tools(() => Root.GameService.GetToolApplier(), new MousePositionProvider());
@@ -33,15 +35,15 @@
 
                 this.tools.RegisterTool(
                     KeyCombination.Builder(this.ResidentialModifierKey).Build(),
-                    zonerBuilder.BuildZoner(Zones.RESIDENTIAL, "zone", ToolBrushes.Rectangle.Name));
+                    zonerBuilder.BuildZoner(Zones.Residential, "zone", ToolBrushes.Rectangle.Name));
 
                 this.tools.RegisterTool(
                     KeyCombination.Builder(this.FarmlandModifierKey).Build(),
-                    zonerBuilder.BuildZoner(Zones.FARMLAND, "zone", ToolBrushes.Rectangle.Name));
+                    zonerBuilder.BuildZoner(Zones.Farmland, "zone", ToolBrushes.Rectangle.Name));
 
                 this.tools.RegisterTool(
                     KeyCombination.Builder(this.RoadModifierKey).Build(),
-                    zonerBuilder.BuildZoner(Zones.ROAD, "build", ToolBrushes.Manatthan.Name));
+                    zonerBuilder.BuildZoner(Zones.Road, "build", ToolBrushes.Manatthan.Name));
             };
         }
 

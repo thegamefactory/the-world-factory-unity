@@ -14,7 +14,7 @@ namespace TWF
     /// </summary>
     public class Ticker
     {
-        private readonly IDictionary<String, float> lastTicks = new Dictionary<String, float>();
+        private readonly IDictionary<string, float> lastTicks = new Dictionary<string, float>();
 
         public void Tick(IActionQueue actionQueue, IWorldView worldView, IEnumerable<ScheduledAgent> agents, float currentTime)
         {
@@ -28,7 +28,7 @@ namespace TWF
                     float lastTick = this.lastTicks[agent.Agent.Name];
                     if (lastTick + agent.Period < currentTime)
                     {
-                        actionQueue.ExecuteSynchronously(agent.Agent.execute(worldView));
+                        actionQueue.ExecuteSynchronously(agent.Agent.Execute(worldView));
                         this.lastTicks[agent.Agent.Name] = lastTick + agent.Period;
                     }
                 }

@@ -6,14 +6,14 @@
 
     public static class ToolBehaviors
     {
-        public static string ZONER = "zoners";
+        public static readonly string ZONER = "zoners";
 
         public static Func<string, IToolBehavior> Zoners(Entities zones)
         {
             return (m) =>
             {
                 var zone = zones.GetNamedEntity(m);
-                if (!zones.GetMarkerComponents(Zones.MANUALLY_ZONABLE).IsMarked(zone.Id))
+                if (!zones.GetMarkerComponents(Zones.ManuallyZonable).IsMarked(zone.Id))
                 {
                     throw new ArgumentException(zone.Name);
                 }

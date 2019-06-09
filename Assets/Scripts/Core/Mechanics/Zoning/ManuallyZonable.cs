@@ -1,21 +1,24 @@
 ﻿namespace TWF
 {
+    using System.Diagnostics.Contracts;
+
     /// <summary>
     /// A zone component to mark a zone as manually zonable.
     /// Such zones can be defined by the user using tools.
     /// </summary>
     public static partial class Zones
     {
-        public static string MANUALLY_ZONABLE = "manuallyZonable";
+        public static readonly string ManuallyZonable = "manually_zonable";
 
         public static void DefaultManuallyZonableComponent(WorldRules worldConfig)
         {
+            Contract.Requires(worldConfig != null);
             Entities zones = worldConfig.Zones;
-            MarkerComponent manuallyZonable = new MarkerComponent(MANUALLY_ZONABLE);
+            MarkerComponents manuallyZonable = new MarkerComponents(ManuallyZonable);
 
-            manuallyZonable.MarkEntity(zones[RESIDENTIAL]);
-            manuallyZonable.MarkEntity(zones[FARMLAND]);
-            manuallyZonable.MarkEntity(zones[ROAD]);
+            manuallyZonable.MarkEntity(zones[Residential]);
+            manuallyZonable.MarkEntity(zones[Farmland]);
+            manuallyZonable.MarkEntity(zones[Road]);
             zones.Extend(manuallyZonable);
         }
     }

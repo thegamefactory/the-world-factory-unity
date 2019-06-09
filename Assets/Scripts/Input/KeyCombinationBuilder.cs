@@ -3,22 +3,19 @@
     using System.Collections.Generic;
     using UnityEngine;
 
-    public partial class KeyCombination
+    public class KeyCombinationBuilder
     {
-        public class KeyCombinationBuilder
+        private readonly LinkedList<KeyCode> keys = new LinkedList<KeyCode>();
+
+        public KeyCombinationBuilder And(KeyCode key)
         {
-            private readonly LinkedList<KeyCode> keys = new LinkedList<KeyCode>();
+            this.keys.AddLast(key);
+            return this;
+        }
 
-            public KeyCombinationBuilder And(KeyCode key)
-            {
-                this.keys.AddLast(key);
-                return this;
-            }
-
-            public KeyCombination Build()
-            {
-                return new KeyCombination(this.keys);
-            }
+        public KeyCombination Build()
+        {
+            return new KeyCombination(this.keys);
         }
     }
 }

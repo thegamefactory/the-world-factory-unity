@@ -132,7 +132,7 @@ namespace TWF.Input.Tests
                     "modify1",
                     "brush1",
                     It.Is<IEnumerable<Vector>>(p => new List<Vector> { new Vector(3, 5), new Vector(2, 5), new Vector(2, 6) }.SequenceEqual(p))))
-                .Returns(ToolOutcome.SUCCESS);
+                .Returns(ToolOutcome.Success);
 
             Initialize();
 
@@ -186,7 +186,7 @@ namespace TWF.Input.Tests
             var previewOutcomeBuilder = ToolPreviewOutcome.Builder();
             foreach (Vector p in positions)
             {
-                previewOutcomeBuilder.WithPositionOutcome(p, ToolOutcome.SUCCESS);
+                previewOutcomeBuilder.WithPositionOutcome(p, ToolOutcome.Success);
             }
             return previewOutcomeBuilder.Build();
         }

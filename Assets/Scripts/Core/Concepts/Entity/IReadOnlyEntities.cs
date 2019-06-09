@@ -11,11 +11,11 @@
     {
         string Name { get; }
 
+        int NumberOfEntities { get; }
+
         string this[int id] { get; }
 
         int this[string name] { get; }
-
-        int NumberOfEntities { get; }
 
         IReadOnlyComponents GetComponents(string componentName);
     }
