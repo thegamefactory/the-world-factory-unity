@@ -22,6 +22,9 @@ namespace TWF.Graphics
         public Color? GetColor(Vector pos)
         {
             ToolOutcome? outcome = toolPreviewProvider().GetPreview(pos);
+            Color? success = toolSuccessColorProvider();
+            Color error = errorColor;
+            error.a = success?.a ?? 1.0f;
             if (null != outcome)
             {
                 if (outcome == ToolOutcome.SUCCESS)
@@ -30,7 +33,7 @@ namespace TWF.Graphics
                 }
                 else
                 {
-                    return errorColor;
+                    return error;
                 }
             }
             else
