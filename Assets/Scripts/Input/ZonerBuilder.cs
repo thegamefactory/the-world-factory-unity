@@ -1,26 +1,27 @@
-﻿using TWF.Graphics;
-using UnityEngine;
-
-namespace TWF.Input
+﻿namespace TWF.Input
 {
-    class ZonerBuilder
+    using TWF.Graphics;
+    using UnityEngine;
+
+    internal class ZonerBuilder
     {
-        private readonly IReadOnlyEntities Zones;
-        private readonly IReadOnlyTypedComponents<Color?> ZoneColor;
+        private readonly IReadOnlyEntities zones;
+        private readonly IReadOnlyTypedComponents<Color?> zoneColor;
 
         public ZonerBuilder(IWorldView worldView)
         {
-            Zones = worldView.Rules.Zones;
-            ZoneColor = Zones.GetTypedComponents<Color?>(ZoneLayer.COMPONENT);
+            this.zones = worldView.Rules.Zones;
+            this.zoneColor = this.zones.GetTypedComponents<Color?>(ZoneLayer.COMPONENT);
         }
 
         public Tool BuildZoner(string zone, string prefix, string brush)
         {
-            Color? color = ZoneColor.GetComponent(Zones[zone]);
+            Color? color = this.zoneColor.GetComponent(this.zones[zone]);
             if (color.HasValue)
             {
                 color = new Color(color.Value.r, color.Value.g, color.Value.b, color.Value.a / 2);
             }
+
             return new Tool(prefix + '_' + zone, ToolBehaviors.ZONER, zone, brush, color);
         }
     }

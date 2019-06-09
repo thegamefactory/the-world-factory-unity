@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
-namespace TWF
+﻿namespace TWF
 {
+    using System.Collections.Generic;
+    using System.Linq;
+
     /// <summary>
     /// An utility class that extends GamePositions to add a bunch of functions that map positions to useful constructs.
     /// </summary>

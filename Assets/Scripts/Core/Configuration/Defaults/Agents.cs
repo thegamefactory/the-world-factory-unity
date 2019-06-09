@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using System;
-using System.Linq;
-
-namespace TWF
+﻿namespace TWF
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
     /// <summary>
     /// Defines default background agents scheduled at fixed interval which mutate the state of the world.
     /// </summary>

@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace TWF
+﻿namespace TWF
 {
+    using System.Collections.Generic;
+
     public static class ToolBrushes
     {
         public static Dictionary<string, IToolBrush> AllToolBrushes { get; } = new Dictionary<string, IToolBrush>();

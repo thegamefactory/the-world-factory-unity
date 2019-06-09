@@ -1,31 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TWF.Graphics
+﻿namespace TWF.Graphics
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+
     /// <summary>
     /// A registry of all the layers that exist.
     /// </summary>
     public class TileLayers
     {
-        private LinkedList<Func<IWorldView, ITileLayer>> layerProviders = new LinkedList<Func<IWorldView, ITileLayer>>();
+        private readonly LinkedList<Func<IWorldView, ITileLayer>> layerProviders = new LinkedList<Func<IWorldView, ITileLayer>>();
         private IDictionary<string, ITileLayer> layers = new Dictionary<string, ITileLayer>();
 
         public void RegisterLayerProvider(Func<IWorldView, ITileLayer> layerProvider)
         {
-            layerProviders.AddLast(layerProvider);
+            this.layerProviders.AddLast(layerProvider);
         }
 
         public void OnNewWorld(IWorldView worldView)
         {
-            layers = new Dictionary<string, ITileLayer>();
-            foreach (var layerProvider in layerProviders)
+            this.layers = new Dictionary<string, ITileLayer>();
+            foreach (var layerProvider in this.layerProviders)
             {
                 var layer = layerProvider(worldView);
-                layers[layer.Name] = layer;
+                this.layers[layer.Name] = layer;
             }
         }
 
@@ -33,11 +33,12 @@ namespace TWF.Graphics
         {
             get
             {
-                if (!layers.ContainsKey(name))
+                if (!this.layers.ContainsKey(name))
                 {
                     throw new KeyNotFoundException(name);
                 }
-                return layers[name];
+
+                return this.layers[name];
             }
         }
     }

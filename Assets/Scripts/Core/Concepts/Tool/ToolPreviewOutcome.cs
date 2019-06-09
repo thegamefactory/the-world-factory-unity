@@ -1,17 +1,17 @@
-using System.Collections.Generic;
-using UnityEngine;
-
 namespace TWF
 {
+    using System.Collections.Generic;
+    using UnityEngine;
+
     /// <summary>
     /// Encapsulates the information related to whether using a tool is possible.
-    /// 
+    ///
     /// This class conveys which positions, if any, are problematic and which are not.
     /// </summary>
     public class ToolPreviewOutcome : IToolPreviewOutcomeMap
     {
-        private Dictionary<Vector, ToolOutcome> outcomes;
-        private bool isPossible;
+        private readonly Dictionary<Vector, ToolOutcome> outcomes;
+        private readonly bool isPossible;
 
         public static readonly ToolPreviewOutcome EMPTY = ToolPreviewOutcome.Builder().Build();
 
@@ -28,14 +28,14 @@ namespace TWF
 
             public PreviewOutcomeBuilder WithPositionOutcome(Vector position, ToolOutcome outcome)
             {
-                outcomes[position] = outcome;
-                isPossible &= outcome != ToolOutcome.FAILURE;
+                this.outcomes[position] = outcome;
+                this.isPossible &= outcome != ToolOutcome.FAILURE;
                 return this;
             }
 
             public ToolPreviewOutcome Build()
             {
-                return new ToolPreviewOutcome(outcomes, isPossible);
+                return new ToolPreviewOutcome(this.outcomes, this.isPossible);
             }
         }
 
@@ -50,14 +50,14 @@ namespace TWF
         /// <returns><c>true</c>, if using tool is possible, <c>false</c> otherwise.</returns>
         public bool IsPossible()
         {
-            return isPossible;
+            return this.isPossible;
         }
 
         public ToolOutcome? GetPreview(Vector pos)
         {
-            if (outcomes.ContainsKey(pos))
+            if (this.outcomes.ContainsKey(pos))
             {
-                return outcomes[pos];
+                return this.outcomes[pos];
             }
             else
             {

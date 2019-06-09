@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace TWF
+﻿namespace TWF
 {
+    using System;
+    using System.Collections.Generic;
+
     /// <summary>
     /// A tuple (id, name) to represent an entity.
     /// The bare integer representation should be preferred when possible but for code maintainability it is sometimes better to reference the name.
@@ -20,30 +20,30 @@ namespace TWF
 
         public void SetId(int id)
         {
-            Id = id;
+            this.Id = id;
         }
 
         public void SetName(string name)
         {
-            Name = name;
+            this.Name = name;
         }
 
         public override bool Equals(object obj)
         {
-            return obj is NamedEntity entity && Equals(entity);
+            return obj is NamedEntity entity && this.Equals(entity);
         }
 
         public bool Equals(NamedEntity other)
         {
-            return Id == other.Id &&
-                   Name == other.Name;
+            return this.Id == other.Id &&
+                   this.Name == other.Name;
         }
 
         public override int GetHashCode()
         {
             var hashCode = -1919740922;
-            hashCode = hashCode * -1521134295 + Id.GetHashCode();
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Name);
+            hashCode = hashCode * -1521134295 + this.Id.GetHashCode();
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(this.Name);
             return hashCode;
         }
 

@@ -1,7 +1,7 @@
-using System;
-
 namespace TWF
 {
+    using System;
+
     public class WorldFactory
     {
         public Vector Size { get; set; } = new Vector(1, 1);
@@ -17,16 +17,16 @@ namespace TWF
         /// </summary>
         public World Create()
         {
-            TwfDebug.Assert(Size.X > 0, "size.X must be positive");
-            TwfDebug.Assert(Size.Y > 0, "size.Y must be positive");
+            TwfDebug.Assert(this.Size.X > 0, "size.X must be positive");
+            TwfDebug.Assert(this.Size.Y > 0, "size.Y must be positive");
 
-            WorldRules worldConfig = WorldConfigFactory.Create(Random);
+            WorldRules worldConfig = this.WorldConfigFactory.Create(this.Random);
 
-            var terrainMap = TerrainGenerator.GenerateTerrainMap(worldConfig, Size);
-            var zoneMap = new ArrayMap<int>(Size, worldConfig.Zones[Zones.EMPTY]);
-            var buildingMap = new ArrayMap<Building>(Size, null);
+            var terrainMap = this.TerrainGenerator.GenerateTerrainMap(worldConfig, this.Size);
+            var zoneMap = new ArrayMap<int>(this.Size, worldConfig.Zones[Zones.EMPTY]);
+            var buildingMap = new ArrayMap<Building>(this.Size, null);
 
-            Maps maps = new Maps(Size);
+            Maps maps = new Maps(this.Size);
             terrainMap.RegisterTerrain(maps);
             zoneMap.RegisterZone(maps);
             buildingMap.RegisterBuilding(maps);

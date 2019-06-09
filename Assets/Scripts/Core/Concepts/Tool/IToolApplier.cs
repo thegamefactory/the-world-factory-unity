@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace TWF
+﻿namespace TWF
 {
+    using System.Collections.Generic;
+
     /// <summary>
     /// An object that can receive tool instructions and apply them to modify the state of the world.
     /// The tool offers a dry run mode (preview) that can be used to generate feedback on the effect of the action before enacting it.
@@ -19,7 +19,7 @@ namespace TWF
         ToolPreviewOutcome PreviewTool(string toolBehaviorName, string toolBehaviorModifier, string toolBrushName, IEnumerable<Vector> positions);
 
         /// <summary>
-        /// Add a position to the linked list of the current positions. 
+        /// Add a position to the linked list of the current positions.
         /// This enable optimizations, for example a rectangle brush may only care about the first position and the last position.
         /// Therefore adding a position can simply replace the last element of the linked list and the linked list size can be bound to two.
         /// The positions parameter is modified in place

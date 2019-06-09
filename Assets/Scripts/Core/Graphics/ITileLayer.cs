@@ -1,7 +1,7 @@
-﻿using UnityEngine;
-
-namespace TWF.Graphics
+﻿namespace TWF.Graphics
 {
+    using UnityEngine;
+
     /// <summary>
     /// A layer applicable to the tile map.
     /// A layer returns an optional color for each position.

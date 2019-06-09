@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace TWF
+﻿namespace TWF
 {
+    using System;
+    using System.Collections.Generic;
+
     /// <summary>
     /// A IGenericMap registry.
     /// The world can be thought as containing different maps (layers) superposing each other.
@@ -11,12 +11,12 @@ namespace TWF
     /// </summary>
     public class Maps
     {
-        IDictionary<string, IGenericMap> maps;
+        private readonly IDictionary<string, IGenericMap> maps;
 
         public Maps(Vector size)
         {
-            Size = size;
-            maps = new Dictionary<string, IGenericMap>();
+            this.Size = size;
+            this.maps = new Dictionary<string, IGenericMap>();
         }
 
         /// <summary>
@@ -36,14 +36,16 @@ namespace TWF
         /// <param name="map">Actual map that is being registered.</param>
         public void RegisterMap(string mapType, IGenericMap map)
         {
-            if (maps.ContainsKey(mapType))
+            if (this.maps.ContainsKey(mapType))
             {
                 throw new ArgumentException("Duplicate type: " + mapType);
             }
-            if (!map.Size.Equals(Size))
+
+            if (!map.Size.Equals(this.Size))
             {
-                throw new ArgumentException("Invalid map size: " + mapType + "(expected: " + Size + ", got: " + map.Size + ")");
+                throw new ArgumentException("Invalid map size: " + mapType + "(expected: " + this.Size + ", got: " + map.Size + ")");
             }
+
             this.maps[mapType] = map;
         }
 
@@ -57,12 +59,12 @@ namespace TWF
         /// Returns the size of the map on the X axis.
         /// </summary>
         /// <return>The size of the map on the X axis.</return>
-        public int SizeX => Size.X;
+        public int SizeX => this.Size.X;
 
         /// <summary>
         /// Returns the size of the map on the Y axis.
         /// </summary>
         /// <return>The size of the map on the Y axis.</return>
-        public int SizeY => Size.Y;
+        public int SizeY => this.Size.Y;
     }
 }

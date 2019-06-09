@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System;
-
-namespace TWF
+﻿namespace TWF
 {
+    using System;
+    using System.Collections.Generic;
+
     /// <summary>
     /// See interface definition.
     /// </summary>
@@ -23,19 +23,23 @@ namespace TWF
         }
 
         public Entities Terrains { get; }
+
         public Entities Zones { get; }
+
         public Dictionary<string, ScheduledAgent> Agents { get; }
+
         public Dictionary<string, Func<string, IToolBehavior>> ToolBehaviors { get; }
+
         public Dictionary<string, IToolBrush> ToolBrushes { get; }
 
-        IReadOnlyEntities IWorldRules.Terrains => Terrains;
+        IReadOnlyEntities IWorldRules.Terrains => this.Terrains;
 
-        IReadOnlyEntities IWorldRules.Zones => Zones;
+        IReadOnlyEntities IWorldRules.Zones => this.Zones;
 
-        IReadOnlyDictionary<string, ScheduledAgent> IWorldRules.Agents => Agents;
+        IReadOnlyDictionary<string, ScheduledAgent> IWorldRules.Agents => this.Agents;
 
-        IReadOnlyDictionary<string, Func<string, IToolBehavior>> IWorldRules.ToolBehaviors => ToolBehaviors;
+        IReadOnlyDictionary<string, Func<string, IToolBehavior>> IWorldRules.ToolBehaviors => this.ToolBehaviors;
 
-        IReadOnlyDictionary<string, IToolBrush> IWorldRules.ToolBrushes => ToolBrushes;
+        IReadOnlyDictionary<string, IToolBrush> IWorldRules.ToolBrushes => this.ToolBrushes;
     }
 }

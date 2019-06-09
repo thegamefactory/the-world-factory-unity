@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace TWF
+﻿namespace TWF
 {
+    using System;
+    using System.Collections.Generic;
+
     /// <summary>
     /// Interface to interact with anything that is unique to a specific world instance.
     /// </summary>
     public class World : IWorldView
     {
-        private Maps maps;
-        private Ticker ticker;
+        private readonly Maps maps;
+        private readonly Ticker ticker;
 
         public World(Maps maps, WorldRules rules, Ticker ticker)
         {
@@ -18,9 +18,11 @@ namespace TWF
             this.ticker = ticker;
         }
 
-        public Vector Size { get => maps.Size; }
-        public int SizeX { get => maps.SizeX; }
-        public int SizeY { get => maps.SizeY; }
+        public Vector Size { get => this.maps.Size; }
+
+        public int SizeX { get => this.maps.SizeX; }
+
+        public int SizeY { get => this.maps.SizeY; }
 
         public IWorldRules Rules { get; }
 
@@ -31,7 +33,7 @@ namespace TWF
         /// <param name="mapType">The type of the map.</param>
         public IMapView<T> GetMapView<T>(string mapType)
         {
-            return maps.GetMap<T>(mapType);
+            return this.maps.GetMap<T>(mapType);
         }
 
         /// <summary>
@@ -41,7 +43,7 @@ namespace TWF
         /// <param name="mapType">The type of the map.</param>
         public IMap<T> GetMap<T>(string mapType)
         {
-            return maps.GetMap<T>(mapType);
+            return this.maps.GetMap<T>(mapType);
         }
 
         /// <summary>
@@ -51,7 +53,7 @@ namespace TWF
         /// <param name="currentTime">The current time, given in seconds.</param>
         public void Tick(IEnumerable<ScheduledAgent> agents, float currentTime)
         {
-            ticker.Tick(GetActionQueue(), this, agents, currentTime);
+            this.ticker.Tick(this.GetActionQueue(), this, agents, currentTime);
         }
 
         /// <summary>
@@ -64,7 +66,7 @@ namespace TWF
 
         private class ActionQueue : IActionQueue
         {
-            private World world;
+            private readonly World world;
 
             internal ActionQueue(World world)
             {
@@ -73,7 +75,7 @@ namespace TWF
 
             public void ExecuteSynchronously(Action<World> action)
             {
-                action(world);
+                action(this.world);
             }
         }
     }

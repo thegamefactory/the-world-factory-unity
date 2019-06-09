@@ -8,9 +8,9 @@ public class GameTicker : MonoBehaviour
 {
     private float currentTime = 0.0f;
 
-    void Update()
+    private void Update()
     {
-        currentTime += Time.deltaTime;
-        Root.GameService.Tick(currentTime);
+        this.currentTime += Time.deltaTime;
+        Root.GameService.Tick(this.currentTime);
     }
 }

@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace TWF
+﻿namespace TWF
 {
+    using System.Collections.Generic;
+
     /// <summary>
     /// Static class extending Entities.
     /// </summary>
@@ -12,6 +12,7 @@ namespace TWF
             TwfDebug.Assert(entities.GetComponents(componentName) is IReadOnlyMarkerComponentRegistry);
             return entities.GetComponents(componentName) as IReadOnlyMarkerComponentRegistry;
         }
+
         public static IReadOnlyTypedComponents<T> GetTypedComponents<T>(this IReadOnlyEntities entities, string componentName)
         {
             TwfDebug.Assert(entities.GetComponents(componentName) is IReadOnlyTypedComponents<T>);

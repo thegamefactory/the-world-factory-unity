@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace TWF
+﻿namespace TWF
 {
+    using System.Collections.Generic;
+
     /// <summary>
     /// A zone component to define legal terrains corresponding to each zone. By default, the only legal terrain is LAND.
     /// </summary>
@@ -27,7 +27,7 @@ namespace TWF
 
     public class ZonableOnlyOn : IZonableTerrain
     {
-        int zonableTerrainId;
+        private readonly int zonableTerrainId;
 
         public ZonableOnlyOn(int zonableTerrainId)
         {
@@ -36,7 +36,7 @@ namespace TWF
 
         public bool IsZonable(int terrainId)
         {
-            return terrainId == zonableTerrainId;
+            return terrainId == this.zonableTerrainId;
         }
     }
 

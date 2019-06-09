@@ -26,6 +26,7 @@ public class CoordinateMapper
             Vector2 normalizedLocalHitPosition = new Vector2(differenceVector.x, differenceVector.y) + new Vector2(0.5f, 0.5f);
             return new Tuple<float, float>(normalizedLocalHitPosition.x, normalizedLocalHitPosition.y);
         }
+
         throw new ArgumentOutOfRangeException();
     }
 }

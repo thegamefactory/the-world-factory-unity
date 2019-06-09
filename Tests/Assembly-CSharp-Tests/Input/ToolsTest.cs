@@ -8,14 +8,14 @@ namespace TWF.Input.Tests
     [TestClass]
     public class ToolsTest
     {
-        private Mock<IToolApplier> toolApplier = new Mock<IToolApplier>(MockBehavior.Strict);
-        private Mock<IMousePositionProvider> mousePositionProvider = new Mock<IMousePositionProvider>(MockBehavior.Strict);
-        private FakeKeyCombination toolKeys1 = new FakeKeyCombination();
-        private FakeKeyCombination toolKeys2 = new FakeKeyCombination();
-        private FakeKeyCombination escape = new FakeKeyCombination();
-        private FakeKeyCombination activator = new FakeKeyCombination();
-        private Tool tool1 = new Tool("1", "do1", "modify1", "brush1", null);
-        private Tool tool2 = new Tool("2", "do2", "modify2", "brush2", null);
+        private readonly Mock<IToolApplier> toolApplier = new Mock<IToolApplier>(MockBehavior.Strict);
+        private readonly Mock<IMousePositionProvider> mousePositionProvider = new Mock<IMousePositionProvider>(MockBehavior.Strict);
+        private readonly FakeKeyCombination toolKeys1 = new FakeKeyCombination();
+        private readonly FakeKeyCombination toolKeys2 = new FakeKeyCombination();
+        private readonly FakeKeyCombination escape = new FakeKeyCombination();
+        private readonly FakeKeyCombination activator = new FakeKeyCombination();
+        private readonly Tool tool1 = new Tool("1", "do1", "modify1", "brush1", null);
+        private readonly Tool tool2 = new Tool("2", "do2", "modify2", "brush2", null);
         private Tools tools;
 
         public void Initialize()

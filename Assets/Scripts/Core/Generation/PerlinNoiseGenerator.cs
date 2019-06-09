@@ -1,18 +1,18 @@
-using UnityEngine;
-
 namespace TWF
 {
+    using UnityEngine;
+
     /// <summary>
     /// An implementation of the noise generator using Perlin noise.
     /// </summary>
     public class PerlinNoiseGenerator : INoiseGenerator
     {
-        private float noisePeriod;
-        private float offsetX;
-        private float offsetY;
+        private readonly float noisePeriod;
+        private readonly float offsetX;
+        private readonly float offsetY;
 
         /// <param name="noisePeriod">
-        /// The noise period. 
+        /// The noise period.
         /// The smaller the number, the higher the noise frequency.
         /// A period of 1 means that the noise repeats itself at the end of the map.
         /// </param>
@@ -42,8 +42,8 @@ namespace TWF
             {
                 for (int y = 0; y < noiseMap.GetLength(1); ++y)
                 {
-                    float sampleX = (float)(x) / width * noisePeriod + offsetX;
-                    float sampleY = (float)(y) / height * noisePeriod + offsetY;
+                    float sampleX = (float)(x) / width * this.noisePeriod + this.offsetX;
+                    float sampleY = (float)(y) / height * this.noisePeriod + this.offsetY;
                     noiseMap[x, y] = Mathf.PerlinNoise(sampleX, sampleY);
                 }
             }

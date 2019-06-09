@@ -6,14 +6,14 @@ public class CameraController : MonoBehaviour
     private Vector3 horizontalDirectionVector = new Vector3(1, 0, 0);
     private Vector3 verticalDirectionVector = new Vector3(0, 1, 0);
 
-    void Update()
+    private void Update()
     {
-        HandleInput();
+        this.HandleInput();
     }
 
-    void HandleInput()
+    private void HandleInput()
     {
-        this.transform.localPosition += Input.GetAxis("Horizontal") * horizontalDirectionVector * Time.deltaTime * speed;
-        this.transform.localPosition += Input.GetAxis("Vertical") * verticalDirectionVector * Time.deltaTime * speed;
+        this.transform.localPosition += Input.GetAxis("Horizontal") * this.horizontalDirectionVector * Time.deltaTime * this.speed;
+        this.transform.localPosition += Input.GetAxis("Vertical") * this.verticalDirectionVector * Time.deltaTime * this.speed;
     }
 }

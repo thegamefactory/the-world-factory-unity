@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace TWF
+﻿namespace TWF
 {
+    using System;
+    using System.Collections.Generic;
+
     /// <summary>
     /// Factory design pattern for WorldRules.
     /// An extension point is provided with WorldRulesCustomizer delegates that can be register and allow to either redefine or create new rules.
@@ -13,7 +13,7 @@ namespace TWF
 
         public WorldRulesFactory()
         {
-            WorldRulesCustomizer = DefaultCustomizer();
+            this.WorldRulesCustomizer = DefaultCustomizer();
         }
 
         public static WorldRulesCustomizer DefaultCustomizer()
@@ -36,7 +36,7 @@ namespace TWF
                 new Dictionary<string, Func<string, IToolBehavior>>() { [ToolBehaviors.ZONER] = ToolBehaviors.Zoners(zones) },
                 ToolBrushes.AllToolBrushes);
 
-            WorldRulesCustomizer(wr);
+            this.WorldRulesCustomizer(wr);
 
             return wr;
         }

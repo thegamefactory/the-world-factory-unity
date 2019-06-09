@@ -1,7 +1,7 @@
-using System.Collections.Generic;
-
 namespace TWF
 {
+    using System.Collections.Generic;
+
     /// <summary>
     /// An interface to define tool brushes.
     /// Tool brushes convert the player input into a list of positions where the tool applies.
@@ -24,7 +24,7 @@ namespace TWF
         IEnumerable<Vector> ComputePositions(IEnumerable<Vector> brushPositions);
 
         /// <summary>
-        /// Add a position to the linked list of the current positions. 
+        /// Add a position to the linked list of the current positions.
         /// This enable optimizations, for example a rectangle brush may only care about the first position and the last position.
         /// Therefore adding a position can simply replace the last element of the linked list and the linked list size can be bound to two.
         /// The positions parameter is modified in place

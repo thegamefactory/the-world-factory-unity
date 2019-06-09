@@ -1,26 +1,28 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
-using System;
-
-namespace TWF.Input
+﻿namespace TWF.Input
 {
+    using System;
+    using UnityEngine;
+    using UnityEngine.UI;
+
     public class InputController : MonoBehaviour
     {
+#pragma warning disable SA1401 // Fields should be private
         public KeyCode ResidentialModifierKey;
         public KeyCode FarmlandModifierKey;
         public KeyCode RoadModifierKey;
         public Text DebugText;
+#pragma warning restore SA1401 // Fields should be private
 
-        readonly private Tools tools = new Tools(() => Root.GameService.GetToolApplier(), new MousePositionProvider());
+        private readonly Tools tools = new Tools(() => Root.GameService.GetToolApplier(), new MousePositionProvider());
 
         public Func<IToolPreviewOutcomeMap> GetToolPreviewOutcomeMapProvider()
         {
-            return () => tools.CurrentPreviewOutcome ?? ToolPreviewOutcome.EMPTY;
+            return () => this.tools.CurrentPreviewOutcome ?? ToolPreviewOutcome.EMPTY;
         }
 
         public Func<Color?> GetToolSuccessColorProvider()
         {
-            return () => tools.SelectedTool?.PreviewColor;
+            return () => this.tools.SelectedTool?.PreviewColor;
         }
 
         public void Awake()
@@ -29,26 +31,26 @@ namespace TWF.Input
             {
                 var zonerBuilder = new ZonerBuilder(w);
 
-                tools.RegisterTool(
-                    KeyCombination.Builder(ResidentialModifierKey).Build(),
+                this.tools.RegisterTool(
+                    KeyCombination.Builder(this.ResidentialModifierKey).Build(),
                     zonerBuilder.BuildZoner(Zones.RESIDENTIAL, "zone", ToolBrushes.Rectangle.Name));
 
-                tools.RegisterTool(
-                    KeyCombination.Builder(FarmlandModifierKey).Build(),
+                this.tools.RegisterTool(
+                    KeyCombination.Builder(this.FarmlandModifierKey).Build(),
                     zonerBuilder.BuildZoner(Zones.FARMLAND, "zone", ToolBrushes.Rectangle.Name));
 
-                tools.RegisterTool(
-                    KeyCombination.Builder(RoadModifierKey).Build(),
+                this.tools.RegisterTool(
+                    KeyCombination.Builder(this.RoadModifierKey).Build(),
                     zonerBuilder.BuildZoner(Zones.ROAD, "build", ToolBrushes.Manatthan.Name));
             };
         }
 
         public void Update()
         {
-            tools.Update();
-            if (null != DebugText)
+            this.tools.Update();
+            if (this.DebugText != null)
             {
-                DebugText.text = tools.ToString() + "\n" + "Mouse=" + UnityEngine.Input.GetKey(KeyCode.Mouse0);
+                this.DebugText.text = this.tools.ToString() + "\n" + "Mouse=" + UnityEngine.Input.GetKey(KeyCode.Mouse0);
             }
         }
     }

@@ -1,7 +1,7 @@
-using System;
-
 namespace TWF
 {
+    using System;
+
     /// <summary>
     /// An X, Y tuple used to represent either vectors or positions.
     /// </summary>
@@ -12,32 +12,32 @@ namespace TWF
 
         public Vector(int x, int y)
         {
-            X = x;
-            Y = y;
+            this.X = x;
+            this.Y = y;
         }
 
         public override bool Equals(object obj)
         {
-            return obj is Vector && Equals((Vector)obj);
+            return obj is Vector && this.Equals((Vector)obj);
         }
 
         public bool Equals(Vector other)
         {
-            return X == other.X &&
-                   Y == other.Y;
+            return this.X == other.X &&
+                   this.Y == other.Y;
         }
 
         public override int GetHashCode()
         {
             var hashCode = 1861411795;
-            hashCode = hashCode * -1521134295 + X.GetHashCode();
-            hashCode = hashCode * -1521134295 + Y.GetHashCode();
+            hashCode = hashCode * -1521134295 + this.X.GetHashCode();
+            hashCode = hashCode * -1521134295 + this.Y.GetHashCode();
             return hashCode;
         }
 
         public override string ToString()
         {
-            return "(" + X + ", " + Y + ")";
+            return "(" + this.X + ", " + this.Y + ")";
         }
 
         public static bool operator ==(Vector vector1, Vector vector2)

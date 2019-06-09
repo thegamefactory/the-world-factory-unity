@@ -9,7 +9,7 @@
 
         public void OnNewWorld(IWorldView worldView)
         {
-            TileLayers.OnNewWorld(worldView);
+            this.TileLayers.OnNewWorld(worldView);
         }
     }
 }

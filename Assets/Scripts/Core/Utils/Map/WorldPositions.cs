@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace TWF
+﻿namespace TWF
 {
+    using System.Collections.Generic;
+
     /// <summary>
     /// A tuple world view / positions.
     /// Having the world view embedded alongside positions enables to map the positions to constructs that are specific to the state.
@@ -10,21 +10,22 @@ namespace TWF
     {
         public WorldPositions(IMapView<T> mapView, IEnumerable<Vector> positions)
         {
-            MapView = mapView;
-            Positions = positions;
+            this.MapView = mapView;
+            this.Positions = positions;
         }
 
         public IMapView<T> MapView { get; }
+
         public IEnumerable<Vector> Positions { get; }
 
         public T GetMapContent(Vector position)
         {
-            return MapView[position];
+            return this.MapView[position];
         }
 
         public (Vector, T) GetMapContentPositionTuple(Vector position)
         {
-            return (position, MapView[position]);
+            return (position, this.MapView[position]);
         }
     }
 }

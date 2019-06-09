@@ -7,6 +7,7 @@
     public partial class Zones
     {
         public static string DEVELOPABLE = "deveoplable";
+
         public static void DefaultDevelopableComponent(WorldRules worldConfig)
         {
             Entities zones = worldConfig.Zones;

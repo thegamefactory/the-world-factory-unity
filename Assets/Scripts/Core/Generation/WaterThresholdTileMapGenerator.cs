@@ -5,8 +5,8 @@ namespace TWF
     /// </summary>
     public class WaterThresholdTerrainGenerator : ITerrainGenerator
     {
-        private INoiseGenerator noiseGenerator;
-        private float waterThreshold;
+        private readonly INoiseGenerator noiseGenerator;
+        private readonly float waterThreshold;
 
         /// <param name="noiseGenerator">The noise generator.</param>
         /// <param name="waterThreshold">
@@ -25,15 +25,16 @@ namespace TWF
             int water = worldConfig.Terrains[Terrains.WATER];
 
             float[,] noiseMap = new float[size.X, size.Y];
-            noiseGenerator.Generate(noiseMap);
+            this.noiseGenerator.Generate(noiseMap);
             int[,] tiles = new int[size.X, size.Y];
             for (int x = 0; x < size.X; ++x)
             {
                 for (int y = 0; y < size.Y; ++y)
                 {
-                    tiles[x, y] = noiseMap[x, y] > waterThreshold ? land : water;
+                    tiles[x, y] = noiseMap[x, y] > this.waterThreshold ? land : water;
                 }
             }
+
             return new ArrayMap<int>(tiles);
         }
     }

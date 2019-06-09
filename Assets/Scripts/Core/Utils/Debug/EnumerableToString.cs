@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Text;
-
-namespace TWF
+﻿namespace TWF
 {
+    using System.Collections.Generic;
+    using System.Text;
+
     public static class EnumerableToString
     {
         public static string ToReadableString<T>(this IEnumerable<T> enumerable, int maxElems)
@@ -16,13 +16,16 @@ namespace TWF
                 {
                     sb.Append(", ");
                 }
+
                 if (i++ == maxElems)
                 {
                     sb.Append("...");
                     break;
                 }
+
                 sb.Append(obj.ToString());
             }
+
             sb.Append("]");
             return sb.ToString();
         }

@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System;
-
-namespace TWF
+﻿namespace TWF
 {
+    using System;
+    using System.Collections.Generic;
+
     /// <summary>
     /// An utility class to iterate over map positions.
     /// Useful wrapper over MapPositionsEnumberables.

@@ -1,8 +1,8 @@
-﻿using System;
-
-namespace TWF.Input
+﻿namespace TWF.Input
 {
-    class MousePositionProvider : IMousePositionProvider
+    using System;
+
+    internal class MousePositionProvider : IMousePositionProvider
     {
         public Vector? GetMousePosition()
         {

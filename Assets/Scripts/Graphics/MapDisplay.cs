@@ -1,22 +1,24 @@
-using TWF;
-using UnityEngine;
-using UnityEngine.Assertions;
-
 namespace TWF.Graphics
 {
+    using TWF;
+    using UnityEngine;
+    using UnityEngine.Assertions;
+
     public class MapDisplay : MonoBehaviour
     {
+#pragma warning disable SA1401 // Fields should be private
         public Renderer TextureRender;
         public string[] ActiveTileLayers;
         public Color EmptyColor;
+#pragma warning restore SA1401 // Fields should be private
 
+        private readonly Texture2D texture2D;
         private ITileLayer[] cachedTileLayers = new ITileLayer[0];
         private Color[] cachedColorMap;
-        private readonly Texture2D texture2D;
 
         public void Update()
         {
-            Draw(Root.WorldView);
+            this.Draw(Root.WorldView);
         }
 
         public void Draw(IWorldView worldView)
@@ -27,7 +29,7 @@ namespace TWF.Graphics
             Assert.IsTrue(width > 0);
             Assert.IsTrue(height > 0);
 
-            Color[] colorMap = GetColorMap(width, height);
+            Color[] colorMap = this.GetColorMap(width, height);
 
             IMapView<Building> buildingMap = worldView.GetBuildingMapView();
             IMapView<int> zoneMap = worldView.GetZoneMapView();
@@ -35,13 +37,13 @@ namespace TWF.Graphics
 
             Vector v;
             int i = 0;
-            ITileLayer[] tileLayers = GetTileLayers();
+            ITileLayer[] tileLayers = this.GetTileLayers();
 
             for (v.Y = 0; v.Y < height; v.Y++)
             {
                 for (v.X = 0; v.X < width; v.X++)
                 {
-                    Color color = EmptyColor;
+                    Color color = this.EmptyColor;
                     color.a = 0.0f;
 
                     foreach (ITileLayer tileLayer in tileLayers)
@@ -50,30 +52,31 @@ namespace TWF.Graphics
                         if (newColor.HasValue)
                         {
                             ColorUtils.Superpose(ref color, color, newColor.Value);
-                            if (1.0f == color.a)
+                            if (color.a == 1.0f)
                             {
                                 break;
                             }
                         }
                     }
+
                     colorMap[i++] = color;
                 }
             }
 
-            Texture2D texture = GetTexture(width, height);
+            Texture2D texture = this.GetTexture(width, height);
             texture.SetPixels(colorMap);
             texture.Apply();
-            TextureRender.sharedMaterial.mainTexture = texture;
+            this.TextureRender.sharedMaterial.mainTexture = texture;
         }
 
         private ITileLayer[] GetTileLayers()
         {
             bool invalidCache = false;
-            if (cachedTileLayers.Length == ActiveTileLayers.Length)
+            if (this.cachedTileLayers.Length == this.ActiveTileLayers.Length)
             {
-                for (int i = 0; i < ActiveTileLayers.Length; ++i)
+                for (int i = 0; i < this.ActiveTileLayers.Length; ++i)
                 {
-                    if (cachedTileLayers[i].Name != ActiveTileLayers[i])
+                    if (this.cachedTileLayers[i].Name != this.ActiveTileLayers[i])
                     {
                         invalidCache = true;
                     }
@@ -86,36 +89,40 @@ namespace TWF.Graphics
 
             if (invalidCache)
             {
-                ITileLayer[] tileLayers = new ITileLayer[ActiveTileLayers.Length];
-                for (int i = 0; i < ActiveTileLayers.Length; ++i)
+                ITileLayer[] tileLayers = new ITileLayer[this.ActiveTileLayers.Length];
+                for (int i = 0; i < this.ActiveTileLayers.Length; ++i)
                 {
-                    tileLayers[i] = Root.GameService.GraphicConfig.TileLayers[ActiveTileLayers[i]];
+                    tileLayers[i] = Root.GameService.GraphicConfig.TileLayers[this.ActiveTileLayers[i]];
                 }
-                cachedTileLayers = tileLayers;
+
+                this.cachedTileLayers = tileLayers;
             }
-            return cachedTileLayers;
+
+            return this.cachedTileLayers;
         }
 
         private Color[] GetColorMap(int width, int height)
         {
-            if (null == cachedColorMap || cachedColorMap.Length != width * height)
+            if (this.cachedColorMap == null || this.cachedColorMap.Length != width * height)
             {
-                cachedColorMap = new Color[width * height];
+                this.cachedColorMap = new Color[width * height];
             }
-            return cachedColorMap;
+
+            return this.cachedColorMap;
         }
 
         private Texture2D GetTexture(int width, int height)
         {
-            Texture2D texture = TextureRender.sharedMaterial.mainTexture as Texture2D;
-            if (null == texture || texture.width != width || texture.height != height)
+            Texture2D texture = this.TextureRender.sharedMaterial.mainTexture as Texture2D;
+            if (texture == null || texture.width != width || texture.height != height)
             {
                 texture = new Texture2D(width, height)
                 {
-                    filterMode = FilterMode.Point
+                    filterMode = FilterMode.Point,
                 };
-                TextureRender.transform.localScale = new Vector3(width, height, 1);
+                this.TextureRender.transform.localScale = new Vector3(width, height, 1);
             }
+
             return texture;
         }
     }

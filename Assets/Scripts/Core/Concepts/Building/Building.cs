@@ -9,7 +9,7 @@ namespace TWF
 
         public Building(int variant)
         {
-            Variant = variant;
+            this.Variant = variant;
         }
     }
 }

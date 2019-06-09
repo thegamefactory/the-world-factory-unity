@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace TWF
+﻿namespace TWF
 {
+    using System.Collections.Generic;
+
     /// <summary>
     /// A simple component that is used to mark entities; this enable a simple component existence check for the entity.
     /// </summary>

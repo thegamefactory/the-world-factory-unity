@@ -7,12 +7,14 @@
     {
         public ScheduledAgent(IAgent agent, float period)
         {
-            Agent = agent;
-            Period = period;
+            this.Agent = agent;
+            this.Period = period;
         }
 
         public IAgent Agent { get; }
+
         public float Period { get; }
-        public string Name => Agent.Name;
+
+        public string Name => this.Agent.Name;
     }
 }

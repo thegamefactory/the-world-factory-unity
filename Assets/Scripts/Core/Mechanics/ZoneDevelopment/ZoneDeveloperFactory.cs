@@ -1,13 +1,13 @@
-﻿using System;
-
-namespace TWF
+﻿namespace TWF
 {
+    using System;
+
     /// <summary>
     /// Factory pattern for the ZoneDeveloper.
     /// </summary>
     public class ZoneDeveloperFactory
     {
-        private Random random;
+        private readonly Random random;
 
         public ZoneDeveloperFactory(Random random)
         {
@@ -17,8 +17,8 @@ namespace TWF
         public ZoneDeveloper CreateZoneDeveloper(double developmentRate)
         {
             return new ZoneDeveloper(
-                    () => random.NextDouble() < developmentRate,
-                    random.Next);
+                    () => this.random.NextDouble() < developmentRate,
+                    this.random.Next);
         }
     }
 }

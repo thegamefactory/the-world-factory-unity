@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-
 namespace TWF
 {
+    using System;
+    using System.Collections.Generic;
+
     /// <summary>
     /// A tool behavior that sets the zone of the input positions.
     /// </summary>
@@ -10,12 +10,12 @@ namespace TWF
     {
         public Zoner(NamedEntity zone)
         {
-            Zone = zone;
+            this.Zone = zone;
         }
 
         public NamedEntity Zone { get; }
 
-        public string Name => NameFromZone(Zone.Name);
+        public string Name => NameFromZone(this.Zone.Name);
 
         public static string NameFromZone(string zoneName)
         {
@@ -29,7 +29,7 @@ namespace TWF
                 IMap<int> zoneMap = world.GetZoneMap();
                 foreach (var pos in inputPositions)
                 {
-                    zoneMap[pos] = Zone.Id;
+                    zoneMap[pos] = this.Zone.Id;
                 }
             };
         }
@@ -38,14 +38,15 @@ namespace TWF
         {
             IMapView<int> terrainMap = worldView.GetTerrainMapView();
             IMapView<Building> buildingMap = worldView.GetBuildingMapView();
-            IZonableTerrain zonableTerrains = worldView.Rules.Zones.GetTypedComponents<IZonableTerrain>(Zones.ZONABLE_TERRAINS).GetComponent(Zone.Id);
+            IZonableTerrain zonableTerrains = worldView.Rules.Zones.GetTypedComponents<IZonableTerrain>(Zones.ZONABLE_TERRAINS).GetComponent(this.Zone.Id);
 
             ToolPreviewOutcome.PreviewOutcomeBuilder builder = ToolPreviewOutcome.Builder();
             foreach (Vector pos in inputPositions)
             {
-                bool possible = null == buildingMap[pos] && zonableTerrains.IsZonable(terrainMap[pos]);
+                bool possible = buildingMap[pos] == null && zonableTerrains.IsZonable(terrainMap[pos]);
                 builder.WithPositionOutcome(pos, possible ? ToolOutcome.SUCCESS : ToolOutcome.FAILURE);
             }
+
             return builder.Build();
         }
     }

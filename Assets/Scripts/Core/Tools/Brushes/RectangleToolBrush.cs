@@ -1,8 +1,8 @@
-using System.Collections.Generic;
-using System.Linq;
-
 namespace TWF
 {
+    using System.Collections.Generic;
+    using System.Linq;
+
     /// <summary>
     /// A tool brush that yields all rectangle tiles given rectangle corners (inclusive).
     /// </summary>
@@ -33,6 +33,7 @@ namespace TWF
             {
                 positions.RemoveLast();
             }
+
             positions.AddLast(position);
         }
     }

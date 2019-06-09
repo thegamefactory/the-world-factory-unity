@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System;
-
-namespace TWF
+﻿namespace TWF
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
     public static class ToolBehaviors
     {
         public static string ZONER = "zoners";
@@ -17,6 +17,7 @@ namespace TWF
                 {
                     throw new ArgumentException(zone.Name);
                 }
+
                 return new Zoner(zone);
             };
         }

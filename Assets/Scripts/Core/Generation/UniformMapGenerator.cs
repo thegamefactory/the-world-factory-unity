@@ -5,7 +5,7 @@ namespace TWF
     /// </summary>
     public class UniformMapGenerator : ITerrainGenerator
     {
-        private string terrain;
+        private readonly string terrain;
 
         /// <param name="terrain">The type of terrain that this generator create.</param>
         public UniformMapGenerator(string terrain)
@@ -15,7 +15,7 @@ namespace TWF
 
         public IMap<int> GenerateTerrainMap(IWorldRules worldConfig, Vector size)
         {
-            int terrainId = worldConfig.Terrains[terrain];
+            int terrainId = worldConfig.Terrains[this.terrain];
             int[,] tiles = new int[size.X, size.Y];
             for (int x = 0; x < size.X; x++)
             {
@@ -24,6 +24,7 @@ namespace TWF
                     tiles[x, y] = terrainId;
                 }
             }
+
             return new ArrayMap<int>(tiles);
         }
     }

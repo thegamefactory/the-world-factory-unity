@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System;
-
-namespace TWF
+﻿namespace TWF
 {
+    using System;
+    using System.Collections.Generic;
+
     /// <summary>
     /// An utility class to iterate over maps positions.
     /// </summary>
@@ -17,7 +17,6 @@ namespace TWF
         {
             return UnsafeGetPositions(0, 0, map.SizeX - 1, map.SizeY - 1);
         }
-
 
         /// <summary>
         /// Get an enumerable to iterate over the tiles positions in the rectangle defined by the given coordinates.

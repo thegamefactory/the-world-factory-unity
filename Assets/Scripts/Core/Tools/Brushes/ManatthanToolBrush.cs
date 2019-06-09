@@ -1,11 +1,11 @@
-using System.Collections.Generic;
-using System.Linq;
-using System;
-
 namespace TWF
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System;
+
     /// <summary>
-    /// A tool brush that yields the positions of all the tiles corresponding with a manatthan road between the start and the end
+    /// A tool brush that yields the positions of all the tiles corresponding with a manatthan road between the start and the end.
     /// </summary>
     public class ManatthanToolBrush : IToolBrush
     {
@@ -18,7 +18,7 @@ namespace TWF
 
         public IEnumerable<Vector> ComputePositions(IEnumerable<Vector> brushPositions)
         {
-            if (0 == brushPositions.Count())
+            if (brushPositions.Count() == 0)
             {
                 return brushPositions;
             }
@@ -69,6 +69,7 @@ namespace TWF
             {
                 positions.RemoveLast();
             }
+
             positions.AddLast(position);
         }
     }

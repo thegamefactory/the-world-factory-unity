@@ -1,14 +1,17 @@
-﻿using UnityEngine;
-
-namespace TWF.Graphics
+﻿namespace TWF.Graphics
 {
+    using UnityEngine;
+
     internal delegate Color? ZoneColorProvider(int zoneId);
+
     public class ZoneLayer : ITileLayer
     {
-        private IMapView<int> zoneMap;
-        private ZoneColorProvider zoneColorProvider;
-
+#pragma warning disable SA1401 // Fields should be private
         public static string COMPONENT = "zone_color";
+#pragma warning restore SA1401 // Fields should be private
+
+        private readonly IMapView<int> zoneMap;
+        private readonly ZoneColorProvider zoneColorProvider;
 
         public ZoneLayer(IWorldView worldView)
         {
@@ -22,7 +25,7 @@ namespace TWF.Graphics
 
         public Color? GetColor(Vector pos)
         {
-            return zoneColorProvider(zoneMap[pos]);
+            return this.zoneColorProvider(this.zoneMap[pos]);
         }
     }
 }

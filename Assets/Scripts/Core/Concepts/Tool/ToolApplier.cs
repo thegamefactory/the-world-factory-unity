@@ -1,15 +1,15 @@
-using System;
-using System.Collections.Generic;
-
 namespace TWF
 {
+    using System;
+    using System.Collections.Generic;
+
     /// <summary>
     /// An object that can receive tool instructions and apply them to modify the state of the world.
     /// The tool offers a dry run mode (preview) that can be used to generate feedback on the effect of the action before enacting it.
     /// </summary>
     public class ToolApplier : IToolApplier
     {
-        private World world;
+        private readonly World world;
 
         public ToolApplier(World world)
         {
@@ -18,28 +18,28 @@ namespace TWF
 
         public ToolOutcome ApplyTool(string toolBehaviorName, string modifier, string toolBrushName, IEnumerable<Vector> positions)
         {
-            return Apply(world.GetActionQueue(), GetToolBehavior(toolBehaviorName, modifier), GetToolBrush(toolBrushName), positions);
+            return this.Apply(this.world.GetActionQueue(), this.GetToolBehavior(toolBehaviorName, modifier), this.GetToolBrush(toolBrushName), positions);
         }
 
         public ToolPreviewOutcome PreviewTool(string toolBehaviorName, string modifier, string toolBrushName, IEnumerable<Vector> positions)
         {
-            return Preview(world, GetToolBehavior(toolBehaviorName, modifier), GetToolBrush(toolBrushName), positions);
+            return this.Preview(this.world, this.GetToolBehavior(toolBehaviorName, modifier), this.GetToolBrush(toolBrushName), positions);
         }
 
         public void AddPosition(string toolBrushName, LinkedList<Vector> positions, Vector position)
         {
-            GetToolBrush(toolBrushName).AddPosition(positions, position);
+            this.GetToolBrush(toolBrushName).AddPosition(positions, position);
         }
 
         private IToolBehavior GetToolBehavior(string toolBehaviorName, string modifier)
         {
-            var toolBehaviorProvider = world.Rules.ToolBehaviors[toolBehaviorName] ?? throw new ArgumentException("Invalid tool behavior: " + toolBehaviorName);
+            var toolBehaviorProvider = this.world.Rules.ToolBehaviors[toolBehaviorName] ?? throw new ArgumentException("Invalid tool behavior: " + toolBehaviorName);
             return toolBehaviorProvider(modifier);
         }
 
         private IToolBrush GetToolBrush(string toolBrushName)
         {
-            return world.Rules.ToolBrushes[toolBrushName] ?? throw new ArgumentException("Invalid tool brush: " + toolBrushName);
+            return this.world.Rules.ToolBrushes[toolBrushName] ?? throw new ArgumentException("Invalid tool brush: " + toolBrushName);
         }
 
         private ToolPreviewOutcome Preview(IWorldView worldView, IToolBehavior toolBehavior, IToolBrush toolBrush, IEnumerable<Vector> inputPositions)
@@ -59,7 +59,7 @@ namespace TWF
             var action = toolBehavior.CreateActions(toolPositions);
             Action<World> validatedAction = (gs) =>
             {
-                if (Validate(gs, toolBehavior, toolPositions))
+                if (this.Validate(gs, toolBehavior, toolPositions))
                 {
                     action(gs);
                 }

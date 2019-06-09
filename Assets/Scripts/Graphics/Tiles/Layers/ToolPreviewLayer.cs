@@ -1,13 +1,10 @@
-﻿using UnityEngine;
-using System;
-
-namespace TWF.Graphics
+﻿namespace TWF.Graphics
 {
+    using System;
+    using UnityEngine;
 
-    class ToolPreviewLayer : ITileLayer
+    internal class ToolPreviewLayer : ITileLayer
     {
-        public string Name => "tool_preview";
-
         private readonly Func<IToolPreviewOutcomeMap> toolPreviewProvider;
         private readonly Func<Color?> toolSuccessColorProvider;
         private readonly Color errorColor;
@@ -19,17 +16,19 @@ namespace TWF.Graphics
             this.errorColor = errorColor;
         }
 
+        public string Name => "tool_preview";
+
         public Color? GetColor(Vector pos)
         {
-            ToolOutcome? outcome = toolPreviewProvider().GetPreview(pos);
-            Color? success = toolSuccessColorProvider();
-            Color error = errorColor;
+            ToolOutcome? outcome = this.toolPreviewProvider().GetPreview(pos);
+            Color? success = this.toolSuccessColorProvider();
+            Color error = this.errorColor;
             error.a = success?.a ?? 1.0f;
-            if (null != outcome)
+            if (outcome != null)
             {
                 if (outcome == ToolOutcome.SUCCESS)
                 {
-                    return toolSuccessColorProvider();
+                    return this.toolSuccessColorProvider();
                 }
                 else
                 {

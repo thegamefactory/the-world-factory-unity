@@ -1,19 +1,19 @@
-﻿using System.Collections.Generic;
-using System;
-
-namespace TWF
+﻿namespace TWF
 {
+    using System;
+    using System.Collections.Generic;
+
     /// <summary>
     /// Richly typed components that can be attached to entities.
     /// </summary>
-    class TypedComponent<T> : IReadOnlyTypedComponents<T>
+    internal class TypedComponent<T> : IReadOnlyTypedComponents<T>
     {
-        List<T> values = new List<T>();
-        Func<T> defaultProvider;
+        private readonly List<T> values = new List<T>();
+        private readonly Func<T> defaultProvider;
 
         public TypedComponent(string name, Func<T> defaultProvider)
         {
-            Name = name;
+            this.Name = name;
             this.defaultProvider = defaultProvider;
         }
 
@@ -21,21 +21,22 @@ namespace TWF
 
         public void AttachComponent(int entityId, T value)
         {
-            while (values.Count <= entityId)
+            while (this.values.Count <= entityId)
             {
-                values.Add(defaultProvider());
+                this.values.Add(this.defaultProvider());
             }
 
-            values[entityId] = value;
+            this.values[entityId] = value;
         }
 
         public T GetComponent(int entityId)
         {
-            if (values.Count <= entityId)
+            if (this.values.Count <= entityId)
             {
-                AttachComponent(entityId, defaultProvider());
+                this.AttachComponent(entityId, this.defaultProvider());
             }
-            return values[entityId];
+
+            return this.values[entityId];
         }
     }
 }
