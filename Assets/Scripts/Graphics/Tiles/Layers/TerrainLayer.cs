@@ -5,7 +5,7 @@ namespace TWF.Graphics
     internal delegate Color TerrainColorProvider(int zoneId);
     public class TerrainLayer : ITileLayer
     {
-        public static string COMPONENT = "terrainColor";
+        public static string COMPONENT = "terrain_color";
 
         private IMapView<int> terrainMap;
         private TerrainColorProvider terrainColorProvider;
@@ -14,7 +14,7 @@ namespace TWF.Graphics
         {
             this.terrainMap = worldView.GetTerrainMapView();
 
-            var terrainColor = worldView.Terrains.GetTypedComponents<Color>(COMPONENT);
+            var terrainColor = worldView.Rules.Terrains.GetTypedComponents<Color>(COMPONENT);
             this.terrainColorProvider = (t) => terrainColor.GetComponent(t);
         }
 

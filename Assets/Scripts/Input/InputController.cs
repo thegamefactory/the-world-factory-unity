@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using System;
+using TWF.Graphics;
 
 namespace TWF.Input
 {
@@ -10,19 +12,34 @@ namespace TWF.Input
 
         readonly private Tools tools = new Tools(() => Root.GameService.GetToolApplier(), new MousePositionProvider());
 
-        private void Awake()
+        public Func<IToolPreviewOutcomeMap> GetToolPreviewOutcomeMapProvider()
         {
-            tools.RegisterTool(
-                KeyCombination.Builder(ResidentialModifierKey).Build(),
-                new Tool("ZoneResidential", ToolBehaviors.ZONER, Zones.RESIDENTIAL, ToolBrushes.Rectangle.Name));
+            return () => tools.CurrentPreviewOutcome ?? ToolPreviewOutcome.EMPTY;
+        }
 
-            tools.RegisterTool(
-                KeyCombination.Builder(FarmlandModifierKey).Build(),
-                new Tool("ZoneFarmland", ToolBehaviors.ZONER, Zones.FARMLAND, ToolBrushes.Rectangle.Name));
+        public Func<Color?> GetToolSuccessColorProvider()
+        {
+            return () => tools.SelectedTool?.PreviewColor;
+        }
 
-            tools.RegisterTool(
-                KeyCombination.Builder(RoadModifierKey).Build(),
-                new Tool("BuildRoad", ToolBehaviors.ZONER, Zones.ROAD, ToolBrushes.Manatthan.Name));
+        public void Awake()
+        {
+            Root.GameService.OnNewWorldListener += w =>
+            {
+                var zonerBuilder = new ZonerBuilder(w);
+
+                tools.RegisterTool(
+                    KeyCombination.Builder(ResidentialModifierKey).Build(),
+                    zonerBuilder.BuildZoner(Zones.RESIDENTIAL, "zone", ToolBrushes.Rectangle.Name));
+
+                tools.RegisterTool(
+                    KeyCombination.Builder(FarmlandModifierKey).Build(),
+                    zonerBuilder.BuildZoner(Zones.FARMLAND, "zone", ToolBrushes.Rectangle.Name));
+
+                tools.RegisterTool(
+                    KeyCombination.Builder(RoadModifierKey).Build(),
+                    zonerBuilder.BuildZoner(Zones.ROAD, "build", ToolBrushes.Manatthan.Name));
+            };
         }
 
         void Update()

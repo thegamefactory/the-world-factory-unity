@@ -23,6 +23,13 @@ namespace TWF.Graphics
             tileLayers.RegisterLayerProvider(wv => new ZoneLayer(wv));
             tileLayers.RegisterLayerProvider(wv => new BuildingLayer(wv));
             tileLayers.RegisterLayerProvider(wv => new TerrainLayer(wv));
+
+            var inputController = GetComponent<Input.InputController>();
+            tileLayers.RegisterLayerProvider(wv => new ToolPreviewLayer(
+                inputController.GetToolPreviewOutcomeMapProvider(),
+                inputController.GetToolSuccessColorProvider(),
+                ErrorTile
+                ));
         }
 
         private void ConfigureTileColors(WorldRules worldConfig)

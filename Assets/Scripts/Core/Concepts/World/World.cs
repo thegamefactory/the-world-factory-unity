@@ -9,24 +9,20 @@ namespace TWF
     public class World : IWorldView
     {
         private Maps maps;
-        private WorldRules rules;
         private Ticker ticker;
 
-        public World(Maps maps, WorldRules config, Ticker ticker)
+        public World(Maps maps, WorldRules rules, Ticker ticker)
         {
             this.maps = maps;
-            this.rules = config;
+            this.Rules = rules;
             this.ticker = ticker;
         }
 
         public Vector Size { get => maps.Size; }
         public int SizeX { get => maps.SizeX; }
         public int SizeY { get => maps.SizeY; }
-        public IReadOnlyEntities Terrains => rules.Terrains;
-        public IReadOnlyEntities Zones => rules.Zones;
-        public IReadOnlyDictionary<string, ScheduledAgent> Agents => rules.Agents;
-        public IReadOnlyDictionary<string, Func<string, IToolBehavior>> ToolBehaviors => rules.ToolBehaviors;
-        public IReadOnlyDictionary<string, IToolBrush> ToolBrushes => rules.ToolBrushes;
+
+        public IWorldRules Rules { get; }
 
         /// <summary>
         /// Get the map view corresponding to the given type.

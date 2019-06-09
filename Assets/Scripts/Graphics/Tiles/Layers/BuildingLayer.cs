@@ -11,14 +11,14 @@ namespace TWF.Graphics
         private IMapView<int> zoneMap;
         private BuildingColorProvider buildingColorProvider;
 
-        public static string COMPONENT = "buildingColor";
+        public static string COMPONENT = "building_color";
 
         public BuildingLayer(IWorldView worldView)
         {
             buildingMap = worldView.GetBuildingMapView();
             zoneMap = worldView.GetZoneMapView();
 
-            var buildingColor = worldView.Zones.GetTypedComponents<BuildingColor>(COMPONENT);
+            var buildingColor = worldView.Rules.Zones.GetTypedComponents<BuildingColor>(COMPONENT);
             buildingColorProvider = (zoneId, buildingId) => buildingColor.GetComponent(zoneId).Invoke(buildingId);
         }
 

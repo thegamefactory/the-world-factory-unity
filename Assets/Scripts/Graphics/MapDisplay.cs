@@ -35,21 +35,28 @@ namespace TWF.Graphics
 
             Vector v;
             int i = 0;
+            ITileLayer[] tileLayers = GetTileLayers();
+
             for (v.Y = 0; v.Y < height; v.Y++)
             {
                 for (v.X = 0; v.X < width; v.X++)
                 {
-                    Color? color = null;
-                    ITileLayer[] tileLayers = GetTileLayers();
+                    Color color = EmptyColor;
+                    color.a = 0.0f;
+
                     foreach (ITileLayer tileLayer in tileLayers)
                     {
-                        color = tileLayer.GetColor(v);
-                        if (null != color)
+                        Color? newColor = tileLayer.GetColor(v);
+                        if (newColor.HasValue)
                         {
-                            break;
+                            ColorUtils.Superpose(ref color, color, newColor.Value);
+                            if (1.0f == color.a)
+                            {
+                                break;
+                            }
                         }
                     }
-                    colorMap[i++] = color ?? EmptyColor;
+                    colorMap[i++] = color;
                 }
             }
 

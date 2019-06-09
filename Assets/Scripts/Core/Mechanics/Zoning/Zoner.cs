@@ -34,13 +34,13 @@ namespace TWF
             };
         }
 
-        public PreviewOutcome Preview(IWorldView worldView, IEnumerable<Vector> inputPositions)
+        public ToolPreviewOutcome Preview(IWorldView worldView, IEnumerable<Vector> inputPositions)
         {
             IMapView<int> terrainMap = worldView.GetTerrainMapView();
             IMapView<Building> buildingMap = worldView.GetBuildingMapView();
-            IZonableTerrain zonableTerrains = worldView.Zones.GetTypedComponents<IZonableTerrain>(Zones.ZONABLE_TERRAINS).GetComponent(Zone.Id);
+            IZonableTerrain zonableTerrains = worldView.Rules.Zones.GetTypedComponents<IZonableTerrain>(Zones.ZONABLE_TERRAINS).GetComponent(Zone.Id);
 
-            PreviewOutcome.Builder builder = PreviewOutcome.builder();
+            ToolPreviewOutcome.PreviewOutcomeBuilder builder = ToolPreviewOutcome.Builder();
             foreach (Vector pos in inputPositions)
             {
                 bool possible = null == buildingMap[pos] && zonableTerrains.IsZonable(terrainMap[pos]);

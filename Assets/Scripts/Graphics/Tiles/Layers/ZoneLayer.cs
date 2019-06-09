@@ -8,13 +8,13 @@ namespace TWF.Graphics
         private IMapView<int> zoneMap;
         private ZoneColorProvider zoneColorProvider;
 
-        public static string COMPONENT = "zoneColor";
+        public static string COMPONENT = "zone_color";
 
         public ZoneLayer(IWorldView worldView)
         {
             this.zoneMap = worldView.GetZoneMapView();
 
-            var zoneColor = worldView.Zones.GetTypedComponents<Color?>(COMPONENT);
+            var zoneColor = worldView.Rules.Zones.GetTypedComponents<Color?>(COMPONENT);
             this.zoneColorProvider = (z) => zoneColor.GetComponent(z);
         }
 

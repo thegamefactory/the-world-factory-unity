@@ -16,6 +16,6 @@ namespace TWF
         /// <summary>
         /// Previews the application of the given behavior and associated modifier to the given positions processed with the brush type.
         /// </summary>
-        PreviewOutcome PreviewTool(string toolBehaviorName, string toolBehaviorModifier, string toolBrushName, IEnumerable<Vector> positions);
+        ToolPreviewOutcome PreviewTool(string toolBehaviorName, string toolBehaviorModifier, string toolBrushName, IEnumerable<Vector> positions);
     }
 }

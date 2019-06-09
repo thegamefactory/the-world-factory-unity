@@ -1,6 +1,6 @@
 namespace TWF
 {
-    public interface IWorldView : IWorldRules
+    public interface IWorldView
     {
         /// <summary>
         /// <summary>
@@ -27,5 +27,11 @@ namespace TWF
         /// <return>The map view corresponding to the given type.</return>
         /// <param name="mapType">The type of the map.</param>
         IMapView<T> GetMapView<T>(string mapType);
+
+        /// <summary>
+        /// Get the world rules.
+        /// </summary>
+        /// <return>The world rules.</return>
+        IWorldRules Rules { get; }
     }
 }

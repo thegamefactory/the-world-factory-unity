@@ -16,11 +16,11 @@ namespace TWF.Input
     /// </summary>
     public class Tools
     {
-        public PreviewOutcome CurrentPreviewOutcome { get; private set; }
+        public ToolPreviewOutcome CurrentPreviewOutcome { get; private set; }
 
-        private Tool _SelectedTool;
-        private Tool _ActiveTool;
-        public Tool SelectedTool
+        private ITool _SelectedTool;
+        private ITool _ActiveTool;
+        public ITool SelectedTool
         {
             get
             {
@@ -28,11 +28,14 @@ namespace TWF.Input
             }
             set
             {
-                _SelectedTool = value;
-                ResetActiveTool();
+                if (value != _SelectedTool)
+                {
+                    _SelectedTool = value;
+                    ResetActiveTool();
+                }
             }
         }
-        public Tool ActiveTool
+        public ITool ActiveTool
         {
             get
             {
@@ -40,10 +43,10 @@ namespace TWF.Input
             }
             set
             {
-                ResetPositions();
-                if (null == value || AddCurrentMousePosition())
+                if (value != _ActiveTool)
                 {
                     _ActiveTool = value;
+                    ResetPositions();
                 }
             }
         }
@@ -53,7 +56,7 @@ namespace TWF.Input
         private readonly Func<IToolApplier> toolApplierProvider;
         private readonly IMousePositionProvider mousePositionProvider;
         private readonly List<KeyCombinationSubject> keyCombinationSubjects = new List<KeyCombinationSubject>();
-        private readonly ICollection<Tool> tools = new List<Tool>();
+        private readonly ICollection<ITool> tools = new List<ITool>();
 
         public Tools(Func<IToolApplier> toolApplierProvider, IMousePositionProvider mousePositionProvider)
             : this(toolApplierProvider, mousePositionProvider, KeyCombination.Builder(KeyCode.Escape).Build(), KeyCombination.Builder(KeyCode.Mouse0).Build())
@@ -83,7 +86,7 @@ namespace TWF.Input
             keyCombinationSubjects.ForEach((kep) => kep.Enact());
         }
 
-        public void RegisterTool(IKeyCombination keyCombination, Tool tool)
+        public void RegisterTool(IKeyCombination keyCombination, ITool tool)
         {
             keyCombinationSubjects.Add(KeyCombinationSubject.Builder(keyCombination)
                 .OnActivate(() => SelectedTool = tool)
@@ -93,44 +96,36 @@ namespace TWF.Input
 
         private void ContinueTool()
         {
-            DoIfToolIsActive(() =>
+            ProcessMousePosition(() =>
             {
-                CurrentPreviewOutcome = ActiveTool.Preview(toolApplierProvider(), positions);
+                if (AddCurrentMousePosition())
+                {
+                    CurrentPreviewOutcome = ActiveTool.Preview(toolApplierProvider(), positions);
+                }
             });
         }
 
         private void EnactTool()
         {
-            DoIfToolIsActive(() =>
+            ProcessMousePosition(() =>
             {
-                ToolOutcome outcome = ActiveTool.Apply(toolApplierProvider(), positions);
-                if (ToolOutcome.SUCCESS != outcome)
-                {
-                    Debug.LogError("Failed to enact " + ActiveTool);
-                }
-                else
-                {
-                    Debug.Log("Enacted " + ActiveTool);
-                }
+                ActiveTool.Apply(toolApplierProvider(), positions);
             });
             ResetActiveTool();
         }
 
-        private void DoIfToolIsActive(Action action)
+        private void ProcessMousePosition(Action action)
         {
             if (null != ActiveTool && ActiveTool == SelectedTool)
             {
-                if (AddCurrentMousePosition())
-                {
-                    action();
-                }
+                action();
             }
         }
 
         private bool AddCurrentMousePosition()
         {
             Vector? position = mousePositionProvider.GetMousePosition();
-            if (null != position)
+            if (null != position && (positions.Count == 0 || positions.Last.Value != position))
             {
                 positions.AddLast(position.Value);
             }

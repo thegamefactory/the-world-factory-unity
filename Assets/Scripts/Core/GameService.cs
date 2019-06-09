@@ -19,6 +19,7 @@ namespace TWF
         public WorldFactory WorldFactory { get; }
         private World world;
 
+        public OnNewWorldListener OnNewWorldListener { get; set; }
         public GraphicConfig GraphicConfig { get; } = new GraphicConfig();
 
         /// <summary>
@@ -29,6 +30,7 @@ namespace TWF
         public GameService()
         {
             WorldFactory = new WorldFactory();
+            OnNewWorldListener += GraphicConfig.OnNewWorld;
             NewWorld();
         }
 
@@ -38,7 +40,7 @@ namespace TWF
         public IWorldView NewWorld()
         {
             world = WorldFactory.Create();
-            GraphicConfig.OnNewWorld(world);
+            OnNewWorldListener(world);
             return world;
         }
 
@@ -86,7 +88,7 @@ namespace TWF
         /// <param name="currentTime">The current time, given in seconds.</param>
         public void Tick(float currentTime)
         {
-            world.Tick(world.Agents.Values, currentTime);
+            world.Tick(world.Rules.Agents.Values, currentTime);
         }
     }
 }

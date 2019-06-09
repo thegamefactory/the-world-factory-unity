@@ -29,6 +29,6 @@ namespace TWF
 
         Action<World> CreateActions(IEnumerable<Vector> inputPositions);
 
-        PreviewOutcome Preview(IWorldView worldView, IEnumerable<Vector> inputPositions);
+        ToolPreviewOutcome Preview(IWorldView worldView, IEnumerable<Vector> inputPositions);
     }
 }
