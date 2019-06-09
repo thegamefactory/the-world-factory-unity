@@ -63,6 +63,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Roslyn\CsprojAssetPostprocessor.cs" />
     <Compile Include="Assets\Scripts\Core\Concepts\Agent\IActionQueue.cs" />
     <Compile Include="Assets\Scripts\Core\Concepts\Agent\IAgent.cs" />
     <Compile Include="Assets\Scripts\Core\Concepts\Agent\ScheduledAgent.cs" />
