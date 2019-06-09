@@ -1,6 +1,7 @@
 ﻿namespace TWF.Input
 {
     using System.Collections.Generic;
+    using System.Diagnostics.Contracts;
     using UnityEngine;
 
     /// <summary>
@@ -29,11 +30,13 @@
 
         public ToolPreviewOutcome Preview(IToolApplier toolApplier, ICollection<Vector> positions)
         {
+            Contract.Requires(toolApplier != null);
             return toolApplier.PreviewTool(this.ToolBehaviorName, this.ToolBehaviorModifier, this.ToolBrushName, positions);
         }
 
         public ToolOutcome Apply(IToolApplier toolApplier, ICollection<Vector> positions)
         {
+            Contract.Requires(toolApplier != null);
             return toolApplier.ApplyTool(this.ToolBehaviorName, this.ToolBehaviorModifier, this.ToolBrushName, positions);
         }
 

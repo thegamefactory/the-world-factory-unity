@@ -57,7 +57,7 @@ namespace TWF
         {
             IEnumerable<Vector> toolPositions = toolBrush.ComputePositions(inputPositions);
             var action = toolBehavior.CreateActions(toolPositions);
-            Action<World> validatedAction = (gs) =>
+            void validatedAction(World gs)
             {
                 if (this.Validate(gs, toolBehavior, toolPositions))
                 {
@@ -67,7 +67,7 @@ namespace TWF
                 {
                     throw new InvalidOperationException("Action is not valid");
                 }
-            };
+            }
 
             // TODO: don't use exception to control the flow. Need google for this.
             try

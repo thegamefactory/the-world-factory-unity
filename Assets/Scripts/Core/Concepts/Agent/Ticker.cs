@@ -2,6 +2,7 @@ namespace TWF
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.Contracts;
 
     /// <summary>
     /// The Ticker is called periodically and triggers the due agent executions.
@@ -17,6 +18,9 @@ namespace TWF
 
         public void Tick(IActionQueue actionQueue, IWorldView worldView, IEnumerable<ScheduledAgent> agents, float currentTime)
         {
+            Contract.Requires(actionQueue != null);
+            Contract.Requires(agents != null);
+
             foreach (var agent in agents)
             {
                 if (this.lastTicks.ContainsKey(agent.Agent.Name))

@@ -5,12 +5,14 @@ using UnityEngine.Assertions;
 
 public class MapGenerator : MonoBehaviour
 {
+#pragma warning disable CA1051 // Do not declare visible instance fields
     public int MapWidth;
     public int MapHeight;
     public float NoisePeriod;
     public float WaterThreshold;
     public bool AutoUpdate;
     public int Seed;
+#pragma warning restore CA1051 // Do not declare visible instance fields
 
     public void OnValidate()
     {

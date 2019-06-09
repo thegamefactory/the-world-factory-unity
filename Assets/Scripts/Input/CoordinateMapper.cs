@@ -12,8 +12,7 @@ public class CoordinateMapper
     public static Tuple<float, float> ScreenPositionToMeshPosition(Vector3 screenPosition)
     {
         Ray mouseRay = Camera.main.ScreenPointToRay(screenPosition);
-        RaycastHit hit;
-        if (Physics.Raycast(mouseRay, out hit))
+        if (Physics.Raycast(mouseRay, out RaycastHit hit))
         {
             // Gets the bounds in local space
             Bounds b = hit.transform.gameObject.GetComponent<MeshFilter>().mesh.bounds;

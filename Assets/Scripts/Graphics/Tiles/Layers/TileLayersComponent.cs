@@ -5,6 +5,7 @@
     public class TileLayersComponent : MonoBehaviour
     {
 #pragma warning disable SA1401 // Fields should be private
+#pragma warning disable CA1051 // Do not declare visible instance fields
         public Color LandTile;
         public Color ResidentialTile;
         public Color FarmlandTile;
@@ -15,6 +16,7 @@
         public Color RoadTile;
 
         public Color ErrorTile;
+#pragma warning restore CA1051 // Do not declare visible instance fields
 #pragma warning restore SA1401 // Fields should be private
 
         public void Awake()

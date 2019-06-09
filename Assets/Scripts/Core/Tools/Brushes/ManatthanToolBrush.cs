@@ -31,20 +31,20 @@ namespace TWF
             var verticalStart = first.Y < second.Y ? first : second;
             var verticalEnd = first.Y < second.Y ? second : first;
 
-            Action<int> processHorizontal = (y) =>
+            void processHorizontal(int y)
             {
                 for (int x = horizontalStart.X; x <= horizontalEnd.X; x++)
                 {
                     result.AddLast(new Vector(x, y));
                 }
-            };
-            Action<int> processVertical = (x) =>
+            }
+            void processVertical(int x)
             {
                 for (int y = verticalStart.Y; y <= verticalEnd.Y; y++)
                 {
                     result.AddLast(new Vector(x, y));
                 }
-            };
+            }
 
             var horizontalDist = horizontalEnd.X - horizontalStart.X;
             var verticalDist = verticalEnd.Y - verticalStart.Y;

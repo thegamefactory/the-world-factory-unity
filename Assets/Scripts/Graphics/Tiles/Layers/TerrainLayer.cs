@@ -6,9 +6,7 @@
 
     public class TerrainLayer : ITileLayer
     {
-#pragma warning disable SA1401 // Fields should be private
         public static string COMPONENT = "terrain_color";
-#pragma warning restore SA1401 // Fields should be private
 
         private readonly IMapView<int> terrainMap;
         private readonly TerrainColorProvider terrainColorProvider;

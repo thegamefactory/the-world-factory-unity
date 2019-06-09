@@ -31,10 +31,6 @@ namespace TWF.Graphics
 
             Color[] colorMap = this.GetColorMap(width, height);
 
-            IMapView<Building> buildingMap = worldView.GetBuildingMapView();
-            IMapView<int> zoneMap = worldView.GetZoneMapView();
-            IMapView<int> terrainMap = worldView.GetTerrainMapView();
-
             Vector v;
             int i = 0;
             ITileLayer[] tileLayers = this.GetTileLayers();
