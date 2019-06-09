@@ -17,7 +17,14 @@ namespace TWF
 
         public IEnumerable<Vector> ComputePositions(IEnumerable<Vector> brushPositions)
         {
-            return MapPositionsEnumerables.GetPositions(brushPositions.First(), brushPositions.Last());
+            if (brushPositions.Count() > 0)
+            {
+                return MapPositionsEnumerables.GetPositions(brushPositions.First(), brushPositions.Last());
+            }
+            else
+            {
+                return brushPositions;
+            }
         }
 
         public void AddPosition(LinkedList<Vector> positions, Vector position)

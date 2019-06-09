@@ -24,7 +24,7 @@ namespace TWF.Graphics
             tileLayers.RegisterLayerProvider(wv => new BuildingLayer(wv));
             tileLayers.RegisterLayerProvider(wv => new TerrainLayer(wv));
 
-            var inputController = GetComponent<Input.InputController>();
+            var inputController = GameObject.Find("Input").GetComponent<Input.InputController>();
             tileLayers.RegisterLayerProvider(wv => new ToolPreviewLayer(
                 inputController.GetToolPreviewOutcomeMapProvider(),
                 inputController.GetToolSuccessColorProvider(),

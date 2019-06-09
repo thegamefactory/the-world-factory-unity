@@ -83,7 +83,7 @@ namespace TWF.Input
 
         public void Update()
         {
-            keyCombinationSubjects.ForEach((kep) => kep.Enact());
+            keyCombinationSubjects.ForEach((kcs) => kcs.Enact());
         }
 
         public void RegisterTool(IKeyCombination keyCombination, ITool tool)

@@ -17,6 +17,11 @@ namespace TWF
 
         public IEnumerable<Vector> ComputePositions(IEnumerable<Vector> brushPositions)
         {
+            if (0 == brushPositions.Count())
+            {
+                return brushPositions;
+            }
+
             LinkedList<Vector> result = new LinkedList<Vector>();
             var first = brushPositions.First();
             var second = brushPositions.Last();

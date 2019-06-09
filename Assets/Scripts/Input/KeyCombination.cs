@@ -41,5 +41,10 @@ namespace TWF.Input
         {
             return keys.All(k => UnityEngine.Input.GetKey(k));
         }
+
+        public override string ToString()
+        {
+            return keys.ToReadableString(10);
+        }
     }
 }

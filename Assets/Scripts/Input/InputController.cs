@@ -43,12 +43,12 @@ namespace TWF.Input
             };
         }
 
-        void Update()
+        public void Update()
         {
             tools.Update();
             if (null != DebugText)
             {
-                DebugText.text = tools.ToString();
+                DebugText.text = tools.ToString() + "\n" + "Mouse=" + UnityEngine.Input.GetKey(KeyCode.Mouse0);
             }
         }
     }
