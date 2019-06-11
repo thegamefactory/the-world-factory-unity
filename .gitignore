@@ -64,3 +64,6 @@ Packages/
 # Tests
 Tests/Assembly-CSharp-Tests/obj
 Tests/Assembly-CSharp-Tests/bin
+
+# RoslynAnalyzers
+RoslynAnalyzers
