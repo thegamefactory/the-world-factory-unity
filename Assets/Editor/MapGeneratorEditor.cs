@@ -6,10 +6,10 @@ public class MapGeneratorEditor : Editor
 {
     public override void OnInspectorGUI()
     {
-        MapGenerator mapGenerator = target as MapGenerator;
-        DrawDefaultInspector();
+        MapGenerator mapGenerator = this.target as MapGenerator;
+        this.DrawDefaultInspector();
 
-        if ((DrawDefaultInspector() && mapGenerator.AutoUpdate)
+        if ((this.DrawDefaultInspector() && mapGenerator.AutoUpdate)
             || GUILayout.Button("Generate"))
         {
             mapGenerator.Generate();

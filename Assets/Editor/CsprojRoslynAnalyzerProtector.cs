@@ -1,33 +1,14 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using System.Xml.Linq;
-using UnityEditor;
-using UnityEngine;
-
-namespace RoslynAnalyserSupport
+﻿namespace RoslynAnalyserSupport
 {
+    using System;
+    using System.IO;
+    using System.Linq;
+    using System.Xml.Linq;
+    using UnityEditor;
+    using UnityEngine;
+
     public class CsprojRoslynAnalyzerProtector : AssetPostprocessor
     {
-        public override int GetPostprocessOrder()
-        {
-            return 20;
-        }
-
-        private static string[] GetCsprojLinesInSln()
-        {
-            var projectDirectory = Directory.GetParent(Application.dataPath).FullName;
-            var projectName = Path.GetFileName(projectDirectory);
-            var slnFile = Path.GetFullPath(string.Format("{0}.sln", projectName));
-            if (!File.Exists(slnFile))
-                return new string[0];
-
-            var slnAllText = File.ReadAllText(slnFile);
-            var lines = slnAllText.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries)
-              .Where(a => a.StartsWith("Project(")).ToArray();
-            return lines;
-        }
-
         public static void OnGeneratedCSProjectFiles()
         {
             try
@@ -43,11 +24,34 @@ namespace RoslynAnalyserSupport
                     UpgradeProjectFile(file);
                 }
             }
+#pragma warning disable CA1031 // Do not catch general exception types
             catch (Exception e)
+#pragma warning restore CA1031 // Do not catch general exception types
             {
                 // unhandled exception kills editor
                 Debug.LogError(e);
             }
+        }
+
+        public override int GetPostprocessOrder()
+        {
+            return 20;
+        }
+
+        private static string[] GetCsprojLinesInSln()
+        {
+            var projectDirectory = Directory.GetParent(Application.dataPath).FullName;
+            var projectName = Path.GetFileName(projectDirectory);
+            var slnFile = Path.GetFullPath(string.Format("{0}.sln", projectName));
+            if (!File.Exists(slnFile))
+            {
+                return Array.Empty<string>();
+            }
+
+            var slnAllText = File.ReadAllText(slnFile);
+            var lines = slnAllText.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries)
+              .Where(a => a.StartsWith("Project(")).ToArray();
+            return lines;
         }
 
         private static void UpgradeProjectFile(string projectFile)
@@ -57,7 +61,9 @@ namespace RoslynAnalyserSupport
             {
                 doc = XDocument.Load(projectFile);
             }
+#pragma warning disable CA1031 // Do not catch general exception types
             catch (Exception)
+#pragma warning restore CA1031 // Do not catch general exception types
             {
                 Debug.LogError(string.Format("Failed to Load {0}", projectFile));
                 return;
@@ -71,14 +77,17 @@ namespace RoslynAnalyserSupport
         }
 
         // add everything from RoslyAnalyzers folder to csproj
-        //<ItemGroup><Analyzer Include="RoslynAnalyzers\UnityEngineAnalyzer.1.0.0.0\analyzers\dotnet\cs\UnityEngineAnalyzer.dll" /></ItemGroup>
-        //<CodeAnalysisRuleSet>..\path\to\myrules.ruleset</CodeAnalysisRuleSet>
+        // <ItemGroup><Analyzer Include="RoslynAnalyzers\UnityEngineAnalyzer.1.0.0.0\analyzers\dotnet\cs\UnityEngineAnalyzer.dll" /></ItemGroup>
+        // <CodeAnalysisRuleSet>..\path\to\myrules.ruleset</CodeAnalysisRuleSet>
         private static void SetRoslynAnalyzers(XElement projectContentElement, XNamespace xmlns)
         {
             var currentDirectory = Directory.GetCurrentDirectory();
             var roslynAnalysersBaseDir = new DirectoryInfo(Path.Combine(currentDirectory, "RoslynAnalyzers"));
             if (!roslynAnalysersBaseDir.Exists)
+            {
                 return;
+            }
+
             var relPaths = roslynAnalysersBaseDir.GetFiles("*", SearchOption.AllDirectories)
               .Select(x => x.FullName.Substring(currentDirectory.Length + 1));
             var itemGroup = new XElement(xmlns + "ItemGroup");
@@ -96,6 +105,7 @@ namespace RoslynAnalyserSupport
                     SetOrUpdateProperty(projectContentElement, xmlns, "CodeAnalysisRuleSet", existing => file);
                 }
             }
+
             projectContentElement.Add(itemGroup);
         }
 
@@ -107,8 +117,11 @@ namespace RoslynAnalyserSupport
                 var result = updater(element.Value);
                 if (result != element.Value)
                 {
-                    Debug.Log(string.Format("Overriding existing project property {0}. Old value: {1}, new value: {2}", name,
-                      element.Value, result));
+                    Debug.Log(string.Format(
+                        "Overriding existing project property {0}. Old value: {1}, new value: {2}",
+                        name,
+                        element.Value,
+                        result));
 
                     element.SetValue(result);
                     return true;
