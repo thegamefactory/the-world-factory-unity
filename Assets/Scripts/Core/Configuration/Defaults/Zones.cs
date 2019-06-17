@@ -2,16 +2,16 @@
 {
     public static partial class Zones
     {
-        public static readonly string ENTITIES = "zone";
-        public static readonly string EMPTY = "empty";
+        public static readonly string Entities = "zone";
+        public static readonly string Empty = "empty";
         public static readonly string Residential = "residential";
         public static readonly string Farmland = "farmland";
         public static readonly string Road = "road";
 
-        public static Entities DefaultZones()
+        public static NamedEntities DefaultZones()
         {
-            Entities zones = new Entities(ENTITIES);
-            zones.Register(EMPTY);
+            NamedEntities zones = new NamedEntities(Entities);
+            zones.Register(Empty);
             zones.Register(Residential);
             zones.Register(Farmland);
             zones.Register(Road);

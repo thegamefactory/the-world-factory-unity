@@ -28,6 +28,12 @@ namespace TWF
         IWorldRules Rules { get; }
 
         /// <summary>
+        /// Gets the world buildings.
+        /// </summary>
+        /// <return>The world buildings.</return>
+        IReadOnlyEntities Buildings { get; }
+
+        /// <summary>
         /// Gets the map view corresponding to the given type.
         /// </summary>
         /// <return>The map view corresponding to the given type.</return>

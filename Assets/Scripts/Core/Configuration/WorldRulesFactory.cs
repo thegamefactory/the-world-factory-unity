@@ -18,20 +18,25 @@
 
         public static WorldRulesCustomizer DefaultCustomizer()
         {
-            WorldRulesCustomizer defaultDevelopableComponent = Zones.DefaultDevelopableComponent;
-            WorldRulesCustomizer defaultManuallyZonableComponent = Zones.DefaultManuallyZonableComponent;
-            WorldRulesCustomizer defaultZonableTerrainsComponent = Zones.DefaultZonableTerrainComponent;
-            return defaultDevelopableComponent + defaultManuallyZonableComponent + defaultZonableTerrainsComponent;
+            WorldRulesCustomizer wrc = Zones.DefaultDevelopableComponent;
+            wrc += Zones.DefaultManuallyZonableComponent;
+            wrc += Zones.DefaultZonableTerrainComponent;
+            wrc += BuildingModels.DefaultBuildingModelComponent;
+            wrc += BuildingVariants.DefaultBuildingVariantComponent;
+            return wrc;
         }
 
         public WorldRules Create(Random random)
         {
-            Entities zones = Zones.DefaultZones();
-            Entities terrains = Terrains.DefaultTerrains();
+            var zones = Zones.DefaultZones();
+            var terrains = Terrains.DefaultTerrains();
+            var buildingModels = BuildingModels.DefaultBuildingModels();
 
             WorldRules wr = new WorldRules(
+                random,
                 zones,
                 terrains,
+                buildingModels,
                 Agents.AllAgents(random),
                 new Dictionary<string, Func<string, IToolBehavior>>() { [ToolBehaviors.ZONER] = ToolBehaviors.Zoners(zones) },
                 ToolBrushes.AllToolBrushes);

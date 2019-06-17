@@ -5,7 +5,7 @@
 
     internal class ZonerBuilder
     {
-        private readonly IReadOnlyEntities zones;
+        private readonly IReadOnlyNamedEntities zones;
         private readonly IReadOnlyTypedComponents<Color?> zoneColor;
 
         public ZonerBuilder(IWorldView worldView)

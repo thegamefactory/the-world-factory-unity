@@ -7,24 +7,25 @@
     /// </summary>
     public static partial class MapTypes
     {
-        public static readonly string BUILDING = "building";
+        public static readonly string Building = "building";
+        public static readonly int NoBuilding = -1;
 
-        public static IMapView<Building> GetBuildingMapView(this IWorldView worldView)
+        public static IMapView<int> GetBuildingMapView(this IWorldView worldView)
         {
             Contract.Requires(worldView != null);
-            return worldView.GetMapView<Building>(MapTypes.BUILDING);
+            return worldView.GetMapView<int>(MapTypes.Building);
         }
 
-        public static IMap<Building> GetBuildingMap(this World world)
+        public static IMap<int> GetBuildingMap(this World world)
         {
             Contract.Requires(world != null);
-            return world.GetMap<Building>(MapTypes.BUILDING);
+            return world.GetMap<int>(MapTypes.Building);
         }
 
-        public static void RegisterBuilding(this IMap<Building> map, Maps maps)
+        public static void RegisterBuilding(this IMap<int> map, Maps maps)
         {
             Contract.Requires(maps != null);
-            maps.RegisterMap(MapTypes.BUILDING, map);
+            maps.RegisterMap(MapTypes.Building, map);
         }
     }
 }

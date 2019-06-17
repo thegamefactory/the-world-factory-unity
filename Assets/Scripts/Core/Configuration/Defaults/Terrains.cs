@@ -6,9 +6,9 @@
         public static readonly string Land = "land";
         public static readonly string Water = "water";
 
-        public static Entities DefaultTerrains()
+        public static NamedEntities DefaultTerrains()
         {
-            Entities terrains = new Entities(EntitiesName);
+            NamedEntities terrains = new NamedEntities(EntitiesName);
             terrains.Register(Land);
             terrains.Register(Water);
             return terrains;

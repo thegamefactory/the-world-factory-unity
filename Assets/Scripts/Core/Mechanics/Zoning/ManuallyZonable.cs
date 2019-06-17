@@ -13,7 +13,7 @@
         public static void DefaultManuallyZonableComponent(WorldRules worldConfig)
         {
             Contract.Requires(worldConfig != null);
-            Entities zones = worldConfig.Zones;
+            NamedEntities zones = worldConfig.Zones;
             MarkerComponents manuallyZonable = new MarkerComponents(ManuallyZonable);
 
             manuallyZonable.MarkEntity(zones[Residential]);

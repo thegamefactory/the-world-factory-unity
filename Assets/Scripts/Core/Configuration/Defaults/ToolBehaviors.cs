@@ -8,7 +8,7 @@
     {
         public static readonly string ZONER = "zoners";
 
-        public static Func<string, IToolBehavior> Zoners(Entities zones)
+        public static Func<string, IToolBehavior> Zoners(NamedEntities zones)
         {
             return (m) =>
             {

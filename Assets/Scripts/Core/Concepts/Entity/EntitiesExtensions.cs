@@ -22,7 +22,14 @@
             return entities.GetComponents(componentName) as IReadOnlyTypedComponents<T>;
         }
 
-        public static NamedEntity GetNamedEntity(this IReadOnlyEntities entities, string entityName)
+        public static TypedComponents<T> GetMutableTypedComponents<T>(this AbstractEntities entities, string componentName)
+        {
+            Contract.Requires(entities != null);
+            Contract.Requires(entities.GetComponents(componentName) is TypedComponents<T>);
+            return (entities as IReadOnlyEntities).GetComponents(componentName) as TypedComponents<T>;
+        }
+
+        public static NamedEntity GetNamedEntity(this IReadOnlyNamedEntities entities, string entityName)
         {
             Contract.Requires(entities != null);
             return new NamedEntity(entities[entityName], entityName);
@@ -35,7 +42,7 @@
             return componentRegistry.MarkedEntities();
         }
 
-        public static IList<NamedEntity> GetMarkedNamedEntities(this IReadOnlyEntities entities, string componentName)
+        public static IList<NamedEntity> GetMarkedNamedEntities(this IReadOnlyNamedEntities entities, string componentName)
         {
             Contract.Requires(entities != null);
             var markedEntities = GetMarkedEntities(entities, componentName);

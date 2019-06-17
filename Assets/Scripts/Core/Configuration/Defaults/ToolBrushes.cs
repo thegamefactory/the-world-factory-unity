@@ -8,15 +8,15 @@
         public static readonly IToolBrush Manatthan = RegisterToolBrush(new ManatthanToolBrush());
         public static readonly IToolBrush Rectangle = RegisterToolBrush(new RectangleToolBrush());
 
-        private static Dictionary<string, IToolBrush> allToolBrushes;
+        private static LinkedList<IToolBrush> allToolBrushes;
 
-        public static Dictionary<string, IToolBrush> AllToolBrushes
+        public static LinkedList<IToolBrush> AllToolBrushes
         {
             get
             {
                 if (allToolBrushes == null)
                 {
-                    allToolBrushes = new Dictionary<string, IToolBrush>();
+                    allToolBrushes = new LinkedList<IToolBrush>();
                 }
 
                 return allToolBrushes;
@@ -25,7 +25,7 @@
 
         private static IToolBrush RegisterToolBrush(IToolBrush toolBrush)
         {
-            AllToolBrushes.Add(toolBrush.Name, toolBrush);
+            AllToolBrushes.AddLast(toolBrush);
             return toolBrush;
         }
     }

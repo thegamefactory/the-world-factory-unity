@@ -11,9 +11,10 @@
         private readonly Maps maps;
         private readonly Ticker ticker;
 
-        public World(Maps maps, WorldRules rules, Ticker ticker)
+        public World(Maps maps, AnonymousEntities buildings, WorldRules rules, Ticker ticker)
         {
             this.maps = maps;
+            this.Buildings = buildings;
             this.Rules = rules;
             this.ticker = ticker;
         }
@@ -25,6 +26,10 @@
         public int SizeY { get => this.maps.SizeY; }
 
         public IWorldRules Rules { get; }
+
+        public AnonymousEntities Buildings { get; }
+
+        IReadOnlyEntities IWorldView.Buildings => this.Buildings;
 
         /// <summary>
         /// Get the map view corresponding to the given type.

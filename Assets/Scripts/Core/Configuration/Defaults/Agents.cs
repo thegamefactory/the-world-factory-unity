@@ -9,10 +9,10 @@
     /// </summary>
     public static class Agents
     {
-        public static Dictionary<string, ScheduledAgent> AllAgents(Random random)
+        public static List<ScheduledAgent> AllAgents(Random random)
         {
             ScheduledAgent[] agents = { new ScheduledAgent(new ZoneDeveloperFactory(random).CreateZoneDeveloper(0.1), 1.0f) };
-            return new List<ScheduledAgent>(agents).ToDictionary((a) => a.Name);
+            return new List<ScheduledAgent>(agents);
         }
     }
 }

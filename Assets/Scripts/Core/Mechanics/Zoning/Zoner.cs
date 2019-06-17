@@ -40,13 +40,13 @@ namespace TWF
             Contract.Requires(inputPositions != null);
 
             IMapView<int> terrainMap = worldView.GetTerrainMapView();
-            IMapView<Building> buildingMap = worldView.GetBuildingMapView();
+            IMapView<int> buildingMap = worldView.GetBuildingMapView();
             IZonableTerrain zonableTerrains = worldView.Rules.Zones.GetTypedComponents<IZonableTerrain>(Zones.ZonableTerrains).GetComponent(this.Zone.Id);
 
             PreviewOutcomeBuilder builder = ToolPreviewOutcome.Builder();
             foreach (Vector pos in inputPositions)
             {
-                bool possible = buildingMap[pos] == null && zonableTerrains.IsZonable(terrainMap[pos]);
+                bool possible = buildingMap[pos] == MapTypes.NoBuilding && zonableTerrains.IsZonable(terrainMap[pos]);
                 builder.WithPositionOutcome(pos, possible ? ToolOutcome.Success : ToolOutcome.Failure);
             }
 

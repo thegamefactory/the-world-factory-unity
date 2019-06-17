@@ -7,7 +7,7 @@
     /// Richly typed components that can be attached to entities.
     /// </summary>
     /// <typeparam name="T">The type of value that can be attached to each entity.</typeparam>
-    internal class TypedComponents<T> : IReadOnlyTypedComponents<T>
+    public class TypedComponents<T> : IReadOnlyTypedComponents<T>
     {
         private readonly List<T> values = new List<T>();
         private readonly Func<T> defaultProvider;

@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     /// <summary>
     /// See interface definition.
@@ -9,37 +10,52 @@
     public class WorldRules : IWorldRules
     {
         public WorldRules(
-            Entities zones,
-            Entities terrains,
-            Dictionary<string, ScheduledAgent> agents,
+            Random random,
+            NamedEntities zones,
+            NamedEntities terrains,
+            NamedEntities buildingModels,
+            ICollection<ScheduledAgent> agents,
             Dictionary<string, Func<string, IToolBehavior>> toolBehaviors,
-            Dictionary<string, IToolBrush> toolBrushes)
+            ICollection<IToolBrush> toolBrushes)
         {
+            this.Random = random;
             this.Zones = zones;
             this.Terrains = terrains;
-            this.Agents = agents;
+            this.BuildingModels = buildingModels;
+            this.BuildingComponents = new Dictionary<string, IReadOnlyComponents>();
+            this.Agents = agents.ToDictionary(s => s.Name);
             this.ToolBehaviors = toolBehaviors;
-            this.ToolBrushes = toolBrushes;
+            this.ToolBrushes = toolBrushes.ToDictionary(tb => tb.Name);
         }
 
-        public Entities Terrains { get; }
+        public NamedEntities Terrains { get; }
 
-        public Entities Zones { get; }
+        public NamedEntities Zones { get; }
 
         public Dictionary<string, ScheduledAgent> Agents { get; }
+
+        public Dictionary<string, IReadOnlyComponents> BuildingComponents { get; }
 
         public Dictionary<string, Func<string, IToolBehavior>> ToolBehaviors { get; }
 
         public Dictionary<string, IToolBrush> ToolBrushes { get; }
 
-        IReadOnlyEntities IWorldRules.Terrains => this.Terrains;
+        public NamedEntities BuildingModels { get; }
 
-        IReadOnlyEntities IWorldRules.Zones => this.Zones;
+        public Random Random { get; }
+
+        IReadOnlyNamedEntities IWorldRules.Terrains => this.Terrains;
+
+        IReadOnlyNamedEntities IWorldRules.Zones => this.Zones;
 
         IReadOnlyDictionary<string, ScheduledAgent> IWorldRules.Agents => this.Agents;
 
         IReadOnlyDictionary<string, Func<string, IToolBehavior>> IWorldRules.ToolBehaviors => this.ToolBehaviors;
 
         IReadOnlyDictionary<string, IToolBrush> IWorldRules.ToolBrushes => this.ToolBrushes;
+
+        IReadOnlyDictionary<string, IReadOnlyComponents> IWorldRules.BuildingComponents => this.BuildingComponents;
+
+        IReadOnlyNamedEntities IWorldRules.BuildingModels => this.BuildingModels;
     }
 }

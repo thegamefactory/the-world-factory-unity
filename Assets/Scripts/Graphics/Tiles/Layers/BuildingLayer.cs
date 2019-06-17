@@ -10,13 +10,15 @@
     {
         public static readonly string Component = "building_color";
 
-        private readonly IMapView<Building> buildingMap;
+        private readonly IMapView<int> buildingMap;
+        private readonly IReadOnlyTypedComponents<int> buildingVariants;
         private readonly IMapView<int> zoneMap;
         private readonly BuildingColorProvider buildingColorProvider;
 
         public BuildingLayer(IWorldView worldView)
         {
             this.buildingMap = worldView.GetBuildingMapView();
+            this.buildingVariants = worldView.Buildings.GetTypedComponents<int>(BuildingVariants.Component);
             this.zoneMap = worldView.GetZoneMapView();
 
             var buildingColor = worldView.Rules.Zones.GetTypedComponents<BuildingColor>(Component);
@@ -27,10 +29,10 @@
 
         public Color? GetColor(Vector pos)
         {
-            Building building = this.buildingMap[pos];
-            if (building != null)
+            int building = this.buildingMap[pos];
+            if (building != MapTypes.NoBuilding)
             {
-                return this.buildingColorProvider(this.zoneMap[pos], building.Variant);
+                return this.buildingColorProvider(this.zoneMap[pos], this.buildingVariants.GetComponent(building));
             }
             else
             {

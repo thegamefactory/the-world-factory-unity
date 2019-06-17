@@ -17,7 +17,7 @@
             var terrains = worldConfig.Terrains;
             ZonableOnlyOn zonableOnlyOnLand = new ZonableOnlyOn(terrains[Terrains.Land]);
             TypedComponents<IZonableTerrain> zonableTerrains = new TypedComponents<IZonableTerrain>(ZonableTerrains, () => zonableOnlyOnLand);
-            zonableTerrains.AttachComponent(zones[TWF.Zones.EMPTY], new AlwaysZonable());
+            zonableTerrains.AttachComponent(zones[TWF.Zones.Empty], new AlwaysZonable());
             zones.Extend(zonableTerrains);
         }
     }

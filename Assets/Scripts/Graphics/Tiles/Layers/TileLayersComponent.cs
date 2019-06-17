@@ -21,7 +21,7 @@
 
         public void Awake()
         {
-            Root.GameService.WorldFactory.WorldConfigFactory.WorldRulesCustomizer += this.ConfigureTileColors;
+            Root.GameService.WorldFactory.WorldRulesFactory.WorldRulesCustomizer += this.ConfigureTileColors;
             var worldView = Root.WorldView;
             var tileLayers = Root.GameService.GraphicConfig.TileLayers;
             tileLayers.RegisterLayerProvider(wv => new ZoneLayer(wv));
@@ -37,8 +37,8 @@
 
         private void ConfigureTileColors(WorldRules worldConfig)
         {
-            Entities terrains = worldConfig.Terrains;
-            Entities zones = worldConfig.Zones;
+            var terrains = worldConfig.Terrains;
+            var zones = worldConfig.Zones;
 
             TypedComponents<Color> terrainColor = new TypedComponents<Color>(TerrainLayer.Component, () => this.ErrorTile);
             terrainColor.AttachComponent(terrains[Terrains.Land], this.LandTile);
