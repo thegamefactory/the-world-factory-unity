@@ -9,12 +9,12 @@
     {
         public static readonly string ZonableTerrains = "zonable_terrains";
 
-        public static void DefaultZonableTerrainComponent(WorldRules worldConfig)
+        public static void RegisterZonableTerrainComponent(WorldRules worldRules)
         {
-            Contract.Requires(worldConfig != null);
+            Contract.Requires(worldRules != null);
 
-            var zones = worldConfig.Zones;
-            var terrains = worldConfig.Terrains;
+            var zones = worldRules.Zones;
+            var terrains = worldRules.Terrains;
             ZonableOnlyOn zonableOnlyOnLand = new ZonableOnlyOn(terrains[Terrains.Land]);
             TypedComponents<IZonableTerrain> zonableTerrains = new TypedComponents<IZonableTerrain>(ZonableTerrains, () => zonableOnlyOnLand);
             zonableTerrains.AttachComponent(zones[TWF.Zones.Empty], new AlwaysZonable());

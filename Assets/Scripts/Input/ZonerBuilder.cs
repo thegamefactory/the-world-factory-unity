@@ -22,7 +22,7 @@
                 color = new Color(color.Value.r, color.Value.g, color.Value.b, color.Value.a / 2);
             }
 
-            return new Tool(prefix + '_' + zone, ToolBehaviors.ZONER, zone, brush, color);
+            return new Tool(prefix + '_' + zone, ToolBehaviors.Zoner, zone, brush, color);
         }
     }
 }

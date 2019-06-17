@@ -26,15 +26,16 @@
         public static readonly string Component = "building_models";
         public static readonly int NoModel = -1;
 
-        public static NamedEntities DefaultBuildingModels()
+        public static void RegisterDefaults(WorldRules worldRules)
         {
-            NamedEntities buildingModels = new NamedEntities(EntitiesName);
+            Contract.Requires(worldRules != null);
+
+            NamedEntities buildingModels = worldRules.BuildingModels;
             buildingModels.Register(Farm);
             buildingModels.Register(House);
-            return buildingModels;
         }
 
-        public static void DefaultBuildingModelComponent(WorldRules worldRules)
+        public static void RegisterBuilidingModelComponent(WorldRules worldRules)
         {
             Contract.Requires(worldRules != null);
 

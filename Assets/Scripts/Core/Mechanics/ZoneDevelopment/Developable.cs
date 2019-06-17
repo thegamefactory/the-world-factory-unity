@@ -10,11 +10,11 @@
     {
         public static readonly string Developable = "deveoplable";
 
-        public static void DefaultDevelopableComponent(WorldRules worldConfig)
+        public static void RegisterDevelopableComponent(WorldRules worldRules)
         {
-            Contract.Requires(worldConfig != null);
+            Contract.Requires(worldRules != null);
 
-            NamedEntities zones = worldConfig.Zones;
+            NamedEntities zones = worldRules.Zones;
             MarkerComponents developable = new MarkerComponents(Developable);
 
             developable.MarkEntity(zones[Residential]);

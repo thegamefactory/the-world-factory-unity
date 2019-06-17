@@ -2,30 +2,22 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
 
     /// <summary>
     /// See interface definition.
     /// </summary>
     public class WorldRules : IWorldRules
     {
-        public WorldRules(
-            Random random,
-            NamedEntities zones,
-            NamedEntities terrains,
-            NamedEntities buildingModels,
-            ICollection<ScheduledAgent> agents,
-            Dictionary<string, Func<string, IToolBehavior>> toolBehaviors,
-            ICollection<IToolBrush> toolBrushes)
+        public WorldRules(Random random)
         {
             this.Random = random;
-            this.Zones = zones;
-            this.Terrains = terrains;
-            this.BuildingModels = buildingModels;
+            this.Zones = new NamedEntities(TWF.Zones.EntitiesName);
+            this.Terrains = new NamedEntities(TWF.Terrains.EntitiesName);
+            this.BuildingModels = new NamedEntities(TWF.BuildingModels.EntitiesName);
             this.BuildingComponents = new Dictionary<string, IReadOnlyComponents>();
-            this.Agents = agents.ToDictionary(s => s.Name);
-            this.ToolBehaviors = toolBehaviors;
-            this.ToolBrushes = toolBrushes.ToDictionary(tb => tb.Name);
+            this.Agents = new Dictionary<string, ScheduledAgent>();
+            this.ToolBehaviors = new Dictionary<string, Func<string, IToolBehavior>>();
+            this.ToolBrushes = new Dictionary<string, IToolBrush>();
         }
 
         public NamedEntities Terrains { get; }

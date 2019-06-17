@@ -1,32 +1,23 @@
 ﻿namespace TWF
 {
     using System.Collections.Generic;
+    using System.Diagnostics.Contracts;
 
     public static class ToolBrushes
     {
-        public static readonly IToolBrush Pen = RegisterToolBrush(new PenToolBrush());
-        public static readonly IToolBrush Manatthan = RegisterToolBrush(new ManatthanToolBrush());
-        public static readonly IToolBrush Rectangle = RegisterToolBrush(new RectangleToolBrush());
+        public static readonly IToolBrush Pen = new PenToolBrush();
+        public static readonly IToolBrush Manatthan = new ManatthanToolBrush();
+        public static readonly IToolBrush Rectangle = new RectangleToolBrush();
 
         private static LinkedList<IToolBrush> allToolBrushes;
 
-        public static LinkedList<IToolBrush> AllToolBrushes
+        public static void RegisterDefaults(WorldRules worldRules)
         {
-            get
-            {
-                if (allToolBrushes == null)
-                {
-                    allToolBrushes = new LinkedList<IToolBrush>();
-                }
+            Contract.Requires(worldRules != null);
 
-                return allToolBrushes;
-            }
-        }
-
-        private static IToolBrush RegisterToolBrush(IToolBrush toolBrush)
-        {
-            AllToolBrushes.AddLast(toolBrush);
-            return toolBrush;
+            worldRules.ToolBrushes[Pen.Name] = Pen;
+            worldRules.ToolBrushes[Manatthan.Name] = Manatthan;
+            worldRules.ToolBrushes[Rectangle.Name] = Rectangle;
         }
     }
 }

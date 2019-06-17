@@ -1,18 +1,22 @@
 ﻿namespace TWF
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
+    using System.Diagnostics.Contracts;
 
     public static class ToolBehaviors
     {
-        public static readonly string ZONER = "zoners";
+        public static readonly string Zoner = "zoner";
 
-        public static Func<string, IToolBehavior> Zoners(NamedEntities zones)
+        public static void RegisterDefaults(WorldRules worldRules)
         {
-            return (m) =>
+            Contract.Requires(worldRules != null);
+
+            var zones = worldRules.Zones;
+
+            worldRules.ToolBehaviors[Zoner] = m =>
             {
                 var zone = zones.GetNamedEntity(m);
+
                 if (!zones.GetMarkerComponents(Zones.ManuallyZonable).IsMarked(zone.Id))
                 {
                     throw new ArgumentException(zone.Name);

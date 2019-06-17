@@ -1,7 +1,6 @@
 namespace TWF
 {
     using System.Collections.Generic;
-    using UnityEngine;
 
     /// <summary>
     /// Encapsulates the information related to whether using a tool is possible.

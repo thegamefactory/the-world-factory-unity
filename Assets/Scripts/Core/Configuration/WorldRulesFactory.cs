@@ -18,31 +18,24 @@
 
         public static WorldRulesCustomizer DefaultCustomizer()
         {
-            WorldRulesCustomizer wrc = Zones.DefaultDevelopableComponent;
-            wrc += Zones.DefaultManuallyZonableComponent;
-            wrc += Zones.DefaultZonableTerrainComponent;
-            wrc += BuildingModels.DefaultBuildingModelComponent;
-            wrc += BuildingVariants.DefaultBuildingVariantComponent;
+            WorldRulesCustomizer wrc = Zones.RegisterDefaults;
+            wrc += Terrains.RegisterDefaults;
+            wrc += BuildingModels.RegisterDefaults;
+            wrc += Zones.RegisterDevelopableComponent;
+            wrc += Zones.RegisterManuallyZonableComponent;
+            wrc += Zones.RegisterZonableTerrainComponent;
+            wrc += BuildingModels.RegisterBuilidingModelComponent;
+            wrc += BuildingVariants.RegisterBuildingVariantComponent;
+            wrc += Agents.RegisterDefaults;
+            wrc += ToolBehaviors.RegisterDefaults;
+            wrc += ToolBrushes.RegisterDefaults;
             return wrc;
         }
 
         public WorldRules Create(Random random)
         {
-            var zones = Zones.DefaultZones();
-            var terrains = Terrains.DefaultTerrains();
-            var buildingModels = BuildingModels.DefaultBuildingModels();
-
-            WorldRules wr = new WorldRules(
-                random,
-                zones,
-                terrains,
-                buildingModels,
-                Agents.AllAgents(random),
-                new Dictionary<string, Func<string, IToolBehavior>>() { [ToolBehaviors.ZONER] = ToolBehaviors.Zoners(zones) },
-                ToolBrushes.AllToolBrushes);
-
+            WorldRules wr = new WorldRules(random);
             this.WorldRulesCustomizer(wr);
-
             return wr;
         }
     }

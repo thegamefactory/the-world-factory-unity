@@ -1,6 +1,5 @@
 ﻿namespace TWF
 {
-    using System;
     using System.Collections.Generic;
 
     public class NamedEntities : AbstractEntities, IReadOnlyNamedEntities

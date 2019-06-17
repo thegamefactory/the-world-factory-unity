@@ -1,18 +1,20 @@
 ﻿namespace TWF
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
+    using System.Diagnostics.Contracts;
 
     /// <summary>
     /// Defines default background agents scheduled at fixed interval which mutate the state of the world.
     /// </summary>
     public static class Agents
     {
-        public static List<ScheduledAgent> AllAgents(Random random)
+        public static void RegisterDefaults(WorldRules worldRules)
         {
-            ScheduledAgent[] agents = { new ScheduledAgent(new ZoneDeveloperFactory(random).CreateZoneDeveloper(0.1), 1.0f) };
-            return new List<ScheduledAgent>(agents);
+            Contract.Requires(worldRules != null);
+
+            Random random = worldRules.Random;
+            var zoneDeveloper = new ZoneDeveloperFactory(random).CreateZoneDeveloper(0.1);
+            worldRules.Agents[zoneDeveloper.Name] = new ScheduledAgent(zoneDeveloper, 1.0f);
         }
     }
 }

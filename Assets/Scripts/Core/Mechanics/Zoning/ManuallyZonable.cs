@@ -10,10 +10,10 @@
     {
         public static readonly string ManuallyZonable = "manually_zonable";
 
-        public static void DefaultManuallyZonableComponent(WorldRules worldConfig)
+        public static void RegisterManuallyZonableComponent(WorldRules worldRules)
         {
-            Contract.Requires(worldConfig != null);
-            NamedEntities zones = worldConfig.Zones;
+            Contract.Requires(worldRules != null);
+            NamedEntities zones = worldRules.Zones;
             MarkerComponents manuallyZonable = new MarkerComponents(ManuallyZonable);
 
             manuallyZonable.MarkEntity(zones[Residential]);
