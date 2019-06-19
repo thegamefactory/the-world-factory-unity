@@ -2,19 +2,13 @@
 {
     using System.Collections.Generic;
     using System.Diagnostics.Contracts;
+    using System.Linq;
 
     /// <summary>
     /// Static class extending Entities.
     /// </summary>
     public static class EntitiesExtensions
     {
-        public static IReadOnlyMarkerComponentRegistry GetMarkerComponents(this IReadOnlyEntities entities, string componentName)
-        {
-            Contract.Requires(entities != null);
-            Contract.Requires(entities.GetComponents(componentName) is IReadOnlyMarkerComponentRegistry);
-            return entities.GetComponents(componentName) as IReadOnlyMarkerComponentRegistry;
-        }
-
         public static IReadOnlyTypedComponents<T> GetTypedComponents<T>(this IReadOnlyEntities entities, string componentName)
         {
             Contract.Requires(entities != null);
@@ -35,27 +29,27 @@
             return new NamedEntity(entities[entityName], entityName);
         }
 
-        public static LinkedList<int> GetMarkedEntities(this IReadOnlyEntities entities, string componentName)
+        public static IEnumerable<int> GetMarkedEntities(this IReadOnlyEntities entities, string componentName)
         {
             Contract.Requires(entities != null);
-            var componentRegistry = entities.GetMarkerComponents(componentName);
-            return componentRegistry.MarkedEntities();
+            Contract.Requires(entities.GetComponents(componentName) is TypedComponents<bool>);
+
+            var componentRegistry = entities.GetComponents(componentName) as TypedComponents<bool>;
+            return componentRegistry.GetMatchingEntities((v) => v); // returns all entity ids whose boolean component is true
         }
 
-        public static IList<NamedEntity> GetMarkedNamedEntities(this IReadOnlyNamedEntities entities, string componentName)
+        public static IEnumerable<NamedEntity> GetMarkedNamedEntities(this IReadOnlyNamedEntities entities, string componentName)
         {
             Contract.Requires(entities != null);
             var markedEntities = GetMarkedEntities(entities, componentName);
-            var namedEntites = new List<NamedEntity>(markedEntities.Count);
-            int i = 0;
+            var namedEntity = new NamedEntity(-1, string.Empty);
 
             foreach (var markedEntity in markedEntities)
             {
-                namedEntites[i].SetId(markedEntity);
-                namedEntites[i].SetName(entities[markedEntity]);
+                namedEntity.SetId(markedEntity);
+                namedEntity.SetName(entities[markedEntity]);
+                yield return namedEntity;
             }
-
-            return namedEntites;
         }
     }
 }

@@ -14,11 +14,11 @@
         {
             Contract.Requires(worldRules != null);
             NamedEntities zones = worldRules.Zones;
-            MarkerComponents manuallyZonable = new MarkerComponents(ManuallyZonable);
+            var manuallyZonable = new TypedComponents<bool>(ManuallyZonable, () => false);
 
-            manuallyZonable.MarkEntity(zones[Residential]);
-            manuallyZonable.MarkEntity(zones[Farmland]);
-            manuallyZonable.MarkEntity(zones[Road]);
+            manuallyZonable.SetComponent(zones[Residential], true);
+            manuallyZonable.SetComponent(zones[Farmland], true);
+            manuallyZonable.SetComponent(zones[Road], true);
             zones.Extend(manuallyZonable);
         }
     }

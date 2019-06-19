@@ -42,10 +42,12 @@
 
         IReadOnlyDictionary<string, ScheduledAgent> Agents { get; }
 
-        IReadOnlyDictionary<string, Func<string, IToolBehavior>> ToolBehaviors { get; }
+        IReadOnlyDictionary<string, IModifiableToolBehavior> ToolBehaviors { get; }
 
         IReadOnlyDictionary<string, IToolBrush> ToolBrushes { get; }
 
         Random Random { get; }
+
+        OnNewWorldListener OnNewWorldListener { get; }
     }
 }

@@ -41,19 +41,19 @@
             var zones = worldConfig.Zones;
 
             TypedComponents<Color> terrainColor = new TypedComponents<Color>(TerrainLayer.Component, () => this.ErrorTile);
-            terrainColor.AttachComponent(terrains[Terrains.Land], this.LandTile);
-            terrainColor.AttachComponent(terrains[Terrains.Water], this.WaterTile);
+            terrainColor.SetComponent(terrains[Terrains.Land], this.LandTile);
+            terrainColor.SetComponent(terrains[Terrains.Water], this.WaterTile);
             terrains.Extend(terrainColor);
 
             TypedComponents<Color?> zoneColor = new TypedComponents<Color?>(ZoneLayer.Component, () => null);
-            zoneColor.AttachComponent(zones[Zones.Farmland], this.FarmlandTile);
-            zoneColor.AttachComponent(zones[Zones.Residential], this.ResidentialTile);
-            zoneColor.AttachComponent(zones[Zones.Road], this.RoadTile);
+            zoneColor.SetComponent(zones[Zones.Farmland], this.FarmlandTile);
+            zoneColor.SetComponent(zones[Zones.Residential], this.ResidentialTile);
+            zoneColor.SetComponent(zones[Zones.Road], this.RoadTile);
             zones.Extend(zoneColor);
 
             TypedComponents<BuildingColor> tileColor = new TypedComponents<BuildingColor>(BuildingLayer.Component, () => (v) => this.ErrorTile);
-            tileColor.AttachComponent(zones[Zones.Farmland], new BuildingColor((v) => this.FieldTile));
-            tileColor.AttachComponent(zones[Zones.Residential], new BuildingColor((v) => v % 2 == 0 ? this.Building1Tile : this.Building2Tile));
+            tileColor.SetComponent(zones[Zones.Farmland], new BuildingColor((v) => this.FieldTile));
+            tileColor.SetComponent(zones[Zones.Residential], new BuildingColor((v) => v % 2 == 0 ? this.Building1Tile : this.Building2Tile));
             zones.Extend(tileColor);
         }
     }

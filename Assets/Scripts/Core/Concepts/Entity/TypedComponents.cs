@@ -20,7 +20,7 @@
 
         public string Name { get; }
 
-        public void AttachComponent(int entityId, T value)
+        public void SetComponent(int entityId, T value)
         {
             while (this.values.Count <= entityId)
             {
@@ -34,10 +34,21 @@
         {
             if (this.values.Count <= entityId)
             {
-                this.AttachComponent(entityId, this.defaultProvider());
+                this.SetComponent(entityId, this.defaultProvider());
             }
 
             return this.values[entityId];
+        }
+
+        public IEnumerable<int> GetMatchingEntities(Func<T, bool> predicate)
+        {
+            for (int entityId = 0; entityId < this.values.Count; entityId++)
+            {
+                if (predicate(this.values[entityId]))
+                {
+                    yield return entityId;
+                }
+            }
         }
     }
 }

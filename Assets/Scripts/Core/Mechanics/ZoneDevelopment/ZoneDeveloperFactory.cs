@@ -16,7 +16,7 @@
 
         public ZoneDeveloper CreateZoneDeveloper(double developmentRate)
         {
-            return new ZoneDeveloper(() => this.random.NextDouble() < developmentRate);
+            return new ZoneDeveloper(developmentRate, this.random);
         }
     }
 }

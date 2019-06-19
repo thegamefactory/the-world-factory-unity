@@ -9,8 +9,6 @@
         public static readonly IToolBrush Manatthan = new ManatthanToolBrush();
         public static readonly IToolBrush Rectangle = new RectangleToolBrush();
 
-        private static LinkedList<IToolBrush> allToolBrushes;
-
         public static void RegisterDefaults(WorldRules worldRules)
         {
             Contract.Requires(worldRules != null);

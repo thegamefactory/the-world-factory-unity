@@ -42,6 +42,7 @@ namespace TWF
         public IWorldView NewWorld()
         {
             this.world = this.WorldFactory.Create();
+            this.world.Rules.OnNewWorldListener(this.world);
             this.OnNewWorldListener(this.world);
             return this.world;
         }

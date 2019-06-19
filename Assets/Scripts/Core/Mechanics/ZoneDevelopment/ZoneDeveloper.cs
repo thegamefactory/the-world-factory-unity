@@ -10,15 +10,20 @@ namespace TWF
     /// </summary>
     public class ZoneDeveloper : IAgent
     {
-        private readonly Func<bool> doBuild;
+        private readonly double developmentRate;
+        private readonly Random random;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ZoneDeveloper"/> class.
         /// </summary>
-        /// <param name="doBuild">A function called for each unoccupied zoned tile; if it returns true, the agent creates a building.</param>
-        public ZoneDeveloper(Func<bool> doBuild)
+        /// <param name="developmentRate">A development rate between 0 (no development) and 1 (immediate development)</param>
+        /// <param name="random">Provides random value</param>
+        public ZoneDeveloper(double developmentRate, Random random)
         {
-            this.doBuild = doBuild;
+            Contract.Requires(developmentRate >= 0.0 && developmentRate <= 1.0);
+
+            this.developmentRate = developmentRate;
+            this.random = random;
         }
 
         public string Name => "Constructor";
@@ -26,12 +31,16 @@ namespace TWF
         public Action<World> Execute(IWorldView worldView)
         {
             Contract.Requires(worldView != null);
-            var developableZones = worldView.Rules.Zones.GetMarkerComponents(Zones.Developable);
+            var developableZones = worldView.Rules.Zones.GetTypedComponents<CombinedDevelopmentVoter>(Zones.DevelopmentVoter);
 
             List<(Vector, int)> positionsToBuild = worldView.GetZoneMapView()
                 .ToAllPositions()
                 .ToPositionTuples()
-                .Where((z) => developableZones.IsMarked(z.Item2) && this.doBuild())
+                .Where((z) =>
+                {
+                    var vote = developableZones.GetComponent(z.Item2).Vote(z.Item1);
+                    return vote > 0.0 && this.developmentRate * vote > this.random.NextDouble();
+                })
                 .ToList();
 
             return (world) =>
@@ -67,7 +76,7 @@ namespace TWF
 
                     int buildingId = buildings.Register();
                     buildingMap[z.Item1] = buildingId;
-                    buildingModels.AttachComponent(buildingId, buildingModel);
+                    buildingModels.SetComponent(buildingId, buildingModel);
                 }
             };
         }

@@ -16,8 +16,9 @@
             this.BuildingModels = new NamedEntities(TWF.BuildingModels.EntitiesName);
             this.BuildingComponents = new Dictionary<string, IReadOnlyComponents>();
             this.Agents = new Dictionary<string, ScheduledAgent>();
-            this.ToolBehaviors = new Dictionary<string, Func<string, IToolBehavior>>();
+            this.ToolBehaviors = new Dictionary<string, IModifiableToolBehavior>();
             this.ToolBrushes = new Dictionary<string, IToolBrush>();
+            this.OnNewWorldListener = (w) => { };
         }
 
         public NamedEntities Terrains { get; }
@@ -28,7 +29,7 @@
 
         public Dictionary<string, IReadOnlyComponents> BuildingComponents { get; }
 
-        public Dictionary<string, Func<string, IToolBehavior>> ToolBehaviors { get; }
+        public Dictionary<string, IModifiableToolBehavior> ToolBehaviors { get; }
 
         public Dictionary<string, IToolBrush> ToolBrushes { get; }
 
@@ -36,13 +37,15 @@
 
         public Random Random { get; }
 
+        public OnNewWorldListener OnNewWorldListener { get; set; }
+
         IReadOnlyNamedEntities IWorldRules.Terrains => this.Terrains;
 
         IReadOnlyNamedEntities IWorldRules.Zones => this.Zones;
 
         IReadOnlyDictionary<string, ScheduledAgent> IWorldRules.Agents => this.Agents;
 
-        IReadOnlyDictionary<string, Func<string, IToolBehavior>> IWorldRules.ToolBehaviors => this.ToolBehaviors;
+        IReadOnlyDictionary<string, IModifiableToolBehavior> IWorldRules.ToolBehaviors => this.ToolBehaviors;
 
         IReadOnlyDictionary<string, IToolBrush> IWorldRules.ToolBrushes => this.ToolBrushes;
 

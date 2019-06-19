@@ -21,7 +21,7 @@
             WorldRulesCustomizer wrc = Zones.RegisterDefaults;
             wrc += Terrains.RegisterDefaults;
             wrc += BuildingModels.RegisterDefaults;
-            wrc += Zones.RegisterDevelopableComponent;
+            wrc += Zones.RegisterDevelopmentVoter;
             wrc += Zones.RegisterManuallyZonableComponent;
             wrc += Zones.RegisterZonableTerrainComponent;
             wrc += BuildingModels.RegisterBuilidingModelComponent;

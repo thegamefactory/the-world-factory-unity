@@ -13,11 +13,11 @@
 
             var zones = worldRules.Zones;
 
-            worldRules.ToolBehaviors[Zoner] = m =>
+            worldRules.ToolBehaviors[Zoner] = zoneName =>
             {
-                var zone = zones.GetNamedEntity(m);
+                var zone = zones.GetNamedEntity(zoneName);
 
-                if (!zones.GetMarkerComponents(Zones.ManuallyZonable).IsMarked(zone.Id))
+                if (!zones.GetTypedComponents<bool>(Zones.ManuallyZonable).IsMarked(zone.Id))
                 {
                     throw new ArgumentException(zone.Name);
                 }
