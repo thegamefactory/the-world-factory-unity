@@ -41,7 +41,7 @@ namespace TWF
 
             IMapView<int> terrainMap = worldView.GetTerrainMapView();
             IMapView<int> buildingMap = worldView.GetBuildingMapView();
-            IZonableTerrain zonableTerrains = worldView.Rules.Zones.GetTypedComponents<IZonableTerrain>(Zones.ZonableTerrains).GetComponent(this.Zone.Id);
+            IZonableTerrain zonableTerrains = worldView.Rules.Zones.GetTypedComponents<IZonableTerrain>(ZonableTerrains.ComponentName).GetComponent(this.Zone.Id);
 
             PreviewOutcomeBuilder builder = ToolPreviewOutcome.Builder();
             foreach (Vector pos in inputPositions)

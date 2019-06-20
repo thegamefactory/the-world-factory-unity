@@ -2,13 +2,13 @@
 {
     using System.Collections.Generic;
 
-    public class CombinedDevelopmentVoter : IDevelopmentVoter
+    public class CombinedZoneDevelopmentVoter : IZoneDevelopmentVoter
     {
-        private readonly LinkedList<IDevelopmentVoter> voters;
+        private readonly LinkedList<IZoneDevelopmentVoter> voters;
 
-        public CombinedDevelopmentVoter(params IDevelopmentVoter[] developmentVoters)
+        public CombinedZoneDevelopmentVoter(params IZoneDevelopmentVoter[] developmentVoters)
         {
-            this.voters = new LinkedList<IDevelopmentVoter>(developmentVoters);
+            this.voters = new LinkedList<IZoneDevelopmentVoter>(developmentVoters);
         }
 
         public int VotersCount => this.voters.Count;
@@ -21,7 +21,7 @@
             }
         }
 
-        public void RegisterVoter(IDevelopmentVoter voter)
+        public void RegisterVoter(IZoneDevelopmentVoter voter)
         {
             this.voters.AddLast(voter);
         }

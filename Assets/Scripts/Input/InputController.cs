@@ -8,8 +8,9 @@
     {
 #pragma warning disable SA1401 // Fields should be private
 #pragma warning disable CA1051 // Do not declare visible instance fields
-        public KeyCode ResidentialModifierKey;
+        public KeyCode CommercialModifierKey;
         public KeyCode FarmlandModifierKey;
+        public KeyCode ResidentialModifierKey;
         public KeyCode RoadModifierKey;
         public Text DebugText;
 #pragma warning restore CA1051 // Do not declare visible instance fields
@@ -34,12 +35,16 @@
                 var zonerBuilder = new ZonerBuilder(w);
 
                 this.tools.RegisterTool(
-                    KeyCombination.Builder(this.ResidentialModifierKey).Build(),
-                    zonerBuilder.BuildZoner(Zones.Residential, "zone", ToolBrushes.Rectangle.Name));
+                    KeyCombination.Builder(this.CommercialModifierKey).Build(),
+                    zonerBuilder.BuildZoner(Zones.Commercial, "zone", ToolBrushes.Rectangle.Name));
 
                 this.tools.RegisterTool(
                     KeyCombination.Builder(this.FarmlandModifierKey).Build(),
                     zonerBuilder.BuildZoner(Zones.Farmland, "zone", ToolBrushes.Rectangle.Name));
+
+                this.tools.RegisterTool(
+                    KeyCombination.Builder(this.ResidentialModifierKey).Build(),
+                    zonerBuilder.BuildZoner(Zones.Residential, "zone", ToolBrushes.Rectangle.Name));
 
                 this.tools.RegisterTool(
                     KeyCombination.Builder(this.RoadModifierKey).Build(),

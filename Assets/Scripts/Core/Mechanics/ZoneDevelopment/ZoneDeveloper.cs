@@ -31,7 +31,7 @@ namespace TWF
         public Action<World> Execute(IWorldView worldView)
         {
             Contract.Requires(worldView != null);
-            var developableZones = worldView.Rules.Zones.GetTypedComponents<CombinedDevelopmentVoter>(Zones.DevelopmentVoter);
+            var developableZones = worldView.Rules.Zones.GetTypedComponents<CombinedZoneDevelopmentVoter>(ZoneDevelopmentVoter.ComponentName);
 
             List<(Vector, int)> positionsToBuild = worldView.GetZoneMapView()
                 .ToAllPositions()
@@ -48,11 +48,13 @@ namespace TWF
                 // this is very hard wired, we will need to make it more generic in the future
                 IMap<int> buildingMap = world.GetBuildingMap();
                 IMap<int> zoneMap = world.GetZoneMap();
-                int residential = world.Rules.Zones[Zones.Residential];
+                int commercial = world.Rules.Zones[Zones.Commercial];
                 int farmland = world.Rules.Zones[Zones.Farmland];
+                int residential = world.Rules.Zones[Zones.Residential];
                 IReadOnlyNamedEntities allBuildingModels = world.Rules.BuildingModels;
-                int house = allBuildingModels[BuildingModels.House];
                 int farm = allBuildingModels[BuildingModels.Farm];
+                int house = allBuildingModels[BuildingModels.House];
+                int shop = allBuildingModels[BuildingModels.Shop];
                 AnonymousEntities buildings = world.Buildings;
                 TypedComponents<int> buildingVariant = buildings.GetMutableTypedComponents<int>(BuildingVariants.Component);
                 TypedComponents<int> buildingModels = buildings.GetMutableTypedComponents<int>(BuildingModels.Component);
@@ -61,13 +63,17 @@ namespace TWF
                 {
                     int buildingModel;
                     int zone = zoneMap[z.Item1];
-                    if (zone == residential)
+                    if (zone == commercial)
                     {
-                        buildingModel = house;
+                        buildingModel = shop;
                     }
                     else if (zone == farmland)
                     {
                         buildingModel = farm;
+                    }
+                    else if (zone == residential)
+                    {
+                        buildingModel = house;
                     }
                     else
                     {

@@ -22,6 +22,7 @@
         public static readonly string EntitiesName = "building_models";
         public static readonly string Farm = "farm";
         public static readonly string House = "house";
+        public static readonly string Shop = "shop";
 
         public static readonly string Component = "building_models";
         public static readonly int NoModel = -1;
@@ -33,6 +34,7 @@
             NamedEntities buildingModels = worldRules.BuildingModels;
             buildingModels.Register(Farm);
             buildingModels.Register(House);
+            buildingModels.Register(Shop);
         }
 
         public static void RegisterBuilidingModelComponent(WorldRules worldRules)

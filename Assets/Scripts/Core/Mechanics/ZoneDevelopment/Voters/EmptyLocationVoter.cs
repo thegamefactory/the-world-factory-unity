@@ -2,7 +2,7 @@
 {
     using System.Diagnostics.Contracts;
 
-    public class EmptyLocationVoter : IDevelopmentVoter
+    public class EmptyLocationVoter : IZoneDevelopmentVoter
     {
         private static EmptyLocationVoter instance;
 

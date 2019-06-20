@@ -17,7 +17,7 @@
             {
                 var zone = zones.GetNamedEntity(zoneName);
 
-                if (!zones.GetTypedComponents<bool>(Zones.ManuallyZonable).IsMarked(zone.Id))
+                if (!zones.GetTypedComponents<bool>(ManuallyZonable.ComponentName).IsMarked(zone.Id))
                 {
                     throw new ArgumentException(zone.Name);
                 }

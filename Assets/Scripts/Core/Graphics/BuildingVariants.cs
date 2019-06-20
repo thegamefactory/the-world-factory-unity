@@ -9,7 +9,7 @@
     {
         public static readonly string Component = "variant";
 
-        public static void RegisterBuildingVariantComponent(WorldRules worldRules)
+        public static void RegisterBuildingComponent(WorldRules worldRules)
         {
             Contract.Requires(worldRules != null);
 

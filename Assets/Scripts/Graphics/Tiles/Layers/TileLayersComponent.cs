@@ -7,12 +7,17 @@
 #pragma warning disable SA1401 // Fields should be private
 #pragma warning disable CA1051 // Do not declare visible instance fields
         public Color LandTile;
-        public Color ResidentialTile;
+        public Color WaterTile;
+
+        public Color CommercialTile;
         public Color FarmlandTile;
+        public Color ResidentialTile;
+
         public Color FieldTile;
+
         public Color Building1Tile;
         public Color Building2Tile;
-        public Color WaterTile;
+
         public Color RoadTile;
 
         public Color ErrorTile;
@@ -46,6 +51,7 @@
             terrains.Extend(terrainColor);
 
             TypedComponents<Color?> zoneColor = new TypedComponents<Color?>(ZoneLayer.Component, () => null);
+            zoneColor.SetComponent(zones[Zones.Commercial], this.CommercialTile);
             zoneColor.SetComponent(zones[Zones.Farmland], this.FarmlandTile);
             zoneColor.SetComponent(zones[Zones.Residential], this.ResidentialTile);
             zoneColor.SetComponent(zones[Zones.Road], this.RoadTile);
@@ -53,7 +59,8 @@
 
             TypedComponents<BuildingColor> tileColor = new TypedComponents<BuildingColor>(BuildingLayer.Component, () => (v) => this.ErrorTile);
             tileColor.SetComponent(zones[Zones.Farmland], new BuildingColor((v) => this.FieldTile));
-            tileColor.SetComponent(zones[Zones.Residential], new BuildingColor((v) => v % 2 == 0 ? this.Building1Tile : this.Building2Tile));
+            tileColor.SetComponent(zones[Zones.Commercial], new BuildingColor((v) => this.Building1Tile));
+            tileColor.SetComponent(zones[Zones.Residential], new BuildingColor((v) => this.Building2Tile));
             zones.Extend(tileColor);
         }
     }
