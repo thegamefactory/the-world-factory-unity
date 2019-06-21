@@ -4,11 +4,16 @@
     using System.Collections.Generic;
     using System.Diagnostics.Contracts;
 
-    public abstract class AbstractEntities : IMutableEntities, IReadOnlyEntities
+    /// <summary>
+    /// Base class to define an entities registry. See related interfaces.
+    /// </summary>
+    public abstract class AbstractEntities : IExtendableEntities, IReadOnlyEntities
     {
         private readonly Dictionary<string, IReadOnlyComponents> componentRegistries = new Dictionary<string, IReadOnlyComponents>();
 
         public abstract int NumberOfEntities { get; }
+
+        public abstract string Name { get; }
 
         public void Extend(IReadOnlyComponents component)
         {

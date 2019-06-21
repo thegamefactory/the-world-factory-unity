@@ -2,10 +2,7 @@
 {
     /// <summary>
     /// A registry of entities.
-    /// An entity is modeled by an integer and a string identifier.
-    /// The entity can be fetched by both but repeated lookups or iterations across all the entities should use the efficient integer identifier.
-    ///
-    /// The entity is a bare interface. To provide meaning to entities, implementers must attach them components.
+    /// An anonymous entity is modeled by an integer.
     /// </summary>
     public class AnonymousEntities : AbstractEntities, IReadOnlyEntities
     {
@@ -16,7 +13,7 @@
             this.Name = name;
         }
 
-        public string Name { get; }
+        public override string Name { get; }
 
         public override int NumberOfEntities => 0;
 

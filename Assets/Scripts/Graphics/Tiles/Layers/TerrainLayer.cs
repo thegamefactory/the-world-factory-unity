@@ -16,7 +16,7 @@
             this.terrainMap = worldView.GetTerrainMapView();
 
             var terrainColor = worldView.Rules.Terrains.GetTypedComponents<Color>(Component);
-            this.terrainColorProvider = (t) => terrainColor.GetComponent(t);
+            this.terrainColorProvider = (t) => terrainColor[t];
         }
 
         public string Name => Component;

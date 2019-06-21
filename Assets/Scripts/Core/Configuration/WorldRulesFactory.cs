@@ -20,11 +20,13 @@
         {
             WorldRulesCustomizer wrc = Zones.RegisterDefaults;
             wrc += Terrains.RegisterDefaults;
+            wrc += Resources.RegisterDefaults;
             wrc += BuildingModels.RegisterDefaults;
             wrc += ZoneDevelopmentVoter.RegisterZoneComponent;
             wrc += ManuallyZonable.RegisterZoneComponent;
             wrc += ZonableTerrains.RegisterZoneComponent;
-            wrc += BuildingModels.RegisterBuilidingModelComponent;
+            wrc += BuildingModels.RegisterBuilidingBuildingModelComponent;
+            wrc += BuildingModels.RegisterBuilidingModelResourceProductionComponent;
             wrc += BuildingVariants.RegisterBuildingComponent;
             wrc += Agents.RegisterDefaults;
             wrc += ToolBehaviors.RegisterDefaults;

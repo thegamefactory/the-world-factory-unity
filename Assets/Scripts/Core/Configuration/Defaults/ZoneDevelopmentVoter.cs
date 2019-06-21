@@ -15,11 +15,12 @@
                 ComponentName, () => new CombinedZoneDevelopmentVoter());
 
             EmptyLocationVoter emptyLocation = EmptyLocationVoter.GetInstance();
+            StochasticVoter stochastic = new StochasticVoter(0.01, worldRules.Random);
 
             // these zones will develop (at the condition that there is no building on the zone)
-            developable.GetComponent(zones[Zones.Commercial]).RegisterVoter(emptyLocation);
-            developable.GetComponent(zones[Zones.Farmland]).RegisterVoter(emptyLocation);
-            developable.GetComponent(zones[Zones.Residential]).RegisterVoter(emptyLocation);
+            developable[zones[Zones.Commercial]].RegisterVoters(emptyLocation, stochastic);
+            developable[zones[Zones.Farmland]].RegisterVoters(emptyLocation, stochastic);
+            developable[zones[Zones.Residential]].RegisterVoters(emptyLocation, stochastic);
 
             zones.Extend(developable);
 

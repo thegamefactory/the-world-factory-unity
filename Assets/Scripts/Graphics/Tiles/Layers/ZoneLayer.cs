@@ -16,7 +16,7 @@
             this.zoneMap = worldView.GetZoneMapView();
 
             var zoneColor = worldView.Rules.Zones.GetTypedComponents<Color?>(Component);
-            this.zoneColorProvider = (z) => zoneColor.GetComponent(z);
+            this.zoneColorProvider = (z) => zoneColor[z];
         }
 
         public string Name => Component;

@@ -9,7 +9,7 @@
     /// <typeparam name="T">The type of the component.</param>
     public interface IReadOnlyTypedComponents<T> : IReadOnlyComponents
     {
-        T GetComponent(int entityId);
+        T this[int entityId] { get; }
 
         IEnumerable<int> GetMatchingEntities(Func<T, bool> predicate);
     }

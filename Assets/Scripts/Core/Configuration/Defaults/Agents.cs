@@ -13,7 +13,7 @@
             Contract.Requires(worldRules != null);
 
             Random random = worldRules.Random;
-            var zoneDeveloper = new ZoneDeveloperFactory(random).CreateZoneDeveloper(0.1);
+            var zoneDeveloper = new ZoneDeveloper(random);
             worldRules.Agents[zoneDeveloper.Name] = new ScheduledAgent(zoneDeveloper, 1.0f);
         }
     }

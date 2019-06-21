@@ -7,6 +7,7 @@
     /// Root interface to define the rules of the world.
     ///
     /// This includes:
+    /// - the resources of the world, as well as their traits (defined as components)
     /// - the terrains of the world, as well as their traits (defined as components)
     /// - the zones of the world, as well as their traits (defined as components)
     /// - the buildings models of the world (defined as components)
@@ -32,6 +33,8 @@
     /// </summary>
     public interface IWorldRules
     {
+        IReadOnlyNamedEntities Resources { get; }
+
         IReadOnlyNamedEntities Terrains { get; }
 
         IReadOnlyNamedEntities Zones { get; }

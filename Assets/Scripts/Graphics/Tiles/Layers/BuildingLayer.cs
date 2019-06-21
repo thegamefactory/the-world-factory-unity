@@ -22,7 +22,7 @@
             this.zoneMap = worldView.GetZoneMapView();
 
             var buildingColor = worldView.Rules.Zones.GetTypedComponents<BuildingColor>(Component);
-            this.buildingColorProvider = (zoneId, buildingId) => buildingColor.GetComponent(zoneId).Invoke(buildingId);
+            this.buildingColorProvider = (zoneId, buildingId) => buildingColor[zoneId].Invoke(buildingId);
         }
 
         public string Name => Component;
@@ -32,7 +32,7 @@
             int building = this.buildingMap[pos];
             if (building != MapTypes.NoBuilding)
             {
-                return this.buildingColorProvider(this.zoneMap[pos], this.buildingVariants.GetComponent(building));
+                return this.buildingColorProvider(this.zoneMap[pos], this.buildingVariants[building]);
             }
             else
             {

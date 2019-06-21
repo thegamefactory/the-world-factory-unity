@@ -243,7 +243,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 433e2d923f71b4bd7b17091ae52c1dae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  Speed: 1
 --- !u!81 &813721420
 AudioListener:
   m_ObjectHideFlags: 0
@@ -558,12 +558,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LandTile: {r: 0.78431374, g: 1, b: 0, a: 1}
-  ResidentialTile: {r: 0, g: 1, b: 0, a: 1}
+  WaterTile: {r: 0, g: 1, b: 1, a: 1}
+  CommercialTile: {r: 0.5019608, g: 0, b: 1, a: 1}
   FarmlandTile: {r: 0.78431374, g: 0.78431374, b: 0, a: 1}
+  ResidentialTile: {r: 0, g: 1, b: 0, a: 1}
   FieldTile: {r: 1, g: 1, b: 0, a: 1}
   Building1Tile: {r: 0.5882353, g: 0.5882353, b: 0.5882353, a: 1}
   Building2Tile: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-  WaterTile: {r: 0, g: 1, b: 1, a: 1}
   RoadTile: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   ErrorTile: {r: 1, g: 0, b: 0, a: 1}
 --- !u!114 &1133443529
@@ -698,9 +699,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98cb145e6916143bdad3a2982fd28527, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ResidentialModifierKey: 49
+  CommercialModifierKey: 51
   FarmlandModifierKey: 50
-  RoadModifierKey: 51
+  ResidentialModifierKey: 49
+  RoadModifierKey: 52
   DebugText: {fileID: 1426220389}
 --- !u!4 &1421410155
 Transform:

@@ -10,19 +10,14 @@ namespace TWF
     /// </summary>
     public class ZoneDeveloper : IAgent
     {
-        private readonly double developmentRate;
         private readonly Random random;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ZoneDeveloper"/> class.
         /// </summary>
-        /// <param name="developmentRate">A development rate between 0 (no development) and 1 (immediate development)</param>
         /// <param name="random">Provides random value</param>
-        public ZoneDeveloper(double developmentRate, Random random)
+        public ZoneDeveloper(Random random)
         {
-            Contract.Requires(developmentRate >= 0.0 && developmentRate <= 1.0);
-
-            this.developmentRate = developmentRate;
             this.random = random;
         }
 
@@ -38,8 +33,8 @@ namespace TWF
                 .ToPositionTuples()
                 .Where((z) =>
                 {
-                    var vote = developableZones.GetComponent(z.Item2).Vote(z.Item1);
-                    return vote > 0.0 && this.developmentRate * vote > this.random.NextDouble();
+                    var vote = developableZones[z.Item2].Vote(z.Item1);
+                    return vote > 0.0 && vote > this.random.NextDouble();
                 })
                 .ToList();
 
@@ -54,10 +49,10 @@ namespace TWF
                 IReadOnlyNamedEntities allBuildingModels = world.Rules.BuildingModels;
                 int farm = allBuildingModels[BuildingModels.Farm];
                 int house = allBuildingModels[BuildingModels.House];
-                int shop = allBuildingModels[BuildingModels.Shop];
+                int shop = allBuildingModels[BuildingModels.GroceryStore];
                 AnonymousEntities buildings = world.Buildings;
                 TypedComponents<int> buildingVariant = buildings.GetMutableTypedComponents<int>(BuildingVariants.Component);
-                TypedComponents<int> buildingModels = buildings.GetMutableTypedComponents<int>(BuildingModels.Component);
+                TypedComponents<int> buildingModels = buildings.GetMutableTypedComponents<int>(BuildingModels.BuildingBuildingModelComponent);
 
                 foreach (var z in positionsToBuild.Where((z) => buildingMap[z.Item1] == MapTypes.NoBuilding))
                 {
@@ -82,7 +77,7 @@ namespace TWF
 
                     int buildingId = buildings.Register();
                     buildingMap[z.Item1] = buildingId;
-                    buildingModels.SetComponent(buildingId, buildingModel);
+                    buildingModels[buildingId] = buildingModel;
                 }
             };
         }

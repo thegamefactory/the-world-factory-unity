@@ -16,10 +16,10 @@
             NamedEntities zones = worldRules.Zones;
             var manuallyZonable = new TypedComponents<bool>(ComponentName, () => false);
 
-            manuallyZonable.SetComponent(zones[Zones.Commercial], true);
-            manuallyZonable.SetComponent(zones[Zones.Farmland], true);
-            manuallyZonable.SetComponent(zones[Zones.Residential], true);
-            manuallyZonable.SetComponent(zones[Zones.Road], true);
+            manuallyZonable[zones[Zones.Commercial]] = true;
+            manuallyZonable[zones[Zones.Farmland]] = true;
+            manuallyZonable[zones[Zones.Residential]] = true;
+            manuallyZonable[zones[Zones.Road]] = true;
             zones.Extend(manuallyZonable);
         }
     }

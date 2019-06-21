@@ -46,21 +46,21 @@
             var zones = worldConfig.Zones;
 
             TypedComponents<Color> terrainColor = new TypedComponents<Color>(TerrainLayer.Component, () => this.ErrorTile);
-            terrainColor.SetComponent(terrains[Terrains.Land], this.LandTile);
-            terrainColor.SetComponent(terrains[Terrains.Water], this.WaterTile);
+            terrainColor[terrains[Terrains.Land]] = this.LandTile;
+            terrainColor[terrains[Terrains.Water]] = this.WaterTile;
             terrains.Extend(terrainColor);
 
             TypedComponents<Color?> zoneColor = new TypedComponents<Color?>(ZoneLayer.Component, () => null);
-            zoneColor.SetComponent(zones[Zones.Commercial], this.CommercialTile);
-            zoneColor.SetComponent(zones[Zones.Farmland], this.FarmlandTile);
-            zoneColor.SetComponent(zones[Zones.Residential], this.ResidentialTile);
-            zoneColor.SetComponent(zones[Zones.Road], this.RoadTile);
+            zoneColor[zones[Zones.Commercial]] = this.CommercialTile;
+            zoneColor[zones[Zones.Farmland]] = this.FarmlandTile;
+            zoneColor[zones[Zones.Residential]] = this.ResidentialTile;
+            zoneColor[zones[Zones.Road]] = this.RoadTile;
             zones.Extend(zoneColor);
 
             TypedComponents<BuildingColor> tileColor = new TypedComponents<BuildingColor>(BuildingLayer.Component, () => (v) => this.ErrorTile);
-            tileColor.SetComponent(zones[Zones.Farmland], new BuildingColor((v) => this.FieldTile));
-            tileColor.SetComponent(zones[Zones.Commercial], new BuildingColor((v) => this.Building1Tile));
-            tileColor.SetComponent(zones[Zones.Residential], new BuildingColor((v) => this.Building2Tile));
+            tileColor[zones[Zones.Farmland]] = new BuildingColor((v) => this.FieldTile);
+            tileColor[zones[Zones.Commercial]] = new BuildingColor((v) => this.Building1Tile);
+            tileColor[zones[Zones.Residential]] = new BuildingColor((v) => this.Building2Tile);
             zones.Extend(tileColor);
         }
     }

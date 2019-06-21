@@ -11,6 +11,7 @@
         public WorldRules(Random random)
         {
             this.Random = random;
+            this.Resources = new NamedEntities(TWF.Resources.EntitiesName);
             this.Zones = new NamedEntities(TWF.Zones.EntitiesName);
             this.Terrains = new NamedEntities(TWF.Terrains.EntitiesName);
             this.BuildingModels = new NamedEntities(TWF.BuildingModels.EntitiesName);
@@ -20,6 +21,8 @@
             this.ToolBrushes = new Dictionary<string, IToolBrush>();
             this.OnNewWorldListener = (w) => { };
         }
+
+        public NamedEntities Resources { get; }
 
         public NamedEntities Terrains { get; }
 
@@ -38,6 +41,8 @@
         public Random Random { get; }
 
         public OnNewWorldListener OnNewWorldListener { get; set; }
+
+        IReadOnlyNamedEntities IWorldRules.Resources => this.Resources;
 
         IReadOnlyNamedEntities IWorldRules.Terrains => this.Terrains;
 

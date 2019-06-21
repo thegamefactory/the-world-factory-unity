@@ -1,6 +1,7 @@
 ﻿namespace TWF
 {
     using System.Collections.Generic;
+    using System.Diagnostics.Contracts;
 
     public class CombinedZoneDevelopmentVoter : IZoneDevelopmentVoter
     {
@@ -21,9 +22,14 @@
             }
         }
 
-        public void RegisterVoter(IZoneDevelopmentVoter voter)
+        public void RegisterVoters(params IZoneDevelopmentVoter[] voters)
         {
-            this.voters.AddLast(voter);
+            Contract.Requires(voters != null);
+
+            foreach (var v in voters)
+            {
+                this.voters.AddLast(v);
+            }
         }
 
         public double Vote(Vector pos)

@@ -3,7 +3,9 @@
     using System.Diagnostics.Contracts;
 
     /// <summary>
-    /// Utilities to define and fetch the Building map.
+    /// The building map maps each position to a building id, or -1 if there's no building at this location.
+    /// Note: it maps to a *building id*, not a *building model id*.
+    /// The building entity will have a building model component to access the building model.
     /// </summary>
     public static partial class MapTypes
     {

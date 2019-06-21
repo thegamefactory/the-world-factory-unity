@@ -5,6 +5,7 @@
 
     /// <summary>
     /// Richly typed components that can be attached to entities.
+    /// Note that all entities will be attached a default component to it.
     /// </summary>
     /// <typeparam name="T">The type of value that can be attached to each entity.</typeparam>
     public class TypedComponents<T> : IReadOnlyTypedComponents<T>
@@ -20,26 +21,32 @@
 
         public string Name { get; }
 
-        public void SetComponent(int entityId, T value)
+        public T this[int entityId]
         {
-            while (this.values.Count <= entityId)
+            get
             {
-                this.values.Add(this.defaultProvider());
+                if (this.values.Count <= entityId)
+                {
+                    this[entityId] = this.defaultProvider();
+                }
+
+                return this.values[entityId];
             }
 
-            this.values[entityId] = value;
-        }
-
-        public T GetComponent(int entityId)
-        {
-            if (this.values.Count <= entityId)
+            set
             {
-                this.SetComponent(entityId, this.defaultProvider());
-            }
+                while (this.values.Count <= entityId)
+                {
+                    this.values.Add(this.defaultProvider());
+                }
 
-            return this.values[entityId];
+                this.values[entityId] = value;
+            }
         }
 
+        /// <summary>
+        /// Returns all the entity ids for which the provided predicate on this component is true.
+        /// </summary>
         public IEnumerable<int> GetMatchingEntities(Func<T, bool> predicate)
         {
             for (int entityId = 0; entityId < this.values.Count; entityId++)

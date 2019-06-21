@@ -1,5 +1,6 @@
 ﻿namespace TWF
 {
+    using System.Collections.Generic;
     using System.Diagnostics.Contracts;
 
     /// <summary>
@@ -22,9 +23,11 @@
         public static readonly string EntitiesName = "building_models";
         public static readonly string Farm = "farm";
         public static readonly string House = "house";
-        public static readonly string Shop = "shop";
+        public static readonly string GroceryStore = "grocery_store";
 
-        public static readonly string Component = "building_models";
+        public static readonly string BuildingModelResourceProductionComponent = "resource_production";
+
+        public static readonly string BuildingBuildingModelComponent = "building_models";
         public static readonly int NoModel = -1;
 
         public static void RegisterDefaults(WorldRules worldRules)
@@ -34,16 +37,65 @@
             NamedEntities buildingModels = worldRules.BuildingModels;
             buildingModels.Register(Farm);
             buildingModels.Register(House);
-            buildingModels.Register(Shop);
+            buildingModels.Register(GroceryStore);
         }
 
-        public static void RegisterBuilidingModelComponent(WorldRules worldRules)
+        public static void RegisterBuilidingModelResourceProductionComponent(WorldRules worldRules)
         {
             Contract.Requires(worldRules != null);
 
-            TypedComponents<int> typedComponents = new TypedComponents<int>(Component, () => NoModel);
+            var buildingResourceProduction = new TypedComponents<BuildingResourceProduction[]>(
+                BuildingModelResourceProductionComponent,
+                () => System.Array.Empty<BuildingResourceProduction>());
 
-            worldRules.BuildingComponents.Add(typedComponents.Name, typedComponents);
+            var buildingModelsInitializer = new BuildingModelsInitializer(worldRules.BuildingModels, buildingResourceProduction);
+
+            var resources = worldRules.Resources;
+
+            buildingModelsInitializer.Set(
+                Farm,
+                new BuildingResourceProduction(resources[Resources.Food], 1),
+                new BuildingResourceProduction(resources[Resources.Population], -1));
+
+            buildingModelsInitializer.Set(
+                House,
+                new BuildingResourceProduction(resources[Resources.Food], -2),
+                new BuildingResourceProduction(resources[Resources.Population], 4));
+
+            buildingModelsInitializer.Set(
+                GroceryStore,
+                new BuildingResourceProduction(resources[Resources.Food], -5),
+                new BuildingResourceProduction(resources[Resources.Population], -4));
+
+            worldRules.BuildingModels.Extend(buildingResourceProduction);
+        }
+
+        private class BuildingModelsInitializer
+        {
+            private readonly NamedEntities buildingModels;
+            private readonly TypedComponents<BuildingResourceProduction[]> buildingResourceProduction;
+
+            internal BuildingModelsInitializer(NamedEntities buildingModels, TypedComponents<BuildingResourceProduction[]> buildingResourceProduction)
+            {
+                this.buildingModels = buildingModels;
+                this.buildingResourceProduction = buildingResourceProduction;
+            }
+
+            internal void Set(
+                string buildingModel,
+                params BuildingResourceProduction[] buildingResourceProductions)
+            {
+                this.buildingResourceProduction[this.buildingModels[buildingModel]] = buildingResourceProductions;
+            }
+        }
+
+        public static void RegisterBuilidingBuildingModelComponent(WorldRules worldRules)
+        {
+            Contract.Requires(worldRules != null);
+
+            var buildingModelComponent = new TypedComponents<int>(BuildingBuildingModelComponent, () => NoModel);
+
+            worldRules.BuildingComponents.Add(buildingModelComponent.Name, buildingModelComponent);
         }
     }
 }

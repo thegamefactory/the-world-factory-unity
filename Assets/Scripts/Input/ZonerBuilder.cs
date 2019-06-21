@@ -16,7 +16,7 @@
 
         public Tool BuildZoner(string zone, string prefix, string brush)
         {
-            Color? color = this.zoneColor.GetComponent(this.zones[zone]);
+            Color? color = this.zoneColor[this.zones[zone]];
             if (color.HasValue)
             {
                 color = new Color(color.Value.r, color.Value.g, color.Value.b, color.Value.a / 2);
