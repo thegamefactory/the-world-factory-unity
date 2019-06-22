@@ -3,7 +3,7 @@
     using System;
     using System.Diagnostics.Contracts;
 
-    public class StochasticVoter : IZoneDevelopmentVoter
+    public class StochasticVoter : ITileDevelopmentVoter
     {
         private readonly double developmentRate;
         private readonly Random random;
@@ -27,7 +27,7 @@
             // no-op
         }
 
-        public double Vote(Vector pos)
+        public double Vote(Vector pos, int buildingModel)
         {
             return this.random.NextDouble() > this.developmentRate ? 0 : 1;
         }

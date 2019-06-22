@@ -3,13 +3,13 @@
     using System.Collections.Generic;
     using System.Diagnostics.Contracts;
 
-    public class CombinedZoneDevelopmentVoter : IZoneDevelopmentVoter
+    public class CombinedTileDevelopmentVoter : ITileDevelopmentVoter
     {
-        private readonly LinkedList<IZoneDevelopmentVoter> voters;
+        private readonly LinkedList<ITileDevelopmentVoter> voters;
 
-        public CombinedZoneDevelopmentVoter(params IZoneDevelopmentVoter[] developmentVoters)
+        public CombinedTileDevelopmentVoter(params ITileDevelopmentVoter[] developmentVoters)
         {
-            this.voters = new LinkedList<IZoneDevelopmentVoter>(developmentVoters);
+            this.voters = new LinkedList<ITileDevelopmentVoter>(developmentVoters);
         }
 
         public int VotersCount => this.voters.Count;
@@ -22,7 +22,7 @@
             }
         }
 
-        public void RegisterVoters(params IZoneDevelopmentVoter[] voters)
+        public void RegisterVoters(params ITileDevelopmentVoter[] voters)
         {
             Contract.Requires(voters != null);
 
@@ -32,7 +32,7 @@
             }
         }
 
-        public double Vote(Vector pos)
+        public double Vote(Vector pos, int buildingModel)
         {
             if (this.voters.Count == 0)
             {
@@ -43,7 +43,7 @@
                 double result = 1.0;
                 foreach (var voter in this.voters)
                 {
-                    result *= voter.Vote(pos);
+                    result *= voter.Vote(pos, buildingModel);
                     if (result == 0)
                     {
                         break;

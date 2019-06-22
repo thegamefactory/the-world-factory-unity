@@ -23,8 +23,9 @@
         public static readonly string EntitiesName = "building_models";
         public static readonly string Farm = "farm";
         public static readonly string House = "house";
-        public static readonly string GroceryStore = "grocery_store";
+        public static readonly string ConvenienceStore = "convenience_store";
 
+        public static readonly string BuildingModelZoneComponent = "zone";
         public static readonly string BuildingModelResourceProductionComponent = "resource_production";
 
         public static readonly string BuildingBuildingModelComponent = "building_models";
@@ -37,7 +38,22 @@
             NamedEntities buildingModels = worldRules.BuildingModels;
             buildingModels.Register(Farm);
             buildingModels.Register(House);
-            buildingModels.Register(GroceryStore);
+            buildingModels.Register(ConvenienceStore);
+        }
+
+        public static void RegisterBuildingModelZoneComponent(WorldRules worldRules)
+        {
+            Contract.Requires(worldRules != null);
+
+            var buildingModelZoneComponent = new TypedComponents<int>(BuildingModelZoneComponent, () => -1);
+            var buildingModels = worldRules.BuildingModels;
+            var zones = worldRules.Zones;
+
+            buildingModelZoneComponent[buildingModels[Farm]] = zones[Zones.Farmland];
+            buildingModelZoneComponent[buildingModels[House]] = zones[Zones.Residential];
+            buildingModelZoneComponent[buildingModels[ConvenienceStore]] = zones[Zones.Commercial];
+
+            worldRules.BuildingModels.Extend(buildingModelZoneComponent);
         }
 
         public static void RegisterBuilidingModelResourceProductionComponent(WorldRules worldRules)
@@ -63,11 +79,20 @@
                 new BuildingResourceProduction(resources[Resources.Population], 4));
 
             buildingModelsInitializer.Set(
-                GroceryStore,
+                ConvenienceStore,
                 new BuildingResourceProduction(resources[Resources.Food], -5),
                 new BuildingResourceProduction(resources[Resources.Population], -4));
 
             worldRules.BuildingModels.Extend(buildingResourceProduction);
+        }
+
+        public static void RegisterBuilidingBuildingModelComponent(WorldRules worldRules)
+        {
+            Contract.Requires(worldRules != null);
+
+            var buildingModelComponent = new TypedComponents<int>(BuildingBuildingModelComponent, () => NoModel);
+
+            worldRules.BuildingComponents.Add(buildingModelComponent.Name, buildingModelComponent);
         }
 
         private class BuildingModelsInitializer
@@ -87,15 +112,6 @@
             {
                 this.buildingResourceProduction[this.buildingModels[buildingModel]] = buildingResourceProductions;
             }
-        }
-
-        public static void RegisterBuilidingBuildingModelComponent(WorldRules worldRules)
-        {
-            Contract.Requires(worldRules != null);
-
-            var buildingModelComponent = new TypedComponents<int>(BuildingBuildingModelComponent, () => NoModel);
-
-            worldRules.BuildingComponents.Add(buildingModelComponent.Name, buildingModelComponent);
         }
     }
 }

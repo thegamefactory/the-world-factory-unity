@@ -57,5 +57,13 @@
                 }
             }
         }
+
+        public IEnumerable<(int, T)> GetEntityComponentPairs()
+        {
+            for (int entityId = 0; entityId < this.values.Count; entityId++)
+            {
+                yield return (entityId, this.values[entityId]);
+            }
+        }
     }
 }

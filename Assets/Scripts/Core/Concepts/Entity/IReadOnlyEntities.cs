@@ -1,5 +1,7 @@
 ﻿namespace TWF
 {
+    using System.Collections.Generic;
+
     /// <summary>
     /// A registry of entities.
     ///

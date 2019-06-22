@@ -2,7 +2,7 @@
 {
     using System.Diagnostics.Contracts;
 
-    public class EmptyLocationVoter : IZoneDevelopmentVoter
+    public class EmptyLocationVoter : ITileDevelopmentVoter
     {
         private static EmptyLocationVoter instance;
 
@@ -29,7 +29,7 @@
             this.buildings = worldView.GetMapView<int>(MapTypes.Building);
         }
 
-        public double Vote(Vector pos)
+        public double Vote(Vector pos, int buildingModel)
         {
             return this.buildings[pos] == MapTypes.NoBuilding ? 1.0 : 0.0;
         }

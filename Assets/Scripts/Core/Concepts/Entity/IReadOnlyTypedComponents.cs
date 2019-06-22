@@ -11,6 +11,8 @@
     {
         T this[int entityId] { get; }
 
+        IEnumerable<(int, T)> GetEntityComponentPairs();
+
         IEnumerable<int> GetMatchingEntities(Func<T, bool> predicate);
     }
 }

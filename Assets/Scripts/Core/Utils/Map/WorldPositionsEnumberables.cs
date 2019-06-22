@@ -24,12 +24,12 @@
         /// <summary>
         /// Get an enumerable to iterate over all the tiles positions.
         /// </summary>
-        /// <param name="gameStateView">The map to traverse.</param>
+        /// <param name="worldView">The map to traverse.</param>
         /// <return>An enumerable to iterate over all the positions.</return>
-        public static IEnumerable<Vector> GetAllPositions(this IWorldView gameStateView)
+        public static IEnumerable<Vector> GetAllPositions(this IWorldView worldView)
         {
-            Contract.Requires(gameStateView != null);
-            return MapPositionsEnumerables.GetPositions(0, 0, gameStateView.SizeX - 1, gameStateView.SizeY - 1);
+            Contract.Requires(worldView != null);
+            return MapPositionsEnumerables.GetPositions(0, 0, worldView.SizeX - 1, worldView.SizeY - 1);
         }
 
         /// <summary>

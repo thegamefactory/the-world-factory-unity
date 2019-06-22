@@ -22,13 +22,13 @@
             wrc += Terrains.RegisterDefaults;
             wrc += Resources.RegisterDefaults;
             wrc += BuildingModels.RegisterDefaults;
-            wrc += ZoneDevelopmentVoter.RegisterZoneComponent;
+            wrc += TileDevelopmentAgent.ConfigureTileDevelopment;
             wrc += ManuallyZonable.RegisterZoneComponent;
             wrc += ZonableTerrains.RegisterZoneComponent;
             wrc += BuildingModels.RegisterBuilidingBuildingModelComponent;
+            wrc += BuildingModels.RegisterBuildingModelZoneComponent;
             wrc += BuildingModels.RegisterBuilidingModelResourceProductionComponent;
             wrc += BuildingVariants.RegisterBuildingComponent;
-            wrc += Agents.RegisterDefaults;
             wrc += ToolBehaviors.RegisterDefaults;
             wrc += ToolBrushes.RegisterDefaults;
             return wrc;
