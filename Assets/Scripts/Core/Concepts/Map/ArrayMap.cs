@@ -7,6 +7,7 @@
     public class ArrayMap<T> : IMap<T>
     {
         private readonly T[,] contentMap;
+        private MapUpdateListener<T> updateListener;
 
         public ArrayMap(Vector size)
             : this(size.X, size.Y)
@@ -51,29 +52,27 @@
         T IMapView<T>.this[int x, int y] => this.contentMap[x, y];
 
 #pragma warning disable CA1043 // Use Integral Or String Argument For Indexers
-        public T this[Vector position] { get => this.contentMap[position.X, position.Y]; set => this.contentMap[position.X, position.Y] = value; }
+        public T this[Vector position]
+        {
+            get => this.contentMap[position.X, position.Y];
+            set
+            {
+                this.contentMap[position.X, position.Y] = value;
+                this.updateListener?.Invoke(position, this.contentMap[position.X, position.Y], value);
+            }
+        }
 #pragma warning restore CA1043 // Use Integral Or String Argument For Indexers
 
-        public T this[int x, int y] { get => this.contentMap[x, y]; set => this.contentMap[x, y] = value; }
-
-        public T GetContent(int x, int y)
+        public void RegisterListenener(MapUpdateListener<T> updateListener)
         {
-            return this.contentMap[x, y];
-        }
-
-        public T GetContent(Vector position)
-        {
-            return this.contentMap[position.X, position.Y];
-        }
-
-        public void SetContent(T content, int x, int y)
-        {
-            this.contentMap[x, y] = content;
-        }
-
-        public void SetContent(T content, Vector position)
-        {
-            this.contentMap[position.X, position.Y] = content;
+            if (this.updateListener == null)
+            {
+                this.updateListener = updateListener;
+            }
+            else
+            {
+                this.updateListener += updateListener;
+            }
         }
     }
 }

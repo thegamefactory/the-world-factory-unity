@@ -28,20 +28,5 @@
             get;
         }
 #pragma warning restore CA1043 // Use Integral Or String Argument For Indexers
-
-        /// <summary>
-        /// Returns the T object corresponding to the given position, or null if the map is empty there.
-        /// </summary>
-        /// <returns>The T object corresponding to the given position, or null if the map is empty there.</returns>
-        /// <param name="x">X position.</param>
-        /// <param name="y">Y position.</param>
-        T GetContent(int x, int y);
-
-        /// <summary>
-        /// Returns the T object corresponding to the given position, or null if the map is empty there.
-        /// </summary>
-        /// <returns>The T object corresponding to the given position, or null if the map is empty there.</returns>
-        /// <param name="position">position.</param>
-        T GetContent(Vector position);
     }
 }
