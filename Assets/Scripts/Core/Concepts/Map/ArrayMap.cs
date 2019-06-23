@@ -49,8 +49,6 @@
 
         T IMapView<T>.this[Vector position] => this.contentMap[position.X, position.Y];
 
-        T IMapView<T>.this[int x, int y] => this.contentMap[x, y];
-
 #pragma warning disable CA1043 // Use Integral Or String Argument For Indexers
         public T this[Vector position]
         {
