@@ -2,6 +2,9 @@
 {
     using System.Diagnostics.Contracts;
 
+    /// <summary>
+    /// A voter which is only inclined for empty locations.
+    /// </summary>
     public class EmptyLocationVoter : ITileDevelopmentVoter
     {
         private static EmptyLocationVoter instance;

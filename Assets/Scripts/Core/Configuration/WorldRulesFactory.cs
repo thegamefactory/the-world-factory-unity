@@ -1,7 +1,6 @@
 ﻿namespace TWF
 {
     using System;
-    using System.Collections.Generic;
 
     /// <summary>
     /// Factory design pattern for WorldRules.
@@ -22,12 +21,13 @@
             wrc += Terrains.RegisterDefaults;
             wrc += Resources.RegisterDefaults;
             wrc += BuildingModels.RegisterDefaults;
-            wrc += TileDevelopmentAgent.ConfigureTileDevelopment;
-            wrc += ManuallyZonable.RegisterZoneComponent;
-            wrc += ZonableTerrains.RegisterZoneComponent;
-            wrc += BuildingModels.RegisterBuilidingBuildingModelComponent;
+            wrc += Zones.RegisterManuallyZonableComponent;
+            wrc += Zones.RegisterZonableTerrainsComponent;
+            wrc += Zones.RegisterZonesDefaultBuildingModel;
             wrc += BuildingModels.RegisterBuildingModelZoneComponent;
             wrc += BuildingModels.RegisterBuilidingModelResourceProductionComponent;
+            wrc += Buildings.RegisterBuildingModelComponent;
+            wrc += TileDevelopmentAgent.ConfigureTileDevelopment;
             wrc += BuildingVariants.RegisterBuildingComponent;
             wrc += ToolBehaviors.RegisterDefaults;
             wrc += ToolBrushes.RegisterDefaults;

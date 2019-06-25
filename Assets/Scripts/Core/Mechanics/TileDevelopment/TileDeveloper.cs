@@ -11,16 +11,13 @@
     public class TileDeveloper : IAgent
     {
         private readonly RootTileDevelopmentVoter rootTileDevelopmentVoter;
-        private readonly Random random;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TileDeveloper"/> class.
         /// </summary>
-        /// <param name="random">Provides random value</param>
-        public TileDeveloper(RootTileDevelopmentVoter rootTileDevelopmentVoter, Random random)
+        public TileDeveloper(RootTileDevelopmentVoter rootTileDevelopmentVoter)
         {
             this.rootTileDevelopmentVoter = rootTileDevelopmentVoter;
-            this.random = random;
         }
 
         public string Name => "Constructor";
@@ -41,7 +38,7 @@
                 IMap<int> zoneMap = world.GetZoneMap();
                 AnonymousEntities buildings = world.Buildings;
                 TypedComponents<int> buildingVariant = buildings.GetMutableTypedComponents<int>(BuildingVariants.Component);
-                TypedComponents<int> buildingModels = buildings.GetMutableTypedComponents<int>(BuildingModels.BuildingBuildingModelComponent);
+                TypedComponents<int> buildingModels = buildings.GetMutableTypedComponents<int>(Buildings.BuildingModelComponent);
 
                 foreach (var posBuildingModelTuple in posBuildingModelToBuild
                     .Where((posBuildingModelTuple) => buildingMap[posBuildingModelTuple.Item1] == MapTypes.NoBuilding))
