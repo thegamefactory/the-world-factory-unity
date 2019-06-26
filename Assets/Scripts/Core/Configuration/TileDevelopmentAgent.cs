@@ -11,7 +11,7 @@
             Contract.Requires(worldRules != null);
 
             EmptyLocationVoter emptyLocation = EmptyLocationVoter.GetInstance();
-            StochasticVoter stochastic = new StochasticVoter(0.01, worldRules.Random);
+            StochasticVoter stochastic = new StochasticVoter(0.1, worldRules.Random);
 
             RoadGraph roadGraph = new RoadGraph();
             worldRules.OnNewWorldListener += roadGraph.OnNewWorld;

@@ -9,12 +9,13 @@
     /// The path finder is stateful so that finding path doesn't require to allocate memory.
     /// </summary>
     public class AStarPathFinder<TNode> : IPathFinder<TNode>
+        where TNode : struct
     {
         private readonly IGraph<TNode> graph;
         private readonly IHeuristicProvider<TNode> heuristicProvider;
         private readonly LinkedList<PathSegment<TNode>> pathSegments;
         private readonly Priority_Queue.FastPriorityQueue<PathSegment<TNode>> openNodes;
-        private readonly Dictionary<TNode, (TNode, int)> originCost;
+        private readonly Dictionary<TNode, (TNode?, int)> originCost;
 
         public AStarPathFinder(IGraph<TNode> graph, IHeuristicProvider<TNode> heuristicProvider, int maxExplorationSpace)
         {
@@ -28,7 +29,7 @@
             }
 
             this.openNodes = new Priority_Queue.FastPriorityQueue<PathSegment<TNode>>(this.pathSegments.Count);
-            this.originCost = new Dictionary<TNode, (TNode, int)>(maxExplorationSpace);
+            this.originCost = new Dictionary<TNode, (TNode?, int)>(maxExplorationSpace);
         }
 
         public bool FindPath(TNode origin, TNode destination, int maxCost, ref Path<TNode> path)
@@ -45,10 +46,12 @@
             // it is structured as follows:
             // key: the position
             // value: a tuple containing the origin position that leads to this position and the cost
-            this.originCost[origin] = (default(TNode), 0);
+            this.originCost[origin] = (null, 0);
 
             // enque origin to the space to explore
-            this.Enqueue(current: origin, previous: default, priority: 0);
+            this.Enqueue(current: origin, previous: null, priority: 0);
+
+            bool found = false;
 
             // repeat
             do
@@ -86,6 +89,7 @@
                     // if we have found our destination, stop
                     if (nextNode.Equals(destination))
                     {
+                        found = true;
                         break;
                     }
 
@@ -109,25 +113,22 @@
 
                 // continue unless the space is completely explored
             }
-            while (this.openNodes.Count > 0);
-
-            // if we have visited the destination, we found a path
-            bool found = this.originCost.ContainsKey(destination);
+            while (!found && this.openNodes.Count > 0);
 
             if (found)
             {
                 // we build the path, from the destination to the origin, following our tracks
-                var current = destination;
+                TNode? current = destination;
                 path.Reset();
 
                 do
                 {
-                    path.Append(current);
-                    var nextNode = this.originCost[destination];
+                    path.Append(current.Value);
+                    var nextNode = this.originCost[current.Value];
                     current = nextNode.Item1;
                     path.Cost += nextNode.Item2;
                 }
-                while (current != null);
+                while (current.HasValue);
             }
 
             this.Reset();
@@ -152,7 +153,7 @@
             return result;
         }
 
-        private void Enqueue(TNode current, TNode previous, int priority)
+        private void Enqueue(TNode current, TNode? previous, int priority)
         {
             this.openNodes.Enqueue(this.AllocateNode(current, previous), priority);
         }
@@ -163,7 +164,7 @@
             this.pathSegments.AddLast(pathSegment);
         }
 
-        private PathSegment<TNode> AllocateNode(TNode current, TNode previous)
+        private PathSegment<TNode> AllocateNode(TNode current, TNode? previous)
         {
             // we keep the PathFindingNodes in a pool so we need to allocate and free them
             PathSegment<TNode> segment = this.pathSegments.First.Value;

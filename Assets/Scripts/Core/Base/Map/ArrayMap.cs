@@ -55,8 +55,8 @@
             get => this.contentMap[position.X, position.Y];
             set
             {
-                this.contentMap[position.X, position.Y] = value;
                 this.updateListener?.Invoke(position, this.contentMap[position.X, position.Y], value);
+                this.contentMap[position.X, position.Y] = value;
             }
         }
 #pragma warning restore CA1043 // Use Integral Or String Argument For Indexers

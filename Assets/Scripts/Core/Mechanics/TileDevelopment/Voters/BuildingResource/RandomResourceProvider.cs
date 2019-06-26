@@ -37,7 +37,7 @@
             this.zoneMap = worldView.GetMapView<int>(MapTypes.Zone);
 
             this.zoneMap.RegisterListener(this.OnZoneMapUpdate);
-            worldView.GetMapView<int>(MapTypes.Building).RegisterListener(this.OnZoneMapUpdate);
+            worldView.GetMapView<int>(MapTypes.Building).RegisterListener(this.OnBuildingMapUpdate);
         }
 
         public Vector? GetRandomProvider(int resourceId)
@@ -98,7 +98,14 @@
         private BuildingResourceProduction[] BuildingResourceProductionForZone(int zoneId)
         {
             int defaultBuildingModel = this.defaultZoneBuildingModels[zoneId];
-            return this.buildingModelsResourceProduction[defaultBuildingModel];
+            if (defaultBuildingModel != BuildingModels.NoModel)
+            {
+                return this.buildingModelsResourceProduction[defaultBuildingModel];
+            }
+            else
+            {
+                return Array.Empty<BuildingResourceProduction>();
+            }
         }
 
         private RandomAccessSet<Vector> GetOrCreateProducersForResource(int resourceId)

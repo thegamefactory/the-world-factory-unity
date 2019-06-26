@@ -1,5 +1,6 @@
 ﻿namespace TWF
 {
+    using System;
     using System.Collections.Generic;
     using System.Diagnostics.Contracts;
     using System.Linq;
@@ -23,9 +24,20 @@
 
         public IEnumerable<(Vector, int)> GetWeighedConnections(Vector position)
         {
+            bool isThisRoad = this.IsRoad(position);
+            Func<Vector, bool> predicate;
+            if (isThisRoad)
+            {
+                predicate = (p) => true;
+            }
+            else
+            {
+                predicate = (p) => this.IsRoad(p);
+            }
+
             return this.zoneMap.GetNeighbors(position)
-                .Where(this.IsRoad)
-                .Select(p => (p, 1));
+                .Where(predicate)
+                .Select(p => (p, this.IsRoad(p) ? 1 : 2));
         }
 
         public bool IsConnected(Vector position)

@@ -25,7 +25,7 @@
                     zoneBuildingModels[zoneId] = new LinkedList<int>();
                 }
 
-                zoneBuildingModels[zoneId].AddLast(zoneId);
+                zoneBuildingModels[zoneId].AddLast(buildingModelId);
             }
 
             this.zoneBuildingModels = new Dictionary<int, int[]>();
