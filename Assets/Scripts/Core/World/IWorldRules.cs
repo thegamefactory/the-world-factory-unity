@@ -52,5 +52,7 @@
         Random Random { get; }
 
         OnNewWorldListener OnNewWorldListener { get; }
+
+        IConfigProvider ConfigProvider { get; }
     }
 }

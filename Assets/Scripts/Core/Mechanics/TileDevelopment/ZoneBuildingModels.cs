@@ -5,7 +5,7 @@
     using System.Diagnostics.Contracts;
 
     /// <summary>
-    /// Maintains a cache zone id to all building models ids that can be developed on the corresponding zone.
+    /// Maintains a key value store cache, where zone id are keys and all building models ids that can be developed on the corresponding zone values.
     /// </summary>
     public class ZoneBuildingModels
     {

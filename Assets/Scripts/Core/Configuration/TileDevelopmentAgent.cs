@@ -11,7 +11,12 @@
             Contract.Requires(worldRules != null);
 
             EmptyLocationVoter emptyLocation = EmptyLocationVoter.GetInstance();
-            StochasticVoter stochastic = new StochasticVoter(0.1, worldRules.Random);
+            StochasticVoter stochastic = new StochasticVoter(worldRules.Random);
+            worldRules.ConfigProvider.RegisterConfigUpdateListener<double>("tiledev.rate", rate =>
+            {
+                Contract.Requires(rate >= 0.0 && rate <= 1.0);
+                stochastic.DevelopmentRate = rate;
+            });
 
             RoadGraph roadGraph = new RoadGraph();
             worldRules.OnNewWorldListener += roadGraph.OnNewWorld;

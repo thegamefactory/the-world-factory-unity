@@ -3,6 +3,9 @@
     using System.Collections.Generic;
     using System.Diagnostics.Contracts;
 
+    /// <summary>
+    /// A tile development voter that dispatches requests to a list of voters and aggregate the results.
+    /// </summary>
     public class CombinedTileDevelopmentVoter : ITileDevelopmentVoter
     {
         private readonly LinkedList<ITileDevelopmentVoter> voters;

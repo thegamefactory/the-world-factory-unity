@@ -2,6 +2,14 @@
 {
     using System.Diagnostics.Contracts;
 
+    /// <summary>
+    /// A tile development voter that checks whether the building model candidate resource needs are met.
+    /// If they are, it votes 1, otherwise, 0.
+    /// To determine whether the resource needs are met, for each needed resource, it:
+    /// 1) picks a random tile on the map that is able to provide the resource
+    /// 2) checks the connectivity between that tile and the candidate tile
+    /// 3) votes 1 if there's connectivity, 0 otherwise
+    /// </summary>
     public class BuildingResourceVoter : ITileDevelopmentVoter
     {
         private readonly IPathFinder<Vector> pathFinder;

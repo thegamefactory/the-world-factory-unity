@@ -3,9 +3,6 @@
     using System;
     using System.Collections.Generic;
 
-    /// <summary>
-    /// See interface definition.
-    /// </summary>
     public class WorldRules : IWorldRules
     {
         public WorldRules(Random random)
@@ -41,6 +38,8 @@
         public Random Random { get; }
 
         public OnNewWorldListener OnNewWorldListener { get; set; }
+
+        public IConfigProvider ConfigProvider { get; set; }
 
         IReadOnlyNamedEntities IWorldRules.Resources => this.Resources;
 

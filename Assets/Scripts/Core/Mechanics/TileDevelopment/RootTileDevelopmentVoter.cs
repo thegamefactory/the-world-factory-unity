@@ -1,20 +1,26 @@
 ﻿namespace TWF
 {
+    /// <summary>
+    /// Determines, for each unoccupied tile, which building model it should develop, if any.
+    /// It does so by getting the list of all candidate models corresponding to the zone of the unoccupied tile.
+    /// Then it asks the tile development voter the voting score to develop each model.
+    /// If any model has a score higher than 0, it picks it. If multiple models have a score higher than 0, it picks the highest score.
+    /// </summary>
     public class RootTileDevelopmentVoter
     {
-        private readonly CombinedTileDevelopmentVoter combinedTileDevelopmentVoter;
+        private readonly ITileDevelopmentVoter tileDevelopmentVoter;
         private readonly ZoneBuildingModels zoneBuildingModels;
         private IMapView<int> zoneMap;
 
-        public RootTileDevelopmentVoter(CombinedTileDevelopmentVoter combinedTileDevelopmentVoter, ZoneBuildingModels zoneBuildingModels)
+        public RootTileDevelopmentVoter(ITileDevelopmentVoter tileDevelopmentVoter, ZoneBuildingModels zoneBuildingModels)
         {
-            this.combinedTileDevelopmentVoter = combinedTileDevelopmentVoter;
+            this.tileDevelopmentVoter = tileDevelopmentVoter;
             this.zoneBuildingModels = zoneBuildingModels;
         }
 
         public void OnNewWorld(IWorldView worldView)
         {
-            this.combinedTileDevelopmentVoter.OnNewWorld(worldView);
+            this.tileDevelopmentVoter.OnNewWorld(worldView);
             this.zoneBuildingModels.OnNewWorld(worldView);
             this.zoneMap = worldView.GetMapView<int>(MapTypes.Zone);
         }
@@ -27,7 +33,7 @@
 
             foreach (var candidateBuildingModel in candidateBuildingModels)
             {
-                double score = this.combinedTileDevelopmentVoter.Vote(position, candidateBuildingModel);
+                double score = this.tileDevelopmentVoter.Vote(position, candidateBuildingModel);
                 if (score > maxScore)
                 {
                     result = candidateBuildingModel;

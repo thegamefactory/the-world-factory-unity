@@ -1,5 +1,6 @@
 namespace TWF
 {
+    using System.Diagnostics.Contracts;
     using TWF.Graphics;
 
     /// <summary>
@@ -21,11 +22,14 @@ namespace TWF
         /// <summary>
         /// Initializes a new instance of the <see cref="GameService"/> class.
         /// </summary>
-        /// <param name="world">The world.</param>
+        /// <param name="configProvider">The world rules config provider.</param>
         /// Defined as a list of tuples (IAgent, float), where float is the period in seconds at which the agent should be executed.</param>
-        public GameService()
+        public GameService(IConfigProvider worldRulesConfigProvider)
         {
+            Contract.Requires(worldRulesConfigProvider != null);
+
             this.WorldFactory = new WorldFactory();
+            this.WorldFactory.WorldRulesFactory.ConfigProvider = worldRulesConfigProvider;
             this.OnNewWorldListener += this.GraphicConfig.OnNewWorld;
             this.NewWorld();
         }
@@ -44,6 +48,7 @@ namespace TWF
             this.world = this.WorldFactory.Create();
             this.world.Rules.OnNewWorldListener(this.world);
             this.OnNewWorldListener(this.world);
+            this.world.Rules.ConfigProvider.Refresh();
             return this.world;
         }
 

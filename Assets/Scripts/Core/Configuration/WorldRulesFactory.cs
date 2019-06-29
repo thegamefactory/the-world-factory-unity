@@ -1,6 +1,7 @@
 ﻿namespace TWF
 {
     using System;
+    using System.Diagnostics.Contracts;
 
     /// <summary>
     /// Factory design pattern for WorldRules.
@@ -14,6 +15,8 @@
         }
 
         public WorldRulesCustomizer WorldRulesCustomizer { get; set; }
+
+        public IConfigProvider ConfigProvider { get; set; }
 
         public static WorldRulesCustomizer DefaultCustomizer()
         {
@@ -36,7 +39,11 @@
 
         public WorldRules Create(Random random)
         {
+            Contract.Requires(this.ConfigProvider != null);
+            Contract.Requires(this.WorldRulesCustomizer != null);
+
             WorldRules wr = new WorldRules(random);
+            wr.ConfigProvider = this.ConfigProvider;
             this.WorldRulesCustomizer(wr);
             return wr;
         }
