@@ -24,28 +24,12 @@
 
         public IEnumerable<(Vector, int)> GetWeighedConnections(Vector position)
         {
-            bool isThisRoad = this.IsRoad(position);
-            Func<Vector, bool> predicate;
-            if (isThisRoad)
-            {
-                predicate = (p) => true;
-            }
-            else
-            {
-                predicate = (p) => this.IsRoad(p);
-            }
-
             return this.zoneMap.GetNeighbors(position)
-                .Where(predicate)
-                .Select(p => (p, this.IsRoad(p) ? 1 : 2));
+                .Where(this.IsConnected)
+                .Select(p => (p, 1));
         }
 
         public bool IsConnected(Vector position)
-        {
-            return this.IsRoad(position) || this.zoneMap.GetNeighbors(position).Any(this.IsRoad);
-        }
-
-        private bool IsRoad(Vector position)
         {
             return this.zoneMap[position] == this.roadZoneId;
         }

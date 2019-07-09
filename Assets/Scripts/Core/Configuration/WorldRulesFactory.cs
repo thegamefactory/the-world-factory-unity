@@ -42,8 +42,10 @@
             Contract.Requires(this.ConfigProvider != null);
             Contract.Requires(this.WorldRulesCustomizer != null);
 
-            WorldRules wr = new WorldRules(random);
-            wr.ConfigProvider = this.ConfigProvider;
+            WorldRules wr = new WorldRules(random)
+            {
+                ConfigProvider = this.ConfigProvider,
+            };
             this.WorldRulesCustomizer(wr);
             return wr;
         }

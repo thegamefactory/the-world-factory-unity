@@ -21,7 +21,7 @@ public class UnityConfigProvider : MonoBehaviour, TWF.IConfigProvider
         {
             return this.ConvertValue<T>(this.values[key]);
         }
-        catch (KeyNotFoundException e)
+        catch (KeyNotFoundException)
         {
             throw new ArgumentException("Invalid key: " + key);
         }
@@ -90,7 +90,7 @@ public class UnityConfigProvider : MonoBehaviour, TWF.IConfigProvider
         {
             return (T)Convert.ChangeType(value, typeof(T));
         }
-        catch (FormatException e)
+        catch (FormatException)
         {
             throw new ArgumentException("Bad cast: " + value + " cannot be converted to " + typeof(T).Name);
         }

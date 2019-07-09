@@ -7,6 +7,8 @@
 
     /// <summary>
     /// This agent is creating buildings on tiles.
+    /// For each tile, it queries the root tile development voter which building should be developed on the tile.
+    /// Unless the tile developer agent replies with no model, the corresponding building is created.
     /// </summary>
     public class TileDeveloper : IAgent
     {

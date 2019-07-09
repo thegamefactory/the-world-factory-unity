@@ -2,6 +2,9 @@
 {
     using System.Diagnostics.Contracts;
 
+    /// <summary>
+    /// The configuration of the tile development rules.
+    /// </summary>
     public static class TileDevelopmentAgent
     {
         public static readonly string ComponentName = "development_voter";
@@ -21,12 +24,7 @@
             RoadGraph roadGraph = new RoadGraph();
             worldRules.OnNewWorldListener += roadGraph.OnNewWorld;
 
-            ManatthanHeuristicProvider manatthanHeuristicProvider = new ManatthanHeuristicProvider();
-
-            int maxExplorationSpace = 1024;
-
-            BuildingResourceVoter buildingResource = new BuildingResourceVoter(
-                new AStarPathFinder<Vector>(roadGraph, manatthanHeuristicProvider, maxExplorationSpace));
+            var buildingResource = new BuildingResourceVoter(CreatePathFinder(worldRules, roadGraph));
 
             CombinedTileDevelopmentVoter combinedTileDevelopmentVoter = new CombinedTileDevelopmentVoter(emptyLocation, stochastic, buildingResource);
 
@@ -36,6 +34,20 @@
 
             var zoneDeveloper = new TileDeveloper(rootTileDevelopmentVoter);
             worldRules.Agents[zoneDeveloper.Name] = new ScheduledAgent(zoneDeveloper, 1.0f);
+        }
+
+        private static IPathFinder<Vector> CreatePathFinder(WorldRules worldRules, RoadGraph roadGraph)
+        {
+            ManatthanHeuristicProvider manatthanHeuristicProvider = new ManatthanHeuristicProvider();
+
+            int maxExplorationSpace = 1024;
+
+            var pathFinder = new RoadConnectedPathFinder(
+                new AStarPathFinder<Vector>(roadGraph, manatthanHeuristicProvider, maxExplorationSpace));
+
+            worldRules.OnNewWorldListener += pathFinder.OnNewWorld;
+
+            return pathFinder;
         }
     }
 }
