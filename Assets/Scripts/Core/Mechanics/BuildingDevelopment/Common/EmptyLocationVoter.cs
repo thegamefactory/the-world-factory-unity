@@ -3,9 +3,9 @@
     using System.Diagnostics.Contracts;
 
     /// <summary>
-    /// A voter which is only inclined for empty locations.
+    /// A voter which is only inclined for empty tiles.
     /// </summary>
-    public class EmptyLocationVoter : ITileDevelopmentVoter
+    public class EmptyLocationVoter : IBuildingDevelopmentVoter
     {
         private static EmptyLocationVoter instance;
 

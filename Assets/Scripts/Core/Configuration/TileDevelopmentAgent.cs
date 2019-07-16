@@ -24,15 +24,18 @@
             RoadGraph roadGraph = new RoadGraph();
             worldRules.OnNewWorldListener += roadGraph.OnNewWorld;
 
-            var buildingResource = new BuildingResourceVoter(CreatePathFinder(worldRules, roadGraph));
+            var buildingConnectionFinder = new BuildingConnectionFinder(CreatePathFinder(worldRules, roadGraph));
+            worldRules.OnNewWorldListener += buildingConnectionFinder.OnNewWorld;
 
-            CombinedTileDevelopmentVoter combinedTileDevelopmentVoter = new CombinedTileDevelopmentVoter(emptyLocation, stochastic, buildingResource);
+            var buildingResource = new BuildingResourceVoter(buildingConnectionFinder);
 
-            RootTileDevelopmentVoter rootTileDevelopmentVoter = new RootTileDevelopmentVoter(combinedTileDevelopmentVoter, new ZoneBuildingModels());
+            CombinedBuildingDevelopmentVoter combinedTileDevelopmentVoter = new CombinedBuildingDevelopmentVoter(emptyLocation, stochastic, buildingResource);
+
+            BuildingConstructorVoter rootTileDevelopmentVoter = new BuildingConstructorVoter(combinedTileDevelopmentVoter, new ZoneBuildingModels());
 
             worldRules.OnNewWorldListener += w => rootTileDevelopmentVoter.OnNewWorld(w);
 
-            var zoneDeveloper = new TileDeveloper(rootTileDevelopmentVoter);
+            var zoneDeveloper = new BuildingConstructor(rootTileDevelopmentVoter);
             worldRules.Agents[zoneDeveloper.Name] = new ScheduledAgent(zoneDeveloper, 1.0f);
         }
 

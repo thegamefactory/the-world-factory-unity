@@ -6,20 +6,20 @@
     using System.Linq;
 
     /// <summary>
-    /// This agent is creating buildings on tiles.
-    /// For each tile, it queries the root tile development voter which building should be developed on the tile.
-    /// Unless the tile developer agent replies with no model, the corresponding building is created.
+    /// This agent is constructing buildings.
+    /// For each tile, it queries the buildingConstructorVoter for which building should be constructed on the tile.
+    /// When the voter reply is different than no model, the corresponding building is created.
     /// </summary>
-    public class TileDeveloper : IAgent
+    public class BuildingConstructor : IAgent
     {
-        private readonly RootTileDevelopmentVoter rootTileDevelopmentVoter;
+        private readonly BuildingConstructorVoter buildingConstructorVoter;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TileDeveloper"/> class.
+        /// Initializes a new instance of the <see cref="BuildingConstructor"/> class.
         /// </summary>
-        public TileDeveloper(RootTileDevelopmentVoter rootTileDevelopmentVoter)
+        public BuildingConstructor(BuildingConstructorVoter rootTileDevelopmentVoter)
         {
-            this.rootTileDevelopmentVoter = rootTileDevelopmentVoter;
+            this.buildingConstructorVoter = rootTileDevelopmentVoter;
         }
 
         public string Name => "Constructor";
@@ -30,7 +30,7 @@
 
             List<(Vector, int)> posBuildingModelToBuild = worldView.GetZoneMapView()
                 .GetAllPositions()
-                .Select(p => (p, this.rootTileDevelopmentVoter.Vote(p)))
+                .Select(p => (p, this.buildingConstructorVoter.Vote(p)))
                 .Where(posBuildingModelTuple => posBuildingModelTuple.Item2 != BuildingModels.NoModel)
                 .ToList();
 

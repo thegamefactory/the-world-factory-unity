@@ -4,47 +4,47 @@
     using System.Diagnostics.Contracts;
 
     /// <summary>
-    /// A tile development voter that dispatches requests to a list of voters and aggregate the results.
+    /// A voter that dispatches requests to a list of child voters and aggregate the results.
     /// </summary>
-    public class CombinedTileDevelopmentVoter : ITileDevelopmentVoter
+    public class CombinedBuildingDevelopmentVoter : IBuildingDevelopmentVoter
     {
-        private readonly LinkedList<ITileDevelopmentVoter> voters;
+        private readonly LinkedList<IBuildingDevelopmentVoter> childVoters;
 
-        public CombinedTileDevelopmentVoter(params ITileDevelopmentVoter[] developmentVoters)
+        public CombinedBuildingDevelopmentVoter(params IBuildingDevelopmentVoter[] childVoters)
         {
-            this.voters = new LinkedList<ITileDevelopmentVoter>(developmentVoters);
+            this.childVoters = new LinkedList<IBuildingDevelopmentVoter>(childVoters);
         }
 
-        public int VotersCount => this.voters.Count;
+        public int VotersCount => this.childVoters.Count;
 
         public void OnNewWorld(IWorldView worldView)
         {
-            foreach (var voter in this.voters)
+            foreach (var voter in this.childVoters)
             {
                 voter.OnNewWorld(worldView);
             }
         }
 
-        public void RegisterVoters(params ITileDevelopmentVoter[] voters)
+        public void RegisterVoters(params IBuildingDevelopmentVoter[] voters)
         {
             Contract.Requires(voters != null);
 
             foreach (var v in voters)
             {
-                this.voters.AddLast(v);
+                this.childVoters.AddLast(v);
             }
         }
 
         public double Vote(Vector pos, int buildingModel)
         {
-            if (this.voters.Count == 0)
+            if (this.childVoters.Count == 0)
             {
                 return 0;
             }
             else
             {
                 double result = 1.0;
-                foreach (var voter in this.voters)
+                foreach (var voter in this.childVoters)
                 {
                     result *= voter.Vote(pos, buildingModel);
                     if (result == 0)

@@ -1,15 +1,14 @@
 ﻿namespace TWF
 {
-    using System;
     using System.Collections.Generic;
 
     public class Path<TNode>
     {
-        private TNode[] segments;
+        private readonly List<TNode> segments;
 
         public Path(int initialCapacity)
         {
-            this.segments = new TNode[initialCapacity];
+            this.segments = new List<TNode>(initialCapacity);
         }
 
         public int Cost { get; set; }
@@ -24,12 +23,14 @@
 
         public void Append(TNode segment)
         {
-            if (this.Length >= this.segments.Length)
+            if (this.Length >= this.segments.Count)
             {
-                Array.Resize(ref this.segments, this.segments.Length * 2);
+                this.segments.Add(segment);
             }
-
-            this.segments[this.Length++] = segment;
+            else
+            {
+                this.segments[this.Length++] = segment;
+            }
         }
 
         public IEnumerable<TNode> GetPath()

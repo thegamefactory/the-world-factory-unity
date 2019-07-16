@@ -10,7 +10,7 @@
     ///
     /// The cache is maintained up to date by listening to updates on the zone map and the building map.
     ///
-    /// /// Current limitations: the cache only considers undeveloped zone tiles.
+    /// Current limitations: the cache only considers undeveloped zone tiles.
     /// Future development needed: need to consider buildings in the map which are not mapped to a resource consumer (and thus are producers now).
     /// </summary>
     public class RandomResourceProvider

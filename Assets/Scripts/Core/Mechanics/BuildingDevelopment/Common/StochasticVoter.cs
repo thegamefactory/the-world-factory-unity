@@ -1,12 +1,11 @@
 ﻿namespace TWF
 {
     using System;
-    using System.Diagnostics.Contracts;
 
     /// <summary>
     /// A voter which votes randomly, to control the development rate.
     /// </summary>
-    public class StochasticVoter : ITileDevelopmentVoter
+    public class StochasticVoter : IBuildingDevelopmentVoter
     {
         private readonly Random random;
 
