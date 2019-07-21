@@ -30,8 +30,10 @@
             wrc += BuildingModels.RegisterBuildingModelZoneComponent;
             wrc += BuildingModels.RegisterBuilidingModelResourceProductionComponent;
             wrc += Buildings.RegisterBuildingModelComponent;
+            wrc += Buildings.RegisterBuildingLocation;
+            wrc += Buildings.RegisterBuildingTransportLink;
             wrc += Buildings.RegisterBuildingConnections;
-            wrc += TileDevelopmentAgent.ConfigureTileDevelopment;
+            wrc += BuildingConstructorAgent.ConfigureBuildingConstructorAgent;
             wrc += BuildingVariants.RegisterBuildingComponent;
             wrc += ToolBehaviors.RegisterDefaults;
             wrc += ToolBrushes.RegisterDefaults;

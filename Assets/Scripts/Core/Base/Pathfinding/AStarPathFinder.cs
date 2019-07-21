@@ -11,15 +11,13 @@
     public class AStarPathFinder<TNode> : IPathFinder<TNode>
         where TNode : struct
     {
-        private readonly IGraph<TNode> graph;
         private readonly IHeuristicProvider<TNode> heuristicProvider;
         private readonly LinkedList<PathSegment<TNode>> pathSegments;
         private readonly Priority_Queue.FastPriorityQueue<PathSegment<TNode>> openNodes;
         private readonly Dictionary<TNode, (TNode?, int)> originCost;
 
-        public AStarPathFinder(IGraph<TNode> graph, IHeuristicProvider<TNode> heuristicProvider, int maxExplorationSpace)
+        public AStarPathFinder(IHeuristicProvider<TNode> heuristicProvider, int maxExplorationSpace)
         {
-            this.graph = graph;
             this.heuristicProvider = heuristicProvider;
             this.pathSegments = new LinkedList<PathSegment<TNode>>();
 
@@ -32,10 +30,12 @@
             this.originCost = new Dictionary<TNode, (TNode?, int)>(maxExplorationSpace);
         }
 
-        public bool FindPath(TNode origin, TNode destination, int maxCost, ref Path<TNode> path)
+        public bool FindPath(IGraph<TNode> graph, TNode origin, TNode destination, int maxCost, ref Path<TNode> path)
         {
+            Contract.Requires(graph != null);
+
             // Fail fast if origin or destination are not connected.
-            if (!this.graph.IsConnected(origin) || !this.graph.IsConnected(destination))
+            if (!graph.IsConnected(origin) || !graph.IsConnected(destination))
             {
                 return false;
             }
@@ -65,7 +65,7 @@
                 int currentCost = this.originCost[current].Item2;
 
                 // extract from the graph where this node connects to
-                var connections = this.graph.GetWeighedConnections(current);
+                var connections = graph.GetWeighedConnections(current);
 
                 // for each connection
                 foreach (var connection in connections)

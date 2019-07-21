@@ -10,13 +10,15 @@
     {
         private readonly Maps maps;
         private readonly Ticker ticker;
+        private readonly IGraph<Vector> transportGraph;
 
-        public World(Maps maps, AnonymousEntities buildings, WorldRules rules, Ticker ticker)
+        public World(Maps maps, AnonymousEntities buildings, WorldRules rules, Ticker ticker, IGraph<Vector> transportGraph)
         {
             this.maps = maps;
             this.Buildings = buildings;
             this.Rules = rules;
             this.ticker = ticker;
+            this.transportGraph = transportGraph;
         }
 
         public Vector Size { get => this.maps.Size; }
@@ -69,6 +71,11 @@
         public IActionQueue GetActionQueue()
         {
             return new ActionQueue(this);
+        }
+
+        public IGraph<Vector> GetTransportGraph()
+        {
+            return this.transportGraph;
         }
 
         private class ActionQueue : IActionQueue

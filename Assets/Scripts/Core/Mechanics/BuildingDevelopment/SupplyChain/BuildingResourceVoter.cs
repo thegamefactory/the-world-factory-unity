@@ -1,5 +1,7 @@
 ﻿namespace TWF
 {
+    using System.Collections.Generic;
+
     /// <summary>
     /// A voter that checks whether the building model candidate resource needs are met.
     /// If they are, it votes 1, otherwise, 0.
@@ -11,10 +13,14 @@
     public class BuildingResourceVoter : IBuildingDevelopmentVoter
     {
         private readonly BuildingConnectionFinder buildingConnectionFinder;
+        private readonly BuildingTransportLinkFinder buildingTransportLinkFinder;
 
-        public BuildingResourceVoter(BuildingConnectionFinder buildingConnectionFinder)
+        public BuildingResourceVoter(
+            BuildingConnectionFinder buildingConnectionFinder,
+            BuildingTransportLinkFinder buildingTransportLocationFinder)
         {
             this.buildingConnectionFinder = buildingConnectionFinder;
+            this.buildingTransportLinkFinder = buildingTransportLocationFinder;
         }
 
         public void OnNewWorld(IWorldView worldView)
@@ -24,7 +30,7 @@
 
         public double Vote(Vector pos, int buildingModel)
         {
-            foreach (var connection in this.buildingConnectionFinder.FindConnections(pos, buildingModel))
+            foreach (var connection in this.BuildingConnections(pos, buildingModel))
             {
                 // connection is a pair where the value represents the connecting vector corresponding to the building resource production
                 if (connection.Item2 == null)
@@ -35,6 +41,23 @@
 
             // if we reach here, all building resource productions found a connection
             return 1;
+        }
+
+        private IEnumerable<(BuildingResourceProduction, Vector?)> BuildingConnections(Vector pos, int buildingModel)
+        {
+            Vector? transportLink = this.buildingTransportLinkFinder.FindTransportLink(pos);
+
+            if (transportLink.HasValue)
+            {
+                foreach (var connection in this.buildingConnectionFinder.FindConnections(transportLink.Value, buildingModel))
+                {
+                    yield return connection;
+                }
+            }
+            else
+            {
+                yield return (default, null);
+            }
         }
     }
 }

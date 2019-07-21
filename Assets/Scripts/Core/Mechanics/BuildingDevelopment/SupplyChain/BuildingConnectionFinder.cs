@@ -22,18 +22,22 @@
     {
         private readonly IPathFinder<Vector> pathFinder;
         private readonly RandomResourceProvider randomResourceProvider;
+
+        private IGraph<Vector> transportGraph;
         private IReadOnlyTypedComponents<BuildingResourceProduction[]> buidlingResourceProductions;
         private Path<Vector> path;
 
-        public BuildingConnectionFinder(IPathFinder<Vector> pathFinder)
+        public BuildingConnectionFinder(IPathFinder<Vector> pathFinder, RandomResourceProvider randomResourceProvider)
         {
             this.pathFinder = pathFinder;
-            this.randomResourceProvider = new RandomResourceProvider();
+            this.randomResourceProvider = randomResourceProvider;
         }
 
         public void OnNewWorld(IWorldView worldView)
         {
             Contract.Requires(worldView != null);
+
+            this.transportGraph = worldView.GetTransportGraph();
 
             this.randomResourceProvider.OnNewWorld(worldView);
             this.buidlingResourceProductions = worldView.Rules.BuildingModels
@@ -46,18 +50,23 @@
         {
             BuildingResourceProduction[] resourceProductions = this.buidlingResourceProductions[buildingModel];
 
+            return this.FindConnections(pos, resourceProductions);
+        }
+
+        public IEnumerable<(BuildingResourceProduction, Vector?)> FindConnections(Vector pos, BuildingResourceProduction[] resourceProductions)
+        {
             foreach (var resourceProduction in resourceProductions)
             {
                 if (resourceProduction.IsConsumer())
                 {
-                    Vector? candidateProvider = this.randomResourceProvider.GetRandomProvider(resourceProduction.ResourceId);
+                    Vector? candidateProvider = this.randomResourceProvider.GetRandomSupplyChainLink(resourceProduction);
 
                     if (!candidateProvider.HasValue)
                     {
                         yield return (resourceProduction, null);
                     }
 
-                    if (!this.pathFinder.FindPath(pos, candidateProvider.Value, resourceProduction.MaxDistance, ref this.path))
+                    if (!this.pathFinder.FindPath(this.transportGraph, pos, candidateProvider.Value, resourceProduction.MaxDistance, ref this.path))
                     {
                         yield return (resourceProduction, null);
                     }

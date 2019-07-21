@@ -8,6 +8,6 @@
     /// </summary>
     public interface IPathFinder<TNode>
     {
-        bool FindPath(TNode origin, TNode destination, int maxCost, ref Path<TNode> path);
+        bool FindPath(IGraph<TNode> graph, TNode origin, TNode destination, int maxCost, ref Path<TNode> path);
     }
 }

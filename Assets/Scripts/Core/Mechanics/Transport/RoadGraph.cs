@@ -1,7 +1,6 @@
 ﻿namespace TWF
 {
     using System.Collections.Generic;
-    using System.Diagnostics.Contracts;
     using System.Linq;
 
     /// <summary>
@@ -10,15 +9,13 @@
     /// </summary>
     public class RoadGraph : IGraph<Vector>
     {
-        private IMapView<int> zoneMap;
-        private int roadZoneId;
+        private readonly IMapView<int> zoneMap;
+        private readonly int roadZoneId;
 
-        public void OnNewWorld(IWorldView worldView)
+        public RoadGraph(IMapView<int> zoneMap, int roadZoneId)
         {
-            Contract.Requires(worldView != null);
-
-            this.zoneMap = worldView.GetMapView<int>(MapTypes.Zone);
-            this.roadZoneId = worldView.Rules.Zones[Zones.Road];
+            this.zoneMap = zoneMap;
+            this.roadZoneId = roadZoneId;
         }
 
         public IEnumerable<(Vector, int)> GetWeighedConnections(Vector position)

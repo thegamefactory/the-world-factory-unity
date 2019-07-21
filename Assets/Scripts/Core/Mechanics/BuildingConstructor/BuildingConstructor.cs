@@ -41,13 +41,18 @@
                 AnonymousEntities buildings = world.Buildings;
                 TypedComponents<int> buildingVariant = buildings.GetMutableTypedComponents<int>(BuildingVariants.Component);
                 TypedComponents<int> buildingModels = buildings.GetMutableTypedComponents<int>(Buildings.BuildingModelComponent);
+                TypedComponents<Vector> buildingLocations = buildings.GetMutableTypedComponents<Vector>(Buildings.LocationComponent);
+                Random random = world.Rules.Random;
 
                 foreach (var posBuildingModelTuple in posBuildingModelToBuild
                     .Where((posBuildingModelTuple) => buildingMap[posBuildingModelTuple.Item1] == MapTypes.NoBuilding))
                 {
                     int buildingId = buildings.Register();
-                    buildingMap[posBuildingModelTuple.Item1] = buildingId;
+                    buildingVariant[buildingId] = random.Next();
+                    buildingLocations[buildingId] = posBuildingModelTuple.Item1;
                     buildingModels[buildingId] = posBuildingModelTuple.Item2;
+
+                    buildingMap[posBuildingModelTuple.Item1] = buildingId;
                 }
             };
         }

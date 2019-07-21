@@ -40,5 +40,12 @@ namespace TWF
         /// <param name="mapType">The identifier of the map.</param>
         /// <typeparam name="T">The type of the returned map view.</param>
         IMapView<T> GetMapView<T>(string mapType);
+
+        /// <summary>
+        /// Gets transport graph of the world.
+        /// It is used for path finding algorithms connecting different map locations.
+        /// </summary>
+        /// <return>The transport graph.</return>
+        IGraph<Vector> GetTransportGraph();
     }
 }

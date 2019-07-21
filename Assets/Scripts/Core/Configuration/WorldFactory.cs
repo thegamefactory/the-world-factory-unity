@@ -38,7 +38,7 @@ namespace TWF
                 buildings.Extend(buildingComponents);
             }
 
-            return new World(maps, buildings, rules, new Ticker());
+            return new World(maps, buildings, rules, new Ticker(), new RoadGraph(zoneMap, rules.Zones[Zones.Road]));
         }
     }
 }

@@ -9,20 +9,23 @@
     /// to produce resources in the future.
     ///
     /// The cache is maintained up to date by listening to updates on the zone map and the building map.
-    ///
-    /// Current limitations: the cache only considers undeveloped zone tiles.
-    /// Future development needed: need to consider buildings in the map which are not mapped to a resource consumer (and thus are producers now).
     /// </summary>
     public class RandomResourceProvider
     {
+        private readonly BuildingTransportLinkFinder buildingTransportLinkFinder;
+
         private Random random;
         private IDictionary<int, RandomAccessSet<Vector>> producersForResource;
+        private IDictionary<int, RandomAccessSet<Vector>> consumersForResource;
+        private IMapView<int> buildingMap;
         private IMapView<int> zoneMap;
         private IReadOnlyTypedComponents<BuildingResourceProduction[]> buildingModelsResourceProduction;
         private IReadOnlyTypedComponents<int> defaultZoneBuildingModels;
+        private IReadOnlyTypedComponents<Vector?> buildingTransportLinkComponent;
 
-        public RandomResourceProvider()
+        public RandomResourceProvider(BuildingTransportLinkFinder buildingTransportLinkFinder)
         {
+            this.buildingTransportLinkFinder = buildingTransportLinkFinder;
         }
 
         public void OnNewWorld(IWorldView worldView)
@@ -30,27 +33,63 @@
             Contract.Requires(worldView != null);
 
             this.random = worldView.Rules.Random;
+
             this.producersForResource = new Dictionary<int, RandomAccessSet<Vector>>();
+            this.consumersForResource = new Dictionary<int, RandomAccessSet<Vector>>();
+
             this.buildingModelsResourceProduction = worldView.Rules.BuildingModels.GetTypedComponents<BuildingResourceProduction[]>(
                 BuildingModels.BuildingModelResourceProductionComponent);
             this.defaultZoneBuildingModels = worldView.Rules.Zones.GetTypedComponents<int>(Zones.DefaultBuildingModel);
+            this.buildingMap = worldView.GetMapView<int>(MapTypes.Building);
             this.zoneMap = worldView.GetMapView<int>(MapTypes.Zone);
 
             this.zoneMap.RegisterListener(this.OnZoneMapUpdate);
             worldView.GetMapView<int>(MapTypes.Building).RegisterListener(this.OnBuildingMapUpdate);
+
+            this.buildingTransportLinkComponent = worldView.Buildings.GetTypedComponents<Vector?>(Buildings.TransportLinkComponent);
         }
 
-        public Vector? GetRandomProvider(int resourceId)
+        public Vector? GetRandomSupplyChainLink(BuildingResourceProduction buildingResourceProduction)
         {
-            RandomAccessSet<Vector> producersForResource = this.GetOrCreateProducersForResource(resourceId);
+            var resourceRegister = this.GetResourceRegister(buildingResourceProduction);
+            if (resourceRegister == null)
+            {
+                return null;
+            }
+
+            RandomAccessSet<Vector> producersForResource = GetOrCreateRegisterStorage(resourceRegister, buildingResourceProduction.ResourceId);
             int candidatesSize = producersForResource.Size;
             if (candidatesSize > 0)
             {
-                return producersForResource[this.random.Next(candidatesSize)];
+                return this.TransportLinkForResult(producersForResource[this.random.Next(candidatesSize)]);
             }
             else
             {
                 return null;
+            }
+        }
+
+        private static RandomAccessSet<Vector> GetOrCreateRegisterStorage(IDictionary<int, RandomAccessSet<Vector>> resourceRegister, int resourceId)
+        {
+            if (!resourceRegister.TryGetValue(resourceId, out RandomAccessSet<Vector> result))
+            {
+                result = new RandomAccessSet<Vector>(64);
+                resourceRegister[resourceId] = result;
+            }
+
+            return result;
+        }
+
+        private Vector? TransportLinkForResult(Vector position)
+        {
+            int buildingId = this.buildingMap[position];
+            if (buildingId != MapTypes.NoBuilding)
+            {
+                return this.buildingTransportLinkComponent[buildingId];
+            }
+            else
+            {
+                return this.buildingTransportLinkFinder.FindTransportLink(position);
             }
         }
 
@@ -88,11 +127,26 @@
             var resourceProductions = this.BuildingResourceProductionForZone(zoneId);
             foreach (var rp in resourceProductions)
             {
-                if (rp.IsProducer())
+                IDictionary<int, RandomAccessSet<Vector>> resourceRegister = this.GetResourceRegister(rp);
+                if (resourceRegister != null)
                 {
-                    action.Invoke(this.GetOrCreateProducersForResource(rp.ResourceId), position);
+                    action.Invoke(GetOrCreateRegisterStorage(resourceRegister, rp.ResourceId), position);
                 }
             }
+        }
+
+        private IDictionary<int, RandomAccessSet<Vector>> GetResourceRegister(BuildingResourceProduction buildingResourceProduction)
+        {
+            if (buildingResourceProduction.IsProducer())
+            {
+                return this.producersForResource;
+            }
+            else if (buildingResourceProduction.IsConsumer())
+            {
+                return this.consumersForResource;
+            }
+
+            return null;
         }
 
         private BuildingResourceProduction[] BuildingResourceProductionForZone(int zoneId)
@@ -106,17 +160,6 @@
             {
                 return Array.Empty<BuildingResourceProduction>();
             }
-        }
-
-        private RandomAccessSet<Vector> GetOrCreateProducersForResource(int resourceId)
-        {
-            if (!this.producersForResource.TryGetValue(resourceId, out RandomAccessSet<Vector> result))
-            {
-                result = new RandomAccessSet<Vector>(64);
-                this.producersForResource[resourceId] = result;
-            }
-
-            return result;
         }
     }
 }
