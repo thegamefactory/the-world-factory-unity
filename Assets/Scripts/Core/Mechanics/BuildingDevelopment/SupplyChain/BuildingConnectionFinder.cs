@@ -24,7 +24,6 @@
         private readonly RandomResourceProvider randomResourceProvider;
 
         private IGraph<Vector> transportGraph;
-        private IReadOnlyTypedComponents<BuildingResourceProduction[]> buidlingResourceProductions;
         private Path<Vector> path;
 
         public BuildingConnectionFinder(IPathFinder<Vector> pathFinder, RandomResourceProvider randomResourceProvider)
@@ -40,40 +39,28 @@
             this.transportGraph = worldView.GetTransportGraph();
 
             this.randomResourceProvider.OnNewWorld(worldView);
-            this.buidlingResourceProductions = worldView.Rules.BuildingModels
-                .GetTypedComponents<BuildingResourceProduction[]>(BuildingModels.BuildingModelResourceProductionComponent);
 
             this.path = worldView.CreatePath();
-        }
-
-        public IEnumerable<(BuildingResourceProduction, Vector?)> FindConnections(Vector pos, int buildingModel)
-        {
-            BuildingResourceProduction[] resourceProductions = this.buidlingResourceProductions[buildingModel];
-
-            return this.FindConnections(pos, resourceProductions);
         }
 
         public IEnumerable<(BuildingResourceProduction, Vector?)> FindConnections(Vector pos, BuildingResourceProduction[] resourceProductions)
         {
             foreach (var resourceProduction in resourceProductions)
             {
-                if (resourceProduction.IsConsumer())
+                Vector? candidateProvider = this.randomResourceProvider.GetRandomSupplyChainLink(resourceProduction);
+
+                if (!candidateProvider.HasValue)
                 {
-                    Vector? candidateProvider = this.randomResourceProvider.GetRandomSupplyChainLink(resourceProduction);
+                    yield return (resourceProduction, null);
+                }
 
-                    if (!candidateProvider.HasValue)
-                    {
-                        yield return (resourceProduction, null);
-                    }
-
-                    if (!this.pathFinder.FindPath(this.transportGraph, pos, candidateProvider.Value, resourceProduction.MaxDistance, ref this.path))
-                    {
-                        yield return (resourceProduction, null);
-                    }
-                    else
-                    {
-                        yield return (resourceProduction, candidateProvider.Value);
-                    }
+                if (!this.pathFinder.FindPath(this.transportGraph, pos, candidateProvider.Value, resourceProduction.MaxDistance, ref this.path))
+                {
+                    yield return (resourceProduction, null);
+                }
+                else
+                {
+                    yield return (resourceProduction, candidateProvider.Value);
                 }
             }
         }

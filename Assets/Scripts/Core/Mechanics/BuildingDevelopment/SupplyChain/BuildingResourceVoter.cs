@@ -15,6 +15,8 @@
         private readonly BuildingConnectionFinder buildingConnectionFinder;
         private readonly BuildingTransportLinkFinder buildingTransportLinkFinder;
 
+        private IReadOnlyTypedComponents<BuildingResourceProduction[]> buidlingResourceProductions;
+
         public BuildingResourceVoter(
             BuildingConnectionFinder buildingConnectionFinder,
             BuildingTransportLinkFinder buildingTransportLocationFinder)
@@ -25,7 +27,7 @@
 
         public void OnNewWorld(IWorldView worldView)
         {
-            // no-op
+            this.buidlingResourceProductions = worldView.Buildings.GetTypedComponents<BuildingResourceProduction[]>(Buildings.ConnectionsComponent);
         }
 
         public double Vote(Vector pos, int buildingModel)
@@ -49,7 +51,9 @@
 
             if (transportLink.HasValue)
             {
-                foreach (var connection in this.buildingConnectionFinder.FindConnections(transportLink.Value, buildingModel))
+                var resourceProductions = this.buidlingResourceProductions[buildingModel];
+
+                foreach (var connection in this.buildingConnectionFinder.FindConnections(transportLink.Value, resourceProductions))
                 {
                     yield return connection;
                 }

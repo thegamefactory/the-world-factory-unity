@@ -13,6 +13,7 @@
         public int ResourceId;
         public int ResourceQuantity;
         public int MaxDistance;
+        public bool Optional;
 #pragma warning restore SA1307 // Accessible fields should begin with upper-case letter
 #pragma warning restore CA1051 // Do not declare visible instance fields
 
@@ -21,6 +22,15 @@
             this.ResourceId = resourceId;
             this.ResourceQuantity = resourceQuantity;
             this.MaxDistance = maxDistance;
+            this.Optional = false;
+        }
+
+        public BuildingResourceProduction(int resourceId, int resourceQuantity, int maxDistance, bool optional)
+        {
+            this.ResourceId = resourceId;
+            this.ResourceQuantity = resourceQuantity;
+            this.MaxDistance = maxDistance;
+            this.Optional = optional;
         }
 
         public static bool operator ==(BuildingResourceProduction left, BuildingResourceProduction right)
@@ -42,7 +52,8 @@
         {
             return this.ResourceId == other.ResourceId &&
                    this.ResourceQuantity == other.ResourceQuantity &&
-                   this.MaxDistance == other.MaxDistance;
+                   this.MaxDistance == other.MaxDistance &&
+                   this.Optional == other.Optional;
         }
 
         public override int GetHashCode()
@@ -51,7 +62,13 @@
             hashCode = (hashCode * -1521134295) + this.ResourceId.GetHashCode();
             hashCode = (hashCode * -1521134295) + this.ResourceQuantity.GetHashCode();
             hashCode = (hashCode * -1521134295) + this.MaxDistance.GetHashCode();
+            hashCode = (hashCode * -1521134295) + this.Optional.GetHashCode();
             return hashCode;
+        }
+
+        public bool IsOptional()
+        {
+            return this.Optional;
         }
 
         public bool IsConsumer()
